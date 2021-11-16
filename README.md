@@ -13,7 +13,7 @@ We are currently testing a prototype of the hardware and will be able to provide
 
 Meanwhile, here is a measured step response (average of seven runs)
 
-![step](.img/step.png)
+![step](./img/step.png)
 
 
 ## Background
