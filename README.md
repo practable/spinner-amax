@@ -3,7 +3,18 @@ Spinner experiment with Maxxon AMAX 32 motor
 
 ## Status
 
-In development.
+In development. The AMAX 32 motor variant is
+
+![motor](./img/A-max-32-236666-NEW.jpg)
+
+The technical specs are [here](./hw/docEN-21-176.pdf/)
+
+We are currently testing a prototype of the hardware and will be able to provide more updates soon.
+
+Meanwhile, here is a measured step response (average of seven runs)
+
+![step](.img/step.png)
+
 
 ## Background
 
