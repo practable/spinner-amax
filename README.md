@@ -3,7 +3,7 @@ Spinner experiment with Maxxon AMAX 32 motor
 
 ## Status
 
-In development. The AMAX 32 motor variant is
+In development. The AMAX 32 motor variant is part number: 236668
 
 ![motor](./img/A-max-32-236666-NEW.jpg)
 
