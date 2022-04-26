@@ -32,7 +32,7 @@ bool permitOverspeed = false;
 #include <MotorControllerBTN8982.h>
 #include <pid.h>
 #include <rotaryPlant.h>
-
+#include <filter.h>
 
 /**********CURRENT SENSING***********/
 #define CURRENT_1 A6
