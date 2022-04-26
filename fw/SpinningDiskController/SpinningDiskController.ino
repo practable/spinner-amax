@@ -28,7 +28,6 @@ bool permitOverspeed = false;
 #include "ArduinoJson-v6.9.1.h"
 #include <dcmotor.h>
 #include <Encoder.h>
-//#include <MotorControllerBTS7960.h>
 #include <MotorControllerBTN8982.h>
 #include <pid.h>
 #include <rotaryPlant.h>

@@ -18,7 +18,7 @@ enable_testing()
 
 add_executable(filter_test filter_test.cc)
 
-add_subdirectory(../../libraries/Filter/filter filter)
+add_subdirectory(../../libraries/Filter filter)
 
 target_link_libraries(filter_test
   gtest_main
@@ -27,7 +27,7 @@ target_link_libraries(filter_test
 
 target_include_directories(filter_test PUBLIC
   "${PROJECT_BINARY_DIR}"
-   "../../libraries/Filter/filter"
+   "../../libraries/Filter"
   )
 
 include(GoogleTest)
