@@ -1,21 +1,32 @@
 # spinner-amax
-Spinner experiment with Maxxon AMAX 32 motor
 
-## Status
+Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Controls and Instrumentation 3, School of Engineering, University of Edinburgh. This design has now been used for over 2,500 hours in total across 12 separate instances. It is based on the [spinner-nidec](https://github.com/practable/spinner-nidec).
 
-In development. The AMAX 32 motor variant is part number: 236668
+<figure>
+<img src="./img/spinner.png"alt="Spinner hardware using Amax motor in tri-pod mount" style="width:80%">
+<figcaption align = "center"><b>Fig. 2. Spinner hardware using AMAX motor</b></figcaption>
+</figure>
+
+## Contents
+
+  - Firmware `./fw`
+  - Hardware `./hw`
+  - Printed Circuit Board - TODO Add this
+  - UI - TODO Add this
+   
+## New Motor
+
+The experiment is now using an AMAX 32 motor variant (part number: 236668)
 
 ![motor](./img/A-max-32-236666-NEW.jpg)
 
 The technical specs are [here](./hw/docEN-21-176.pdf/)
 
-We are currently testing a prototype of the hardware and will be able to provide more updates soon.
+## Performance
 
+The varaibility of the step response is reduced significantly compared to the spinner using the nidec motor.
 Meanwhile, here is a measured step response (average of seven runs)
 
 ![step](./img/step.png)
 
 
-## Background
-
-This is an updated version of the experiment we used in academic year 2021/22, which can be found [here](https://github.com/practable/spinner-nidec). The AMAX 32 motor we are using has less friction, so it has a more ideal second order response. We are currently developing this (See the develop branch if you want to know how far along we are).
