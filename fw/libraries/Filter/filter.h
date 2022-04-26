@@ -18,8 +18,11 @@ class Filter{
     
 
 public:
-  Filter(float coeff_a, float coeff_b);
+  Filter(float coeffA, float coeffB);
   long update(long x);
-  long value(void);
+  long getValue(void);
+  float getCoeffA(void);
+  float getCoeffB(void);
+  void setCoeffs(float coeffA, float coeffB);
 };
 
