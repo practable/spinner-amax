@@ -1,0 +1,16 @@
+Comment,Designator,Footprint,JLCPCB Part #（optional）
+2k,"R4,R2,R3",R_0805_2012Metric,C17604
+,"REF**,REF**,REF**,REF**",MountingHole_3.2mm_M3,
+,A1,Arduino_UNO_R3,
+SN75175D,U3,SOIC127P600X175-16N,
+ C474952 ,"J3,J4,J5,J6",TerminalBlock_bornier-2_P5.08mm, C474952 
+,U1,MODULE_ABX00027,
+TXS0104ED,U2,SOIC127P600X175-14N,
+C5665 ,J1,PinSocket_2x05_P2.54mm_Vertical,C5665 
+C11214 ,J7,PinSocket_2x03_P2.54mm_Vertical,C11214 
+,"JP1,JP2",SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm,
+,"TP A,TP B,TP I,TP leftPWM,TP rightPWM,TP VUSB,TP 3V3",TestPoint_Pad_D2.0mm,
+,"TP GND,TP GND",TestPoint_Pad_4.0x4.0mm,
+0.1uF,"C1,C2",C_0805_2012Metric,C49678
+5k,R1,R_0805_2012Metric,C78980
+200,"R5,R6,R7",R_0805_2012Metric,C17540

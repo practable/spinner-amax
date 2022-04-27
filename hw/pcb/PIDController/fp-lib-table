@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name SN75175D)(type KiCad)(uri ${KIPRJMOD}/Symbols/SN75175D)(options "")(descr ""))
+  (lib (name TXS0104ED)(type KiCad)(uri ${KIPRJMOD}/Symbols/TXS0104ED)(options "")(descr ""))
+)

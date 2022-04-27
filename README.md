@@ -11,8 +11,8 @@ Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Control
 
   - Firmware `./fw`
   - Hardware `./hw`
-  - Printed Circuit Board - TODO Add this
-  - UI - TODO Add this
+  - Printed Circuit Board `./hw/pcb`
+  - UI `./ui`
    
 ## New Motor
 
@@ -20,7 +20,7 @@ The experiment is now using an AMAX 32 motor variant (part number: 236668)
 
 ![motor](./img/A-max-32-236666-NEW.jpg)
 
-The technical specs are [here](./hw/docEN-21-176.pdf/)
+The technical specs are [here](./hw/doc/EN-21-176.pdf/)
 
 ## Performance
 
@@ -29,4 +29,7 @@ Meanwhile, here is a measured step response (average of seven runs)
 
 ![step](./img/step.png)
 
+## PCB
 
+![pcb](./img/pcb.png)
+![schematic](./img/schematic.png)
