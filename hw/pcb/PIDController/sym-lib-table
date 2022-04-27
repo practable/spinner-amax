@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name PIDController-rescue)(type Legacy)(uri ${KIPRJMOD}/PIDController-rescue.lib)(options "")(descr ""))
+  (lib (name SN75175D)(type Legacy)(uri ${KIPRJMOD}/Symbols/SN75175D/SN75175D.lib)(options "")(descr ""))
+  (lib (name TXS0104ED)(type Legacy)(uri ${KIPRJMOD}/Symbols/TXS0104ED/TXS0104ED.lib)(options "")(descr ""))
+)
