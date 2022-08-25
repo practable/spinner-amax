@@ -12,6 +12,7 @@ Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Control
   - Firmware `./fw`
   - Hardware `./hw`
   - Printed Circuit Board `./hw/pcb`
+  - Single Board Computer `./sbc`
   - UI `./ui`
    
 ## New Motor
@@ -33,3 +34,7 @@ Meanwhile, here is a measured step response (average of seven runs)
 
 ![pcb](./img/pcb.png)
 ![schematic](./img/schematic.png)
+
+## SBC
+
+The scripts to setup your single board computer (in this case, a Raspberry Pi 4 Model B). See the [SBC README](./sbc/README.md) for instructions.

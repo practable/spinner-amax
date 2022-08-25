@@ -1,0 +1,21 @@
+---
+  - name: copy ffmpeg-camera script
+    copy: src=../files/ffmpeg-camera dest=/usr/local/bin/ffmpeg-camera mode=a+x
+    notify:
+      - Reload session-rules
+      
+  - name: copy session-rules script
+    copy: src=../files/session-rules dest=/usr/local/bin/session-rules mode=a+x
+    notify:
+      - Reload session-rules
+
+  - name: copy socat-data script [rpios]
+    copy: src=../files/socat-data.rpios dest=/usr/local/bin/socat-data mode=a+x
+    notify:
+      - Reload session-rules
+
+  - name: copy websocat-data script
+    copy: src=../files/websocat-data dest=/usr/local/bin/websocat-data mode=a+x
+    notify:
+      - Reload session-rules
+      
