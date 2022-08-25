@@ -1,0 +1,15 @@
+---
+- name: install sessionhost on rpi-spinner-v2 experiment
+  hosts: rpispinnerv2
+  become: yes
+  gather_facts: yes
+  
+  tasks:
+
+  - name: Include install-sessionhost-rpios task
+    include: ../tasks/install-sessionhost-rpios.yml
+
+  handlers:
+
+  - name: Include sessionhost handlers
+    include: ../tasks/sessionhost-handlers.yml

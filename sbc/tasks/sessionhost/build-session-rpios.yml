@@ -1,0 +1,17 @@
+---
+  - name: get practable/relay from github
+    git:
+      repo: https://github.com/practable/relay.git
+      dest: /home/pi/sources/relay
+      update: yes
+
+  - name: build cmd/session cmd from practable/relay [rpios]
+    command: /usr/local/go/bin/go build
+    args:
+      chdir: /home/pi/sources/relay/cmd/session
+
+       
+  - name: install cmd/session to usr/local/bin
+    command: cp session /usr/local/bin/session-relay
+    args:
+      chdir: /home/pi/sources/relay/cmd/session

@@ -1,0 +1,7 @@
+---
+
+  - name: Include install arduino cli
+    include: ./arduino/install-arduino-cli-rpios.yml
+    
+  - name: Include install spinner firmware [rpios]
+    include: ./arduino/install-spinmax-firmware-rpios.yml

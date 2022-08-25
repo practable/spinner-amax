@@ -1,0 +1,4 @@
+---
+
+  - name: Include install spinner firmware [rpios]
+    include: ./arduino/install-spinmax-firmware-rpios.yml

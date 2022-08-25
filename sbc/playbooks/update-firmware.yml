@@ -1,0 +1,12 @@
+---
+- name: install firmware on rpi spinner v2 experiment (to arduino)
+  hosts: rpispinnerv2
+  become: yes
+  gather_facts: yes
+  
+  tasks:
+
+  - name: Include install-spinmax-firmware-rpios task
+    include: ../tasks/install-spinmax-firmware-rpios.yml
+
+
