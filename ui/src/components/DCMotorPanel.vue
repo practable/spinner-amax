@@ -73,8 +73,11 @@ export default {
           this.$store.dispatch('setVoltage', this.voltage);
       },
       incrementVoltage(delta){
-          this.voltage = Number(this.voltage) + Number(delta);
-          this.setVoltage();
+          if(Number(this.voltage) + Number(delta) <= this.maxV){
+              this.voltage = Number(this.voltage) + Number(delta);
+              this.setVoltage();
+          }
+          
       }
       
       

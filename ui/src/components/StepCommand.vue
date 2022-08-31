@@ -7,7 +7,7 @@
                 <div class='input-group' v-if='mode == "speedRaw"'>
                     <span class='input-group-text' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</span>
                     <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step_raw" v-model="step_size">
-                    <button class='btn btn-lg' id="run" @click="runStep(); this.$store.dispatch('setAchievementCompleted', 'speedRaw-step-input')">Run</button>
+                    <button class='btn btn-lg' id="run" @click="runStep(); this.$store.dispatch('setAchievementCompleted', 'speedRaw-step-input')" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
                     <button class='btn btn-lg btn-danger' v-if='isStepRunning' id="wait" @click="stopStep">Stop</button>
                 </div>
             
@@ -15,7 +15,7 @@
                 <div class='input-group' v-else-if='mode == "speedPid"'>
                     <span class='input-group-text' for="step_speed">Step size (0 - {{max_speed_step}} rad/s)</span>
                     <input type="number" :max='max_speed_step' :min='-max_speed_step' :class="(parseFloat(step_size) >= -max_speed_step && parseFloat(step_size) <= max_speed_step) ? 'form-control' : 'form-control is-invalid'" id="step_speed" v-model="step_size">
-                    <button class='btn btn-lg' id="run" @click="runStep">Run</button>
+                    <button class='btn btn-lg' id="run" @click="runStep" :disabled='Math.abs(step_size) > max_speed_step'>Run</button>
                     <button class='btn btn-lg btn-danger' v-if='isStepRunning' id="wait" @click="stopStep">Stop</button>
                 </div>
 
@@ -46,7 +46,7 @@ export default {
         step_size: 0.00,            
         max_position_step: 6, 
         max_speed_step: 100,
-        max_voltage_step: 10,
+        max_voltage_step: 6,
         isStepRunning: false,
     }
   },
