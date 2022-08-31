@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#Vue build files
+**/node_modules/
+**/dist/
