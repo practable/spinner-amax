@@ -282,7 +282,7 @@ spin32 ansible_host=192.168.0.184 practable_label=spin32
 [rpispinnerv2:vars]
 ansible_connection=ssh
 ansible_user=pi
-***REMOVED***
+ansible_password=***REMOVED***
 <snip>
 ```
 
