@@ -68,7 +68,7 @@
 
 	<div v-if='inputMode == "free"'>
 		<div v-if='getCurrentMode == "speedRaw"'>
-			<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="12" />
+			<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
 		</div>
 	</div>
 
@@ -89,7 +89,7 @@
 			<div class='col-md-3'>
 				<div class="input-group">
 					<span class="input-group-text" id="basic-addon1">K<sub>p</sub></span>
-					<input type="number" max='10.00' min='0.00' step='0.01' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @keyup.enter='setParameters' @blur='setParameters' :disabled='getCurrentMode == "stopped"'>
+					<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
 					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
 				</div>	
 			</div>
@@ -97,7 +97,7 @@
 			<div class='col-md-3'>
 				<div class="input-group">
 					<span class="input-group-text" id="basic-addon1">K<sub>i</sub></span>
-					<input type="number" max='10.00' min='0.00' step='0.01' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @keyup.enter='setParameters' @blur='setParameters' :disabled='getCurrentMode == "stopped"'>
+					<input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
 					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
 				</div>
 			</div>
@@ -105,7 +105,7 @@
 			<div class='col-md-3'>
 				<div class="input-group">
 					<span class="input-group-text" id="basic-addon1">K<sub>d</sub></span>
-					<input type="number" max='10.00' min='0.00' step='0.01' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @keyup.enter='setParameters' @blur='setParameters' :disabled='getCurrentMode == "stopped"'>
+					<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
 					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
 				</div>	
 			</div>
