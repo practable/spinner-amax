@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import jsmpegplayer from "@cycjimmy/jsmpeg-player";
+import JSMpeg from "@cycjimmy/jsmpeg-player";
 import { mapGetters } from 'vuex';
 import Toolbar from "./elements/Toolbar.vue";
 
@@ -99,7 +99,7 @@ export default {
   watch:{
     url(){
         let canvas = document.getElementById("video-canvas");
-        this.player = new jsmpegplayer.Player(this.url, {canvas: canvas, preserveDrawingBuffer: true});
+        this.player = new JSMpeg.Player(this.url, {canvas: canvas, preserveDrawingBuffer: true});
         this.current_volume = this.player.volume;
     },
   },
