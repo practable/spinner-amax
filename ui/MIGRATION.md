@@ -148,7 +148,7 @@ npm run build
 
 Node-gyp compilation issue - so delete package-lock.json and drop in known good package.json from bookjs and install from there...
 
-````
+```
 es6-promise/auto (imported by /home/tim/sources/spinner-amax/ui/src/main.js)
   vuex (imported by /home/tim/sources/spinner-amax/ui/src/components/StepCommand.vue?id=0)
   uuid (imported by /home/tim/sources/spinner-amax/ui/src/App.vue?id=0)
@@ -165,3 +165,55 @@ npm install --save axios
 npm install --save chart.js
 npm install --save @cycjimmy/jsmpeg-player
 npm install --save smoothie
+
+
+// it looks like the issue is with our old fork of the jsmpeg player.
+
+The new version is fine, compilation wise, just missing our videowrite hook.
+
+So ... the changes are:
+
+`src/lib/decoder.js`
+
+```
+    this.bytesWritten += this.bufferWrite(buffers); //last old line
+	
+    const videoWrite = new CustomEvent('jsmpeg:write', {
+      detail: { bytes: this.bytesWritten }
+    });
+    document.dispatchEvent(videoWrite);
+	
+	this.canPlay = true; //next old line
+	
+```
+`src/lib/websocket.js` increase the reconnect interval to 5min reduce server load
+```
+options.reconnectInterval !== undefined ? options.reconnectInterval : 300;
+
+```
+
+remove 'dist/' from ignore
+modify files as above
+nvm use v19.6.0
+npm audit fix
+npm run build:prod
+
+
+then in spinner-amax/ui
+push to master
+npm remove @cycjimmy/jsmpeg-player #force jsmpeg-player to be updated by reinstalling it
+# edit package.json to put in  "@cycjimmy/jsmpeg-player": "github:timdrysdale/jsmpeg-player",
+npm install #this can take several minutes, no panic
+npm run dev
+
+Also, in VideoElement.vue
+
+these two lines now need different JSMPEG -> jsmpegplayer
+
+```
+import jsmpegplayer from "@cycjimmy/jsmpeg-player";
+```
+
+```
+  this.player = new jsmpegplayer.Player(this.url, {canvas: canvas, preserveDrawingBuffer: true});
+```

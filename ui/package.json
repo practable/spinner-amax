@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cycjimmy/jsmpeg-player": "^6.0.5",
+    "@cycjimmy/jsmpeg-player": "github:timdrysdale/jsmpeg-player",
     "@popperjs/core": "^2.11.6",
     "axios": "^1.3.3",
     "bootstrap": "^5.2.3",
