@@ -1,13 +1,13 @@
 {
   "name": "pidui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "test": "jest"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@cycjimmy/jsmpeg-player": "github:timdrysdale/jsmpeg-player",
@@ -15,28 +15,20 @@
     "axios": "^0.21.4",
     "bootstrap": "^5.0.0-beta3",
     "chart.js": "^2.9.4",
-    "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
     "es6-promise": "^4.2.8",
     "smoothie": "^1.35.0",
     "uuid": "^8.3.2",
-    "vue": "^3.2.20",
+    "vue": "^v3.2.0",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.15",
-    "@vue/cli-plugin-eslint": "^4.5.15",
-    "@vue/cli-plugin-unit-jest": "^4.5.13",
-    "@vue/cli-service": "^4.5.15",
     "@vue/compiler-sfc": "^3.2.20",
     "@vue/test-utils": "^2.0.0-rc.18",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.6.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "jest": "^27.4.7",
-    "jest-websocket-mock": "^2.3.0",
-    "vue-jest": "^5.0.0-alpha.10"
+    "@vitejs/plugin-vue": "^1.6.1",
+    "vite": "^2.5.4"
   },
   "eslintConfig": {
     "root": true,
@@ -47,9 +39,6 @@
       "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
     "rules": {},
     "overrides": [
       {
@@ -65,7 +54,6 @@
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions",
-    "not dead"
+    "last 2 versions"
   ]
 }
