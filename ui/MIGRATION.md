@@ -97,7 +97,7 @@ Remove:
  <strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
  ```
  
- Add (below title):
+ Add (below body to avoid mount returned null error):
  
  ```
  <script type="module" src="/src/main.js"></script>
@@ -145,3 +145,23 @@ npm audit fix #clear up security issues, all should resolve
 npm run dev
 npm run build
 ```
+
+Node-gyp compilation issue - so delete package-lock.json and drop in known good package.json from bookjs and install from there...
+
+````
+es6-promise/auto (imported by /home/tim/sources/spinner-amax/ui/src/main.js)
+  vuex (imported by /home/tim/sources/spinner-amax/ui/src/components/StepCommand.vue?id=0)
+  uuid (imported by /home/tim/sources/spinner-amax/ui/src/App.vue?id=0)
+  axios (imported by /home/tim/sources/spinner-amax/ui/src/components/LoggingStream.vue?id=0)
+  chart.js (imported by /home/tim/sources/spinner-amax/ui/src/components/GraphOutput.vue?id=0)
+  @cycjimmy/jsmpeg-player (imported by /home/tim/sources/spinner-amax/ui/src/components/VideoElement.vue?id=0)
+  smoothie (imported by /home/tim/sources/spinner-amax/ui/src/components/ControlPanelSpinningDisk.vue?id=0)
+```
+
+npm install --save es6-promise
+npm install --save vuex
+npm install --save uuid
+npm install --save axios 
+npm install --save chart.js
+npm install --save @cycjimmy/jsmpeg-player
+npm install --save smoothie
