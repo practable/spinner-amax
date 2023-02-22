@@ -60,7 +60,8 @@ export default {
 	},
   methods: {
       ...mapActions([
-          'setDraggable'
+          'setDraggable',
+          'updateColourIndex'
       ]),
      runStep(){
          if(this.$store.getters.getIsDataRecorderOn){
@@ -77,6 +78,8 @@ export default {
         //  this.$store.dispatch('setStep', step);
          
         this.sendCommand();
+
+        this.updateColourIndex();
              
      },
      sendCommand(){

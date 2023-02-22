@@ -83,11 +83,6 @@ export default {
             var elmnt = document.getElementById(id);
             elmnt.scrollIntoView(false); 
         },
-        // toggleShowDataPoint(data_id, current_state){
-        //     console.log(current_state);
-        //     this.$store.dispatch('setShowDataPoint',{id: data_id, show: !current_state});
-            
-        // }
       },
       
 }

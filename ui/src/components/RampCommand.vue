@@ -62,7 +62,8 @@ export default {
   },
   methods: {
       ...mapActions([
-          'setDraggable'
+          'setDraggable',
+          'updateColourIndex'
       ]),
     runRamp(){
 
@@ -89,6 +90,8 @@ export default {
         }
     
         this.$store.dispatch('addMultipleAchievement','multiple-runs');
+
+        this.updateColourIndex();
     },
     stopRamp(){
         this.isRampRunning = false;

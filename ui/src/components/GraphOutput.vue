@@ -406,6 +406,7 @@ export default {
             current_data_index: 0,
             data_index_interval: 10,
             latest_index: 0,
+            previous_t: 0,
         }
     },
     mounted() {
@@ -419,6 +420,7 @@ export default {
             'getGraphDataParameter',
             'getNumData',
             'getIsRecording',
+            'getColourIndex'
         ]),
       },
     watch:{
@@ -454,10 +456,36 @@ export default {
             this.chart = new Chart(ctx, {
             type: 'scatter',
             data: {
+                //6 colours to loop through
                 datasets: [{
-                    label: 'graph',
+                    label: 'colour0',
                     data: [],
                     pointBackgroundColor: 'rgba(0, 0, 0, 1)',
+                },
+                {
+                    label: 'colour1',
+                    data: [],
+                    pointBackgroundColor: 'rgba(0, 0, 255, 1)',
+                },
+                {
+                    label: 'colour2',
+                    data: [],
+                    pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+                },
+                {
+                    label: 'colour3',
+                    data: [],
+                    pointBackgroundColor: 'rgba(255, 0, 0, 1)',
+                },
+                {
+                    label: 'colour4',
+                    data: [],
+                    pointBackgroundColor: 'rgba(255, 120, 0, 1)',
+                },
+                {
+                    label: 'colour5',
+                    data: [],
+                    pointBackgroundColor: 'rgba(150, 0, 150, 1)',
                 }]
             },
             options: {
@@ -537,13 +565,12 @@ export default {
                 this.XAxisMax = value;
             }
         },
-        addDataToChart(data) {
+        addDataToChart(data, dataset_index) {
             try{
-                this.chart.data.datasets[0].data.push(data);
+                this.chart.data.datasets[dataset_index].data.push(data);
             } catch(e){
                 console.log(e);
             }
-            
         },
         clearData(){
             this.latest_index = 0;          //NEW
@@ -551,7 +578,7 @@ export default {
             this.chart.destroy();
             this.createChart();
         },
-        getAllData(){
+        getAllData(colour_index = 0){
             if(this.current_data_index == 0){
                 this.clearData();
                 
@@ -570,7 +597,14 @@ export default {
                         break;
 
                 }
-                this.addDataToChart({x: x_data, y: y_data});
+
+                if(this.previous_t > x_data){
+                        colour_index = (colour_index + 1) % 6
+                    }
+
+                    this.previous_t = x_data;
+
+                this.addDataToChart({x: x_data, y: y_data}, colour_index);
 
                 if(i >= this.current_data_index + this.data_index_interval || i == this.getNumData - 1){
                     this.current_data_index = i + 1;
@@ -605,7 +639,7 @@ export default {
                         break;
 
                     }
-                    this.addDataToChart({x: x_data, y: y_data});
+                    this.addDataToChart({x: x_data, y: y_data}, this.getColourIndex);
                 } 
             
         },
@@ -624,7 +658,7 @@ export default {
                         break;
 
                     }
-                    this.addDataToChart({x: x_data, y: y_data});
+                    this.addDataToChart({x: x_data, y: y_data}, this.getColourIndex);
                 } 
         },
         removeChart(){

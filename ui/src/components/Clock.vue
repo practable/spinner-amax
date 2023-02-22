@@ -11,7 +11,7 @@ export default {
   name: 'Clock',
   data () {
     return {
-        current_time: '',           //in clock format
+        //current_time: '',           //in clock format
         current_time_left: '',      //in minutes and seconds
         interval_id: 0,
     }
@@ -20,10 +20,10 @@ export default {
     
   },
   computed:{
-      sessionEndTime(){
-          let date = new Date(this.$store.getters.getExpiryTime*1000);
-          return this.getTime(date);
-      }
+    //   sessionEndTime(){
+    //       let date = new Date(this.$store.getters.getExpiryTime*1000);
+    //       return this.getTime(date);
+    //   }
   },
   watch:{
       
@@ -49,7 +49,7 @@ export default {
           //get the new date
           let date = new Date();
           //use this to get time in format hh:mm:ss
-          this.current_time = this.getTime(date);
+          //this.current_time = this.getTime(date);
           //get the time left to go in mm:ss
           this.current_time_left = this.getTimeLeft(date);
       },

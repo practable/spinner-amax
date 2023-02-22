@@ -9,7 +9,7 @@
                     @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
                     />
 
-      <consent v-if='showConsentModal' @consentSet="closeConsentModal"/>
+      <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
       <help v-if='showHelpModal' @togglehelp="showHelpModal = false" />
 
     <transition name='fade'>
@@ -180,15 +180,17 @@ export default {
       window.addEventListener('beforeunload', () => {this.saveDataToLocalStorage()});			//refreshing page, changing URL
 
       this.loadAchievements();  //load the already achieved achievements.
-      this.loadPrompts();
-      this.loadLogging();
+      //this.loadLogging();
       
 
   },
   computed:{
     ...mapGetters([
 			'getDraggable',
-      'getUsesLocalStorage'
+      'getUsesLocalStorage',
+      'getIsLoggingOn',
+      'getExperiment',
+      'getCourse'
 		]),
     getDesktopWindow(){
       let window_width = window.innerWidth;
@@ -403,29 +405,22 @@ export default {
           this.$store.dispatch('loadAchievements', data);
         }
       },
-      loadPrompts(){
-        if(this.getUsesLocalStorage && window.localStorage.getItem('promptsSpinningDisk')){
-          let data = window.localStorage.getItem('promptsSpinningDisk');
-          data = JSON.parse(data);
-          this.$store.dispatch('loadPrompts', data);
-        } else{
-          this.$store.dispatch('setPromptsLoaded');
-        }
-      },
-      loadLogging(){
-        if(this.getUsesLocalStorage && window.localStorage.getItem('loggingSpinningDisk')){
-          let data = window.localStorage.getItem('loggingSpinningDisk');
-          let data_json = JSON.parse(data);
-          this.$store.dispatch('setTotalTime', data_json.time);
-        }
-      },
+      // loadLogging(){
+      //   if(this.getUsesLocalStorage && window.localStorage.getItem('loggingSpinningDisk')){
+      //     let data = window.localStorage.getItem('loggingSpinningDisk');
+      //     let data_json = JSON.parse(data);
+      //     this.$store.dispatch('setTotalTime', data_json.time);
+      //   }
+      // },
       saveDataToLocalStorage(){
-         if(this.getUsesLocalStorage && window.localStorage.getItem('remote-lab-uuid')){
+        let course = this.getCourse;
+        let exp = this.getExperiment;
+        const item = `uuid-${exp}-${course}`
+         if(this.getUsesLocalStorage && window.localStorage.getItem(item)){
             
             this.saveData();
-            this.saveLogging();
+            //this.saveLogging();
             this.saveAchievements();
-            this.savePrompts();
 
             return true;
             
@@ -442,29 +437,23 @@ export default {
           window.localStorage.setItem('dateSavedSpinningDisk', date);
         }
       },
-      saveLogging(){
-        let data = {time: this.$store.getters.getLogTotalTime};
-        let data_json = JSON.stringify(data);
-        window.localStorage.setItem('loggingSpinningDisk', data_json);
-      },
+      // saveLogging(){
+      //   let data = {time: this.$store.getters.getLogTotalTime};
+      //   let data_json = JSON.stringify(data);
+      //   window.localStorage.setItem('loggingSpinningDisk', data_json);
+      // },
       saveAchievements(){
         let data_json = JSON.stringify(this.$store.getters.getAchievements);
         window.localStorage.setItem('achievementsSpinningDisk', data_json);
       },
-      savePrompts(){
-        let prompts = this.$store.getters.getPrompts;
-        prompts.forEach(prompt => {
-          prompt.completed = false;
-        })
-        let data_json = JSON.stringify(prompts);
-
-        window.localStorage.setItem('promptsSpinningDisk', data_json);
-      },
       //need to check on App mount that a UUID exists already or create a new one - this UUID is used in logging and rasa conversations
       updateUUID(){
         let stored_uuid;
+        let course = this.getCourse;
+        let exp = this.getExperiment;
+        const item = `uuid-${exp}-${course}`
         if(this.getUsesLocalStorage){
-          stored_uuid = window.localStorage.getItem('remote-lab-uuid');
+          stored_uuid = window.localStorage.getItem(item);
         } else {
           stored_uuid = null;
         }
@@ -475,30 +464,34 @@ export default {
             let uuid = uuidv4();
             this.$store.dispatch('setUUID', uuid);
             if(this.getUsesLocalStorage){
-              window.localStorage.setItem('remote-lab-uuid', uuid);
+              window.localStorage.setItem(item, uuid);
             }
             
         }
       },
       checkConsent(){
         let logging_consent;
-        let survey_consent;
-        if(this.getUsesLocalStorage){
-          logging_consent = window.localStorage.getItem('remote-lab-logging-consent');
-          survey_consent = window.localStorage.getItem('remote-lab-survey-consent');
-        } else {
-          logging_consent = null;
-          survey_consent = null;
+        if(this.getIsLoggingOn){
+            if(this.getUsesLocalStorage){
+                let course = this.getCourse;
+                let exp = this.getExperiment;
+                const item = `consent-${exp}-${course}`
+                logging_consent = window.localStorage.getItem(item);
+            } else {
+                logging_consent = null;
+            }
+            
+            if(logging_consent == null){
+                this.showConsentModal = true;
+            
+            } else{
+                this.showConsentModal = false;
+                this.$store.dispatch('setLoggingConsent', (logging_consent === 'true'));
+            }
+        } else{
+            this.$store.dispatch('setLoggingConsent', false);
         }
         
-        if(logging_consent == null || survey_consent == null){
-          this.showConsentModal = true;
-          
-        } else{
-          this.showConsentModal = false;
-          this.$store.dispatch('setLoggingConsent', (logging_consent === 'true'));
-          this.$store.dispatch('setSurveyConsent', (survey_consent === 'true'));
-        }
         
       },
       closeConsentModal(){

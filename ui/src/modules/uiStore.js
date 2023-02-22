@@ -8,10 +8,9 @@ const uiStore = {
        isDataRecorderOn: false,    //is the Data Recorder element active
        isDraggable: true,
        
-       isChatBotAvailable: false,    //by default the chatbot is NOT BEING USED
-       isAchievementsAvailable: true,
-       isPromptsAvailable: true,
+       isAchievementsAvailable: false, // remove achievements from the UI
        usesLocalStorage: false,        //can only use localStorage if the browser allows it.
+       colour_index: 0,
 
        }),
        mutations:{
@@ -24,16 +23,12 @@ const uiStore = {
          SET_DRAGGABLE(state, draggable){
             state.isDraggable = draggable;
          },
-         
-         SET_CHATBOT_AVAILABLE(state, set){
-            state.isChatBotAvailable = set;
-         },
          SET_USES_LOCAL_STORAGE(state, set){
             state.usesLocalStorage = set;
          },
-         SET_PROMPTS_AVAILABLE(state, set){
-            state.isPromptsAvailable = set;
-         }
+         SET_COLOUR_INDEX(state, index){
+            state.colour_index = index
+         },
          
 
        },
@@ -47,17 +42,13 @@ const uiStore = {
          setDraggable(context, draggable){
              context.commit('SET_DRAGGABLE', draggable);
          },
-         
-         setChatBotAvailable(context, set){
-            context.commit('SET_CHATBOT_AVAILABLE', set);
-         },
          setUsesLocalStorage(context, set){
             context.commit('SET_USES_LOCAL_STORAGE', set);
          },
-         setPromptsAvailable(context, set){
-            context.commit('SET_PROMPTS_AVAILABLE', set);
-         }
-
+         updateColourIndex(context){
+            let index = (context.state.colour_index + 1) % 6
+            context.commit('SET_COLOUR_INDEX', index);
+         },
 
        },
        getters:{
@@ -70,21 +61,15 @@ const uiStore = {
          getDraggable(state){
              return state.isDraggable;
          },
-         
-         getIsChatbotAvailable(state){
-            return state.isChatBotAvailable;
-         },
          getIsAchievementsAvailable(state){
             return state.isAchievementsAvailable;
          },
          getUsesLocalStorage(state){
             return state.usesLocalStorage;
          },
-         getIsPromptsAvailable(state){
-            return state.isPromptsAvailable;
-         }
-         
-          
+         getColourIndex(state){
+            return state.colour_index;
+         },
          
        },  
   

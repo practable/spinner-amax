@@ -145,10 +145,6 @@ const dataStore = {
          },
          
         
-      //   SET_SHOW_DATA_POINT(state, options){
-      //      console.log('toggling show data point');
-      //       state.data[options.id].showDataPoint = options.show;
-      //   },
        },
        actions:{
          setCurrentEncoderPosition(context, pos){

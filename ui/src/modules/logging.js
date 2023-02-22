@@ -11,18 +11,18 @@ const loggingStore = {
     state: () => ({
         logSocket: null,
         uuid: '',
+        isLoggingOn: true,                  //set for difference UI versions
         logging_consent_given: false,
-        //hardware: '',
-
-        //clicks: [],             //do I need to internally store this?
-        session_time: {
-            start: Date.now(),      //will be updated
-            end: Date.now(),
-            previous: Date.now(),
-            total: 0
-        },
-        //components_opened: [],      //{name: 'graph'} //do I need to internally store this?
-        parameters: [], //do I need to internally store this?
+        hardware: '',           //will be set from the LoggingStream.vue component 
+        exp: 'spinner',         //hardcoded for this UI
+        course: 'engdes1',      //defaults to engdes1, but will be set from Streams.vue from a url query param
+        
+        // session_time: {
+        //     start: Date.now(),      //will be updated
+        //     end: Date.now(),
+        //     previous: Date.now(),
+        //     total: 0
+        // },
 
        }),
        mutations:{
@@ -35,12 +35,9 @@ const loggingStore = {
             SET_UUID(state, uuid){
                 state.uuid = uuid;
             },
-            // SET_HARDWARE(state, hardware){
-            //     state.hardware = hardware;
+            // SET_TOTAL_TIME(state, total){
+            //     state.session_time.total = total;
             // },
-            SET_TOTAL_TIME(state, total){
-                state.session_time.total = total;
-            },
             LOG(state, payload){
                 //only log to server if user has given consent.
                 //Still may require logging internally for achievements etc.
@@ -48,49 +45,57 @@ const loggingStore = {
                     state.logSocket.send(JSON.stringify({
                         user: state.uuid,
                         t: Date.now(),          
-                        //exp: state.hardware,        
+                        exp: state.exp,   
+                        hardware: state.hardware,
+                        course: state.course,    
+                        type: "log", 
                         payload: payload
                     }));
                 }
                 
             },
-            LOG_SURVEY(state, payload){
-                //can only be called if survey_consent has already been given
-                if(state.logSocket != null){
+            LOG_ANALYTICS(state, payload){
+                //only log to server if user has given consent.
+                //Still may require logging internally for achievements etc.
+                if(state.logging_consent_given && state.logSocket != null){
                     state.logSocket.send(JSON.stringify({
                         user: state.uuid,
                         t: Date.now(),          
-                        //exp: state.hardware,        
+                        exp: state.exp,  
+                        hardware: state.hardware, 
+                        course: state.course,    
+                        type: "analytics", 
                         payload: payload
                     }));
                 }
+                
             },
-            // LOG_CLICK(state, data){
-            //     state.clicks.push(data);
+            // LOG_START(state, time){
+            //     state.session_time.start = time;
             // },
-            LOG_START(state, time){
-                state.session_time.start = time;
-            },
-            LOG_END(state, time){
-                state.session_time.end = time;
-            },
-            UPDATE_SESSION_TIME(state, now){
-                let current_total = state.session_time.total;
-                let delta = now - state.session_time.previous;
-                state.session_time.total = current_total + delta;
+            // LOG_END(state, time){
+            //     state.session_time.end = time;
+            // },
+            // UPDATE_SESSION_TIME(state, now){
+            //     let current_total = state.session_time.total;
+            //     let delta = now - state.session_time.previous;
+            //     state.session_time.total = current_total + delta;
 
-                state.session_time.previous = now;
+            //     state.session_time.previous = now;
+            // },
+            // CLEAR_LOGGED_TIME(state){
+            //     state.session_time.start = Date.now();
+            //     state.session_time.end = 0;
+            //     state.session_time.total = 0;
+            // },
+            SET_EXPERIMENT(state, exp){
+                state.exp = exp;
             },
-            // LOG_COMPONENT(state, component){
-            //     state.components_opened.push(component);
-            // },
-            // LOG_PARAMETERS(state, parameters){
-            //     state.parameters.push(parameters);
-            // },
-            CLEAR_LOGGED_TIME(state){
-                state.session_time.start = Date.now();
-                state.session_time.end = 0;
-                state.session_time.total = 0;
+            SET_HARDWARE(state, hardware){
+                state.hardware = hardware;
+            },
+            SET_COURSE(state, course){
+                state.course = course;
             }
          
 
@@ -105,50 +110,51 @@ const loggingStore = {
             setUUID(context, uuid){
                 context.commit('SET_UUID', uuid);
             },
-            // setHardware(context, url){
-            //     let index = url.indexOf('spin');
-            //     let hardware = url.substr(index, 6);
-            //     context.commit('SET_HARDWARE', hardware)
-            // },
-            setTotalTime(context, total){
-                context.commit('SET_TOTAL_TIME', total);
+            setExperiment(context, exp){
+                context.commit('SET_EXPERIMENT', exp)
             },
+            setHardware(context, hardware){
+                context.commit('SET_HARDWARE', hardware)
+            },
+            setCourse(context, course){
+                context.commit('SET_COURSE', course)
+            },
+            // setTotalTime(context, total){
+            //     context.commit('SET_TOTAL_TIME', total);
+            // },
             logClick(context, payload){
-                //context.commit('LOG_CLICK', payload.data);
                 context.commit('LOG', payload);
 
                 //session time should only increase if still connected to the hardware
-                if(!context.getters.getSessionExpired){
-                    context.commit('UPDATE_SESSION_TIME', Date.now());
-                }
+                // if(!context.getters.getSessionExpired){
+                //     context.commit('UPDATE_SESSION_TIME', Date.now());
+                // }
                 
             },
             logStart(context, payload){
-                context.commit('LOG_START', payload.data);
+                //context.commit('LOG_START', payload.data);
                 context.commit('LOG', payload);
             },
             logEnd(context, payload){
-                context.commit('LOG_END', payload.data);
-                context.commit('UPDATE_SESSION_TIME', payload.data);
+                // context.commit('LOG_END', payload.data);
+                // context.commit('UPDATE_SESSION_TIME', payload.data);
                 context.commit('LOG', payload);
             },
-            logComponent(context, payload){
-                //context.commit('LOG_COMPONENT', payload.data);
+            async logComponent(context, payload){
+                await helpers.delay(100);
                 context.commit('LOG', payload);
             },
-            logParameters(context, payload){
-                //context.commit('LOG_PARAMETERS', payload.data);
-                context.commit('LOG', payload);
+            async logParameters(context, payload){
+                await helpers.delay(100);
+                context.commit('LOG_ANALYTICS', payload);
             },
-            logAchievements(context, achievements){
+            async logAchievements(context, achievements){
+                await helpers.delay(100);
                 context.commit('LOG', {log:'achievements', data: achievements});
             },
-            logPrompts(context, prompts){
-                context.commit('LOG_SURVEY', {log:'survey', data: prompts});
-            },
-            clearLoggedTime(context){
-                context.commit('CLEAR_LOGGED_TIME');
-            }
+            // clearLoggedTime(context){
+            //     context.commit('CLEAR_LOGGED_TIME');
+            // }
 
 
        },
@@ -162,31 +168,38 @@ const loggingStore = {
             getLogUUID(state){
                 return state.uuid;
             },
-            // getLogHardware(state){
-            //     return state.hardware;
-            // },
-            getLogTotalTime(state){
-                return state.session_time.total;
+            getExperiment(state){
+                return state.exp;
             },
-            // getLogClicks(state){
-            //     return state.clicks;
-            // },
-            getLogStart(state){
-                return state.session_time.start;
+            getHardware(state){
+                return state.hardware;
             },
-            getLogEnd(state){
-                return state.session_time.end;
+            getCourse(state){
+                return state.course;
             },
-            // getLogComponents(state){
-            //     return state.components_opened;
+            // getLogTotalTime(state){
+            //     return state.session_time.total;
             // },
-            // getLogParameters(state){
-            //     return state.parameters;
-            // }
+            // getLogStart(state){
+            //     return state.session_time.start;
+            // },
+            // getLogEnd(state){
+            //     return state.session_time.end;
+            // },
+            getIsLoggingOn(state){
+                return state.isLoggingOn;
+            }
+            
           
          
        },  
   
+  }
+
+  let helpers = {
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    },
   }
 
   export default loggingStore;

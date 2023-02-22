@@ -44,7 +44,7 @@ export default {
 				if(this.url != '' && this.getLogURLObtained){
 					this.connect();								
 				} else{
-					console.log('disconnecting: ' + this.url);
+					console.log('disconnecting logging websocket ');
 				}
 			} catch(e){
 				console.log(e);
@@ -54,21 +54,12 @@ export default {
             if(expired){
                 this.logEnd({log:'end', type:'session-exp', data: Date.now()});
             }
-        }
+        },
     },
     computed:{
         ...mapGetters([
             'getLogURLObtained',
-            'getLogStart',
-            //'getLogClicks',
-            //'getLogParameters',
-            'getLogTotalTime',
-            'getPromptByName',
-            'getPrompts',
-            'getAchievementByName',
-            'getLogConsent',
-            'getSurveyConsent',
-            'getSessionExpired',
+            'getSessionExpired'
             
         ]),
 
@@ -78,7 +69,6 @@ export default {
             'logClick',
             'logStart',
             'logEnd',
-            'triggerIntent'
         ]),
         initialLogging(){
             this.logStart({log:'start', data: Date.now()});
@@ -98,10 +88,11 @@ export default {
             let _store = this.$store;
 
 			this.logSocket = new WebSocket(this.url);
+            //this.logSocket = new WebSocket('ws://127.0.0.1:8000');  //TESTING
 			_store.dispatch('setLogSocket', this.logSocket);
             
             this.logSocket.onopen = () => {
-				console.log('log connection opened at ', this.url);
+				//console.log('log connection opened at ', this.url);
                 this.initialLogging();
 			};
         }

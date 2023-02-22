@@ -22,8 +22,7 @@
                 </p>
 
                 <h4>Collected Data</h4>
-                <p>No personal data will be collected as part of this study. All data will be collected anonymously. Data is limited to your interaction with the remote lab UI and hardware 
-                  and your responses to any survey questions that you answer.
+                <p>No personal data will be collected as part of this study. All data will be collected anonymously. Data is limited to your interaction with the remote lab UI and hardware.
                 </p>
                 <p>Please review the Participant Information Sheet for this study before giving your consent.</p>
                 <p><a href='https://dev-static.practable.io/info/spinner-1.0/files/Project_Information_Sheet_RemoteLabs.pdf'>Participant Information Sheet</a></p>
@@ -39,21 +38,13 @@
                   </div>
                 </div>
 
-                <h4>Survey Data</h4>
-                <div class='row'>
-                  <div class='col-8'>
-                    <p>I am happy to answer questions on my experience with the remote laboratory. </p>
-                  </div>
-                  <div class="form-check form-switch col-4">
-                    <input class="form-check-input" type="checkbox" id="surveyConsentRadio" v-model='survey'>
-                    <label class="form-check-label" for="surveyConsentRadio">Consent</label>
-                  </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id='consent-yes-button' @click="consent">Confirm</button>
                 </div>
+
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='consent-yes-button' @click="consent">Confirm choices</button>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -65,11 +56,10 @@ import { mapGetters } from 'vuex';
 export default {
 
   name: 'Consent',
-  emits:['consentSet'],
+  emits:['consentset'],
   data () {
     return {
         logging: false,
-        survey: false,
     }
   },
   components: {
@@ -77,7 +67,9 @@ export default {
   },
   computed:{
      ...mapGetters([
-         'getUsesLocalStorage'
+         'getUsesLocalStorage',
+         'getCourse',
+         'getExperiment'
      ])
   },
   watch:{
@@ -92,16 +84,16 @@ export default {
   },
   methods: {
       consent(){
-        //consent has two aspects: logging and survey
           this.$store.dispatch('setLoggingConsent', this.logging);
-          this.$store.dispatch('setSurveyConsent', this.survey);
           if(this.getUsesLocalStorage){
-              window.localStorage.setItem('remote-lab-logging-consent', this.logging);
-              window.localStorage.setItem('remote-lab-survey-consent', this.survey);
+            let course = this.getCourse;
+            let exp = this.getExperiment;
+            const item = `consent-${exp}-${course}`
+              window.localStorage.setItem(item, this.logging);
           }
           
 
-          this.$emit('consentSet');
+          this.$emit('consentset');
           
       }
       

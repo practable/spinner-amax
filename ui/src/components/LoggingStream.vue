@@ -11,7 +11,7 @@
 <script>
 import axios from "axios";
 import Logging from "./Logging.vue";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	name: "LoggingStream",
@@ -47,12 +47,16 @@ export default {
 		},
 		getLogURLObtained(is) {
 			if (is) {
-				console.log("get logURL", this.getLogURLObtained, this.getLogURL);
+				//console.log("get logURL", this.getLogURLObtained, this.getLogURL);
+				this.setHardwareCode(this.getLogURL);
 			}
 		},
 
 	},
 	methods:{
+		...mapActions([
+			'setHardware'
+		]),
 		getWebsocketConnection(){
 			this.stream = this.$store.getters.getStream("log");
 			var accessURL = this.stream.url;
@@ -65,7 +69,12 @@ export default {
 				_this.$store.dispatch("setLogURL", response.data.uri);
 			})
 			.catch((err) => console.log(err));
-		}
+		},
+		setHardwareCode(url){
+                let index = url.indexOf('spin');
+                let hardware = url.substr(index, 6);
+                this.setHardware(hardware);
+            },
 	},
 	
 	

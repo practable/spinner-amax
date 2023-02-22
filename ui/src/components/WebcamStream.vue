@@ -67,11 +67,11 @@ export default {
 				console.log("no stream");
 			}
     },
-		urlOK(is) {
-			if (is) {
-				console.log("get videoURL", this.urlOK, this.url);
-			} 
-		},
+		// urlOK(is) {
+		// 	if (is) {
+		// 		console.log("get videoURL", this.urlOK, this.url);
+		// 	} 
+		// },
 
 	}
 }
