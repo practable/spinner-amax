@@ -12,7 +12,8 @@
      repo: https://github.com/practable/relay.git
      dest: /home/pi/sources/relay
      update: yes
-     
+     version: v0.2.3
+           
  - name: shell build
    command: /usr/local/go/bin/go build
    args:
