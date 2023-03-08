@@ -1,6 +1,9 @@
 # spinner-amax
 
-Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Controls and Instrumentation 3, School of Engineering, University of Edinburgh. This design has now been used for over 2,500 hours in total across 12 separate instances. It is based on the [spinner-nidec](https://github.com/practable/spinner-nidec).
+Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Controls and Instrumentation 3, School of Engineering, University of Edinburgh. This design has now been used for over 2,500 hours in total across 12 separate instances. We have now expanded the fleet to 48 experiments, with 12 different weights (four of each).
+
+You can cite the contents of this repo via this paper:
+[1] D.Reid, J. Burridge, D. Lowe, T. Drysdale "Open-source remote laboratory experiments for controls engineering education," International Journal of Mechanical Engineering Education. February 2022. doi:10.1177/03064190221081451
 
 <figure>
 <img src="./img/spinner.png"alt="Spinner hardware using Amax motor in tri-pod mount" style="width:80%">
@@ -15,13 +18,25 @@ Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Control
   - Single Board Computer `./sbc`
   - UI `./ui`
    
-## New Motor
+## Hardware
+
+For drawings/CAD please look in the `.hw` directory.
+
+### Motor
 
 The experiment is now using an AMAX 32 motor variant (part number: 236668)
 
 ![motor](./img/A-max-32-236666-NEW.jpg)
 
 The technical specs are [here](./hw/doc/EN-21-176.pdf/)
+
+### Weights
+
+The latest iteration of the weights includes attention to reducing eccentricity to reduce side load on the motor bearings.
+
+### Previous hardware version
+
+The first version of the hardware used a motor with siginficantly more friction, which is educationally useful although increases the challenge level for students just learning the control theory for the first time because the variability induced by the friction can obscure the presence/absence about steady state errors. Hardware details:  [spinner-nidec](https://github.com/practable/spinner-nidec).
 
 ## Performance
 
