@@ -20,7 +20,7 @@ You can cite the contents of this repo via this paper:
    
 ## Hardware
 
-For drawings/CAD please look in the `.hw` directory.
+For drawings/CAD please look [here](./hw).
 
 ### Motor
 
