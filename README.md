@@ -3,7 +3,8 @@
 Spinner experiment with Maxxon AMAX 32 motor, upgraded for 2022 usage by Controls and Instrumentation 3, School of Engineering, University of Edinburgh. This design has now been used for over 2,500 hours in total across 12 separate instances. We have now expanded the fleet to 48 experiments, with 12 different weights (four of each).
 
 You can cite the contents of this repo via this paper:
-[1] D.Reid, J. Burridge, D. Lowe, T. Drysdale "Open-source remote laboratory experiments for controls engineering education," International Journal of Mechanical Engineering Education. February 2022. doi:10.1177/03064190221081451
+
+D.Reid, J. Burridge, D. Lowe, T. Drysdale "Open-source remote laboratory experiments for controls engineering education," _International Journal of Mechanical Engineering Education_, February 2022, [doi:10.1177/03064190221081451](https://journals.sagepub.com/doi/full/10.1177/03064190221081451)
 
 <figure>
 <img src="./img/spinner.png"alt="Spinner hardware using Amax motor in tri-pod mount" style="width:80%">
