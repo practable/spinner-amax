@@ -8,7 +8,7 @@ D.Reid, J. Burridge, D. Lowe, T. Drysdale "Open-source remote laboratory experim
 
 <figure>
 <img src="./img/spinner.png"alt="Spinner hardware using Amax motor in tri-pod mount" style="width:80%">
-<figcaption align = "center"><b>Fig. 2. Spinner hardware using AMAX motor</b></figcaption>
+<figcaption align = "center"><b>Fig. 1. Spinner hardware using AMAX motor</b></figcaption>
 </figure>
 
 ## Contents
@@ -21,7 +21,18 @@ D.Reid, J. Burridge, D. Lowe, T. Drysdale "Open-source remote laboratory experim
    
 ## Hardware
 
-For drawings/CAD please look [here](./hw/cad).
+For drawings/CAD files, please look [here](./hw/cad):
+
+[dimensioned drawing of a weight](./hw/cad/weight-drawing.pdf)
+
+[STEP file for the spinner experiment](./hw/cad/spinner.step)
+
+<!--- 
+<figure>
+<img src="./img/spinner-cad.png"alt="3D CAD drawing of the spinner using an Amax motor in tri-pod mount" style="width:80%">
+<figcaption align = "center"><b>Fig. 2. CAD drawing of the spinner hardware</b></figcaption>
+</figure>
+--->
 
 ### Motor
 
@@ -37,7 +48,7 @@ The latest iteration of the weights includes attention to reducing eccentricity 
 
 ### Previous hardware version
 
-The first version of the hardware used a motor with siginficantly more friction, which is educationally useful although increases the challenge level for students just learning the control theory for the first time because the variability induced by the friction can obscure the presence/absence about steady state errors. Hardware details:  [spinner-nidec](https://github.com/practable/spinner-nidec).
+The first version of the hardware used a motor with siginficantly more friction, which is educationally useful although increases the challenge level for students just learning the control theory for the first time because the variability induced by the friction can obscure the presence/absence of steady state errors arising from control theory considerations. First version hardware details:  [spinner-nidec](https://github.com/practable/spinner-nidec).
 
 ## Performance
 
