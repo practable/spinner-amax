@@ -40,7 +40,7 @@
                 
                 <div v-if="currentFunction === 'linear'">
                     <div class='row justify-content-center mb-2'>
-                        <img id='linear_function' src='../../public/images/LinearFunction.png'>
+                        <img id='linear_function' src='/images/LinearFunction.png'>
                     </div>
 
                     <div class='row d-flex justify-content-center'>
@@ -72,7 +72,7 @@
                 <div v-else-if="currentFunction === 'quadratic'">
 
                     <div class='row justify-content-center mb-2'>
-                        <img id='linear_function' src='../../public/images/QuadraticFunction.png'>
+                        <img id='linear_function' src='/images/QuadraticFunction.png'>
                     </div>
 
 
@@ -103,7 +103,7 @@
                 <div v-else-if="currentFunction === 'trigonometric'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='trig_function' src='../../public/images/TrigFunction.png'>
+                        <img id='trig_function' src='/images/TrigFunction.png'>
                     </div>
 
 
@@ -146,7 +146,7 @@
                 <div v-else-if="currentFunction === 'exponential'">
 
                     <div class='row justify-content-center'>
-                        <img id='linear_function' src='../../public/images/ExpFunction.png'>
+                        <img id='linear_function' src='/images/ExpFunction.png'>
                     </div>
 
 
@@ -177,7 +177,7 @@
                 <div v-else-if="currentFunction === 'step'">
                     
                     <div class='row justify-content-center mb-1'>
-                        <img id='transfer_function' src='../../public/images/VoltSpeedTransferFunction.png'>
+                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png'>
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>
@@ -227,7 +227,7 @@
                 <div v-else-if="currentFunction === 'step2nd'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='second_order_transfer_function' src='../../public/images/TransferFunction2ndOrder.png'>
+                        <img id='second_order_transfer_function' src='/images/TransferFunction2ndOrder.png'>
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>
@@ -277,7 +277,7 @@
                 <div v-else-if="currentFunction === 'ramp'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='transfer_function' src='../../public/images/VoltSpeedTransferFunction.png'>
+                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png'>
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>
@@ -333,7 +333,7 @@
         <template v-slot:popup id='graph-popup'>
             <div class='row mb-2' id='gradient-div'>
                 <div class='col-4'>
-                    <img class='popup-image' src='../../public/images/gradient.png'>
+                    <img class='popup-image' src='/images/gradient.png'>
                 </div>
                 <div class='col-8'>
                     <h3> Gradient tool </h3>
@@ -343,7 +343,7 @@
 
             <div class='row mb-2' id='data-point-div'>
                 <div class='col-4'>
-                    <img class='popup-image' src='../../public/images/GraphDataPoint.png'>
+                    <img class='popup-image' src='/images/GraphDataPoint.png'>
                 </div>
                 <div class='col-8'>
                     <h3> Interactive data points </h3>
@@ -356,7 +356,7 @@
 
             <div class='row mb-2' id='functions-div'>
                 <div class='col-4'>
-                    <img class='popup-image' src='../../public/images/function-plotting.png'>
+                    <img class='popup-image' src='/images/function-plotting.png'>
                 </div>
                 <div class='col-8'>
                     <h3> Function Plotting </h3>

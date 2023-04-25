@@ -11,7 +11,7 @@
     </div>
     <div class='row m-2 justify-content-center'>
       <div v-if='getIsRecording' class='col-2'>
-        <img id='red-light' src='../../public/images/red-light.png' width='20' height='20' :hidden='!showRedLight'>
+        <img id='red-light' src='/images/red-light.png' width='20' height='20' :hidden='!showRedLight'>
       </div>
       <div class='col-10'>  
         <p class='m-1'>Recorded: {{getNumData}}/{{getMaxDataPoints}} data points</p>
