@@ -3,8 +3,8 @@
 <template>
 <div>
     <canvas :class="workspace_canvas_clickable ? 'clickable' : 'unclickable'" id="workspace" @mousedown="checkClick" @mousemove="moveClicked" @mouseup="mouseUnclick"></canvas>
-    <img id="ruler-image" src="../../public/images/ruler.png" hidden>
-    <img id="protractor" src="../../public/images/protractor.png" hidden>
+    <img id="ruler-image" src="/images/ruler.png" hidden>
+    <img id="protractor" src="/images/protractor.png" hidden>
     
 </div>
 </template>
