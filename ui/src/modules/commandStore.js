@@ -5,6 +5,8 @@ const commandStore = {
     state: () => ({
         dataSocket: null,
         currentMode: '',
+        isStepRunning: false,
+        isRampRunning: false
 
        }),
        mutations:{
@@ -117,6 +119,12 @@ const commandStore = {
         SET_CURRENT_MODE(state, mode){
             state.currentMode = mode;
          },
+         SET_IS_STEP_RUNNING(state, set){
+            state.isStepRunning = set;
+         },
+         SET_IS_RAMP_RUNNING(state, set){
+            state.isRampRunning = set;
+         }
             
 
        },
@@ -172,6 +180,12 @@ const commandStore = {
         setCurrentMode(context, mode){
             context.commit("SET_CURRENT_MODE", mode);
         },
+        setIsStepRunning(context, set){
+            context.commit('SET_IS_STEP_RUNNING', set);
+        },
+        setIsRampRunning(context, set){
+            context.commit('SET_IS_RAMP_RUNNING', set);
+        }
        },
        getters:{
         getDataSocket(state){
@@ -191,6 +205,12 @@ const commandStore = {
                 return state.currentMode;
             }
         },
+        getIsStepRunning(state){
+            return state.isStepRunning;
+        },
+        getIsRampRunning(state){
+            return state.isRampRunning;
+        }
           
        },  
   

@@ -100,7 +100,7 @@
                     <span v-else class="text-center" id="kp-param-label">K<sub>p</sub></span>
                 </div>
                     
-                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
+                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 			</div>
 
 			<div class='col-md-4'>
@@ -109,7 +109,7 @@
 					<span v-else class="text-center" id="ki-param-label">K<sub>i</sub></span>
 				</div>
 
-                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
+                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 					
 			</div>
 
@@ -118,7 +118,7 @@
 					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="kd-param-label">K<sub>d</sub> &nbsp; [x10<sup>-2</sup>]</span>
 					<span v-else class="text-center" id="kd-param-label">K<sub>d</sub></span>
 				</div>
-				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
+				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 					
 			</div>
 			
@@ -196,7 +196,9 @@ export default {
 			'getRemoteLabVersion',
 			'getCurrentMode',
 			'getSessionExpired',
-			'getMaxReached'
+			'getMaxReached',
+            'getIsStepRunning',
+            'getIsRampRunning'
 		]),
 		inputMode: {
 			get(){

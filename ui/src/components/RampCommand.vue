@@ -8,21 +8,21 @@
                 <div class='input-group' v-if='mode == "speedRaw"'>
                     <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (Vs<sup>-1</sup>)</b></span>
                     <input type="number" :max='max_voltage_ramp' :min='-max_voltage_ramp' :class="(parseFloat(ramp_gradient) >= -max_voltage_ramp && parseFloat(ramp_gradient) <= max_voltage_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                    <button class='btn btn-lg' id="run" v-if='!isRampRunning' @click="runRamp">Run</button>
+                    <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
                     <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
                 </div>
 
                 <div class='input-group' v-else-if='mode == "speedPid"'>
                     <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (rads<sup>-2</sup>)</b></span>
                      <input type="number" :max='max_speed_ramp' :min='-max_speed_ramp' :class="(parseFloat(ramp_gradient) >= -max_speed_ramp && parseFloat(ramp_gradient) <= max_speed_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                     <button class='btn btn-lg' id="run" v-if='!isRampRunning' @click="runRamp">Run</button>
+                     <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
                      <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
                 </div>
 
                 <div class='input-group' v-else-if='mode == "positionPid"'>
                     <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (rads<sup>-1</sup>)</b></span>
                     <input type="number" :max='max_position_ramp' :min='-max_position_ramp' :class="(parseFloat(ramp_gradient) >= -max_position_ramp && parseFloat(ramp_gradient) <= max_position_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                    <button class='btn btn-lg' id="run" v-if='!isRampRunning' @click="runRamp(); this.$store.dispatch('setAchievementCompleted', 'positionPid-ramp-input')">Run</button>
+                    <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp(); this.$store.dispatch('setAchievementCompleted', 'positionPid-ramp-input')">Run</button>
                     <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
                 </div>
 
@@ -49,12 +49,13 @@ export default {
         max_position_ramp: 6.00,
         max_speed_ramp: 100,
         max_voltage_ramp: 10,
-        isRampRunning: false,
+        //isRampRunning: false,         //moved to vuex instead
     }
   },
   computed:{
       ...mapGetters([
-          'getCurrentMode'
+          'getCurrentMode',
+          'getIsRampRunning'
       ])
   },
   watch:{
@@ -63,7 +64,8 @@ export default {
   methods: {
       ...mapActions([
           'setDraggable',
-          'updateColourIndex'
+          'updateColourIndex',
+          'setIsRampRunning'
       ]),
     runRamp(){
 
@@ -74,18 +76,22 @@ export default {
         }
 
         if(this.mode == 'positionPid'){
-            this.isRampRunning = true;
+            //this.isRampRunning = true;
+            this.setIsRampRunning(true);
             this.$store.dispatch('setPositionRamp', this.ramp_gradient);
         } 
         else if(this.mode == 'speedPid'){
-            this.isRampRunning = true;
+            //this.isRampRunning = true;
+            this.setIsRampRunning(true);
             this.$store.dispatch('setSpeedRamp', this.ramp_gradient);
         } 
         else if(this.mode == 'speedRaw'){
-            this.isRampRunning = true;
+            //this.isRampRunning = true;
+            this.setIsRampRunning(true);
             this.$store.dispatch('setVoltageRamp', this.ramp_gradient);
         } else{
-            this.isRampRunning = false;
+            //this.isRampRunning = false;
+            this.setIsRampRunning(false);
             this.$store.dispatch('setIsRecording', false);
         }
     
@@ -94,7 +100,8 @@ export default {
         this.updateColourIndex();
     },
     stopRamp(){
-        this.isRampRunning = false;
+        //this.isRampRunning = false;
+        this.setIsRampRunning(false);
 
         this.$emit('showinputtype', true);
 
