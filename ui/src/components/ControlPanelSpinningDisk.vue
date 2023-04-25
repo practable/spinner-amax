@@ -86,34 +86,49 @@
 	<div v-if='getCurrentMode == "speedPid" || getCurrentMode == "positionPid" || getCurrentMode == "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
 		<div class='d-flex row justify-content-center m-2'>
 		
-			<div class='col-md-3'>
+			<!-- <div class='col-md-4'>
 				<div class="input-group">
 					<span class="input-group-text" id="basic-addon1">K<sub>p</sub></span>
 					<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
 					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
 				</div>	
+			</div> -->
+
+            <div class='col-md-4'>
+                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
+                    <span v-if='getCurrentMode == "speedPid"' class="text-center" id="kp-param-label">K<sub>p</sub> &nbsp; [x10<sup>-2</sup>]</span>
+                    <span v-else class="text-center" id="kp-param-label">K<sub>p</sub></span>
+                </div>
+                    
+                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
 			</div>
 
-			<div class='col-md-3'>
-				<div class="input-group">
-					<span class="input-group-text" id="basic-addon1">K<sub>i</sub></span>
-					<input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
-					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
+			<div class='col-md-4'>
+				<div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
+					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="ki-param-label">K<sub>i</sub> &nbsp; [x10<sup>-2</sup>]</span>
+					<span v-else class="text-center" id="ki-param-label">K<sub>i</sub></span>
 				</div>
+
+                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
+					
 			</div>
 
-			<div class='col-md-3'>
-				<div class="input-group">
-					<span class="input-group-text" id="basic-addon1">K<sub>d</sub></span>
-					<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
-					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
-				</div>	
+			<div class='col-md-4'>
+                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
+					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="kd-param-label">K<sub>d</sub> &nbsp; [x10<sup>-2</sup>]</span>
+					<span v-else class="text-center" id="kd-param-label">K<sub>d</sub></span>
+				</div>
+				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
+					
 			</div>
-			<div class='col-md-1'>
-				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="btn btn-danger btn-sm" @click="resetParameters">Reset</button>
-			</div>
+			
 		
 		</div>
+        <div class='d-flex row justify-content-center m-2'>
+            <div class='col-auto'>
+				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="btn btn-danger btn-sm" @click="resetParameters">Reset PID params</button>
+			</div>
+        </div>
 	</div>
 
 </div>
@@ -685,6 +700,19 @@ select{
     
     background-color: #4490d8;
 }
+
+#kp{
+    min-width: 100px;
+}
+
+#ki{
+    min-width: 100px;
+}
+
+#kd{
+    min-width: 100px;
+}
+
 
 /* #setmode       {background-color: rgb(3, 248, 12);}
 #setmode:hover {background-color: #3e8e41}  */
