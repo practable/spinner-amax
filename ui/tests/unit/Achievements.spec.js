@@ -1,10 +1,10 @@
+import { describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createStore } from 'vuex';
 import Achievements from '../../src/components/Achievements.vue';
 
 import achievementStore from '../../src/modules/achievementStore.js'
 import loggingStore from '../../src/modules/logging.js';
-import promptStore from '../../src/modules/prompts.js';
 
 
 const createVuexStore = () => 
@@ -13,7 +13,6 @@ const createVuexStore = () =>
         modules:{
             achievements: achievementStore,
             logging: loggingStore,
-            prompts: promptStore
         }
     });
 

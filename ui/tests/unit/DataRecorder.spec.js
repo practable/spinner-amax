@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 import DataRecorder from '../../src/components/DataRecorder.vue';
 import { createStore } from 'vuex';
