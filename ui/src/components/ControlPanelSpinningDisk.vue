@@ -253,7 +253,10 @@ export default {
 		...mapActions([
 			'setCurrentMode',
 			'setGraphDataParameter',
-			'setDraggable'
+			'setDraggable',
+            'setIsRecording',
+            'setIsStepRunning',
+            'setIsRampRunning'
 		]),
 		stop(){
 			//this.clearMessages();
@@ -263,6 +266,9 @@ export default {
 		},
 		hasStopped(message){
 			this.error = 'Automatic stop: ' + message + ". Select a mode to continue.";
+            this.setIsRecording(false);     //stop recording data when a limit is reached
+            this.setIsStepRunning(false);
+            this.setIsRampRunning(false);
 			this.stop();								
 		},
 		speedPid(){
@@ -356,129 +362,129 @@ export default {
 			this.chart_omega.options.millisPerPixel = this.smoothie_millis_per_pixel;			
 			
 		},
-		connect(){
+		// connect(){
 
-			let _store = this.$store;
-			let _this = this;
+		// 	let _store = this.$store;
+		// 	let _this = this;
 
-			this.dataSocket = new WebSocket(this.url);
+		// 	this.dataSocket = new WebSocket(this.url);
 			
-			var delay = 0
-			let delay_sum = 0;
-			var messageCount = 0
-			let a;
-			let b;
-			let debug = false;
-			var initialSamplingCount = 1200 // 2 mins at 10Hz, 1200
-			var delayWeightingFactor = 30  // 
-			let responsiveSmoothie = true;
-			let thisTime;
+		// 	var delay = 0
+		// 	let delay_sum = 0;
+		// 	var messageCount = 0
+		// 	let a;
+		// 	let b;
+		// 	let debug = false;
+		// 	var initialSamplingCount = 1200 // 2 mins at 10Hz, 1200
+		// 	var delayWeightingFactor = 30  // 
+		// 	let responsiveSmoothie = true;
+		// 	let thisTime;
 			
-			var chart_omega = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#000000'},maxValue:_this.smoothie_y_max_vel,minValue:_this.smoothie_y_min_vel, interpolation:"linear",labels:{fillStyle:'#00ff00',precision:2}});
-			this.canvas_omega = document.getElementById("smoothie-chart_omega");
-			let series_omega = new TimeSeries();
-			chart_omega.addTimeSeries(series_omega, {lineWidth:2,strokeStyle:'#00ff00'});
-			chart_omega.streamTo(this.canvas_omega, 0);
+		// 	var chart_omega = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#000000'},maxValue:_this.smoothie_y_max_vel,minValue:_this.smoothie_y_min_vel, interpolation:"linear",labels:{fillStyle:'#00ff00',precision:2}});
+		// 	this.canvas_omega = document.getElementById("smoothie-chart_omega");
+		// 	let series_omega = new TimeSeries();
+		// 	chart_omega.addTimeSeries(series_omega, {lineWidth:2,strokeStyle:'#00ff00'});
+		// 	chart_omega.streamTo(this.canvas_omega, 0);
 
-			//smoothie chart for displaying angle data
-			var chart_theta = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#000000'}, maxValue:_this.smoothie_y_max_pos,minValue:_this.smoothie_y_min_pos, interpolation:"linear",labels:{fillStyle:'#00ff00',precision:2}});
-			this.canvas_theta = document.getElementById("smoothie-chart_theta");
-			let series_theta = new TimeSeries();
-			chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#00ff00'});
-			chart_theta.streamTo(this.canvas_theta, 0);
+		// 	//smoothie chart for displaying angle data
+		// 	var chart_theta = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#000000'}, maxValue:_this.smoothie_y_max_pos,minValue:_this.smoothie_y_min_pos, interpolation:"linear",labels:{fillStyle:'#00ff00',precision:2}});
+		// 	this.canvas_theta = document.getElementById("smoothie-chart_theta");
+		// 	let series_theta = new TimeSeries();
+		// 	chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#00ff00'});
+		// 	chart_theta.streamTo(this.canvas_theta, 0);
 
-			//in order to update the charts
-			_this.chart_omega = chart_omega;
-			_this.chart_theta = chart_theta;
+		// 	//in order to update the charts
+		// 	_this.chart_omega = chart_omega;
+		// 	_this.chart_theta = chart_theta;
 
-			this.dataSocket.onopen = () => {
-				console.log('data connection opened');
-			};
+		// 	this.dataSocket.onopen = () => {
+		// 		console.log('data connection opened');
+		// 	};
 
-			this.dataSocket.onmessage = (event) => {
-				try {
-					var obj = JSON.parse(event.data);
+		// 	this.dataSocket.onmessage = (event) => {
+		// 		try {
+		// 			var obj = JSON.parse(event.data);
 					
-					if(obj.error){
-						this.hasStopped(obj.error);
-					}
-					else if(obj.t){
-						//set values coming from hardware
-						_store.dispatch('setP', obj.p_sig);
-						_store.dispatch('setI', obj.i_sig);
-						_store.dispatch('setD', obj.d_sig);
-						_store.dispatch('setError', obj.e);
-						_store.dispatch('setDrive', obj.y);
-						_store.dispatch('setCommand', obj.c);
+		// 			if(obj.error){
+		// 				this.hasStopped(obj.error);
+		// 			}
+		// 			else if(obj.t){
+		// 				//set values coming from hardware
+		// 				_store.dispatch('setP', obj.p_sig);
+		// 				_store.dispatch('setI', obj.i_sig);
+		// 				_store.dispatch('setD', obj.d_sig);
+		// 				_store.dispatch('setError', obj.e);
+		// 				_store.dispatch('setDrive', obj.y);
+		// 				_store.dispatch('setCommand', obj.c);
 
-						var msgTime = obj.t;
-						msgTime = parseFloat(msgTime);
-						var thisDelay = new Date().getTime() - msgTime;
+		// 				var msgTime = obj.t;
+		// 				msgTime = parseFloat(msgTime);
+		// 				var thisDelay = new Date().getTime() - msgTime;
 					
-						var enc = obj.d;					//rad
-						var enc_ang_vel = obj.v;			//rad/s
+		// 				var enc = obj.d;					//rad
+		// 				var enc_ang_vel = obj.v;			//rad/s
 
-						if(messageCount == 0){
-							delay = thisDelay
-							delay_sum += thisDelay;
-						} else{
-							if(!isNaN(thisDelay)){
-								delay_sum += thisDelay;
-								delay = delay_sum / (messageCount + 1);
-							} else{
-								delay_sum += delay;
-								delay = delay_sum / (messageCount + 1);
+		// 				if(messageCount == 0){
+		// 					delay = thisDelay
+		// 					delay_sum += thisDelay;
+		// 				} else{
+		// 					if(!isNaN(thisDelay)){
+		// 						delay_sum += thisDelay;
+		// 						delay = delay_sum / (messageCount + 1);
+		// 					} else{
+		// 						delay_sum += delay;
+		// 						delay = delay_sum / (messageCount + 1);
 								
-							}
+		// 					}
 							
-						}
+		// 				}
 
-						a = 1 / delayWeightingFactor
-						b = 1 - a
+		// 				a = 1 / delayWeightingFactor
+		// 				b = 1 - a
 
-						if (messageCount < initialSamplingCount) {
-							thisDelay = ((delay * messageCount) + thisDelay) / (messageCount + 1)
-						} else {
-							thisDelay = (delay * b) + (thisDelay * a)
-						}
+		// 				if (messageCount < initialSamplingCount) {
+		// 					thisDelay = ((delay * messageCount) + thisDelay) / (messageCount + 1)
+		// 				} else {
+		// 					thisDelay = (delay * b) + (thisDelay * a)
+		// 				}
 			
-						messageCount += 1
-						thisTime = msgTime + thisDelay;
+		// 				messageCount += 1
+		// 				thisTime = msgTime + thisDelay;
 
-						if (!isNaN(thisTime)){
-							let data_received = false;
-							if(!isNaN(enc)){
-								_store.dispatch('setCurrentAngle', enc);			
-								series_theta.append(msgTime + thisDelay, enc);
-								data_received = true;
-							}
+		// 				if (!isNaN(thisTime)){
+		// 					let data_received = false;
+		// 					if(!isNaN(enc)){
+		// 						_store.dispatch('setCurrentAngle', enc);			
+		// 						series_theta.append(msgTime + thisDelay, enc);
+		// 						data_received = true;
+		// 					}
 							
-							if(!isNaN(enc_ang_vel)){		
-								_store.dispatch('setCurrentAngularVelocity', enc_ang_vel);
-								series_omega.append(msgTime + thisDelay, enc_ang_vel);	
-								data_received = true;
-							}
+		// 					if(!isNaN(enc_ang_vel)){		
+		// 						_store.dispatch('setCurrentAngularVelocity', enc_ang_vel);
+		// 						series_omega.append(msgTime + thisDelay, enc_ang_vel);	
+		// 						data_received = true;
+		// 					}
 
-							if(data_received){
-								_store.dispatch('setCurrentTime', msgTime + thisDelay);	//testing
-							}
-						}
-					}
-				} catch (e) {
-					if(debug){
-						console.log(e)
-					}
+		// 					if(data_received){
+		// 						_store.dispatch('setCurrentTime', msgTime + thisDelay);	//testing
+		// 					}
+		// 				}
+		// 			}
+		// 		} catch (e) {
+		// 			if(debug){
+		// 				console.log(e)
+		// 			}
 					
-				}
-			}
+		// 		}
+		// 	}
 
-		_store.dispatch('setStartTime', new Date().getTime());
-		window.addEventListener('keydown', this.hotkey, false);
-		window.addEventListener('pagehide', this.stop);				//closing window
-		window.addEventListener('beforeunload', this.stop);			//refreshing page, changing URL
+		// _store.dispatch('setStartTime', new Date().getTime());
+		// window.addEventListener('keydown', this.hotkey, false);
+		// window.addEventListener('pagehide', this.stop);				//closing window
+		// window.addEventListener('beforeunload', this.stop);			//refreshing page, changing URL
 		
 		
-		},
+		// },
 		connectWithArrays(){
 
 			let _store = this.$store;
