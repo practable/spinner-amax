@@ -195,10 +195,10 @@ export default {
   computed:{
     ...mapGetters([
 			'getDraggable',
-      'getUsesLocalStorage',
-      'getIsLoggingOn',
-      'getExperiment',
-      'getCourse'
+            'getUsesLocalStorage',
+            'getIsLoggingOn',
+            'getExperiment',
+            'getCourse'
 		]),
     getDesktopWindow(){
       let window_width = window.innerWidth;
