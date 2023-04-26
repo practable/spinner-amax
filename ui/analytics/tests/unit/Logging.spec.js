@@ -1,4 +1,4 @@
-import { describe, expect, test, vi, afterEachq} from 'vitest'
+import { describe, expect, test, vi, afterEach} from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createStore } from 'vuex';
 //import WS from "jest-websocket-mock";
