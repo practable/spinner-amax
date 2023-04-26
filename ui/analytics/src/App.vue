@@ -165,8 +165,7 @@ export default {
     //check if the browser allows localStorage and set the UI store accordingly
     this.$store.dispatch('setUsesLocalStorage', this.hasStorage());
     //check if user has a UUID generated already and whether they have consented to take part in the study
-    this.updateUUID();
-    this.checkConsent();
+    
     
   },
   mounted(){
@@ -181,16 +180,25 @@ export default {
 
       this.loadAchievements();  //load the already achieved achievements.
       //this.loadLogging();
+
+    // this.updateUUID();
+    // this.checkConsent();
       
 
+  },
+  watch:{
+    getCourse(){
+        this.updateUUID();
+        this.checkConsent();
+    }
   },
   computed:{
     ...mapGetters([
 			'getDraggable',
-      'getUsesLocalStorage',
-      'getIsLoggingOn',
-      'getExperiment',
-      'getCourse'
+            'getUsesLocalStorage',
+            'getIsLoggingOn',
+            'getExperiment',
+            'getCourse'
 		]),
     getDesktopWindow(){
       let window_width = window.innerWidth;
@@ -490,6 +498,13 @@ export default {
             }
         } else{
             this.$store.dispatch('setLoggingConsent', false);
+
+            if(this.getUsesLocalStorage){
+                let course = this.getCourse;
+                let exp = this.getExperiment;
+                const item = `consent-${exp}-${course}`
+                window.localStorage.setItem(item, false);
+            }
         }
         
         
