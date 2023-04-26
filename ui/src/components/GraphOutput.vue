@@ -328,48 +328,61 @@
 
     </div>
 
-    <toolbar parentCanvasID="graph-canvas" parentComponentName="graph" parentDivID="graph" :showDownload='true' :showPopupHelp="true" :showOptions="false">  
+    <div class="d-flex flex-row">
+        <div class="me-3">
+            <toolbar parentCanvasID="graph-canvas" parentComponentName="graph" parentDivID="graph" :showDownload='true' :showPopupHelp="true" :showOptions="false">  
+                
+                <template v-slot:popup id='graph-popup'>
+                    <div class='row mb-2' id='gradient-div'>
+                        <div class='col-4'>
+                            <img class='popup-image' src='/images/gradient.png'>
+                        </div>
+                        <div class='col-8'>
+                            <h3> Gradient tool </h3>
+                            <p> Click and drag on the graph in order to draw a straight line segment. The gradient of this line is displayed in the Gradient box.</p>
+                        </div>
+                    </div>
+
+                    <div class='row mb-2' id='data-point-div'>
+                        <div class='col-4'>
+                            <img class='popup-image' src='/images/GraphDataPoint.png'>
+                        </div>
+                        <div class='col-8'>
+                            <h3> Interactive data points </h3>
+                            <p> Hover over a data point to get the exact values. If the 'Data Table' component is open, click a data point to go to the corresponding line in 
+                                the data table.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class='row mb-2' id='functions-div'>
+                        <div class='col-4'>
+                            <img class='popup-image' src='/images/function-plotting.png'>
+                        </div>
+                        <div class='col-8'>
+                            <h3> Function Plotting </h3>
+                            <p> Select the function type from the dropdown menu. Input the corresponding function parameters. Angular parameters are in radians. Click plot to display the function.
+                                The function is plotted up to the maximum time value on the x-axis.
+                            </p>
+                        </div>
+
+                    </div>
+                </template>
+                
+            </toolbar>
+            
+        </div> 
         
-        <template v-slot:popup id='graph-popup'>
-            <div class='row mb-2' id='gradient-div'>
-                <div class='col-4'>
-                    <img class='popup-image' src='/images/gradient.png'>
-                </div>
-                <div class='col-8'>
-                    <h3> Gradient tool </h3>
-                    <p> Click and drag on the graph in order to draw a straight line segment. The gradient of this line is displayed in the Gradient box.</p>
-                </div>
-            </div>
+        <div class="mt-2">
+            <span v-if="getNumData < maxDataPoints" class="align-middle">Plotted: {{ getNumData }} / {{ maxDataPoints }}</span>
+            <span v-else class="align-middle">Plotted: {{ maxDataPoints }} / {{ maxDataPoints }} MAX REACHED</span>
+        </div>
+            
 
-            <div class='row mb-2' id='data-point-div'>
-                <div class='col-4'>
-                    <img class='popup-image' src='/images/GraphDataPoint.png'>
-                </div>
-                <div class='col-8'>
-                    <h3> Interactive data points </h3>
-                    <p> Hover over a data point to get the exact values. If the 'Data Table' component is open, click a data point to go to the corresponding line in 
-                        the data table.
-                    </p>
-                </div>
+        
 
-            </div>
-
-            <div class='row mb-2' id='functions-div'>
-                <div class='col-4'>
-                    <img class='popup-image' src='/images/function-plotting.png'>
-                </div>
-                <div class='col-8'>
-                    <h3> Function Plotting </h3>
-                    <p> Select the function type from the dropdown menu. Input the corresponding function parameters. Angular parameters are in radians. Click plot to display the function.
-                        The function is plotted up to the maximum time value on the x-axis.
-                    </p>
-                </div>
-
-            </div>
-        </template>
-    </toolbar>
-
-    
+    </div>
 </div>
 
 </template>
