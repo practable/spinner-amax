@@ -368,6 +368,8 @@
             </div>
         </template>
     </toolbar>
+
+    
 </div>
 
 </template>
@@ -402,7 +404,7 @@ export default {
             YAxisMin: 0,
             XAxisMax: 0,
             XAxisMin: 0,
-            maxDataPoints: 1200,
+            maxDataPoints: 2000,
             current_data_index: 0,
             data_index_interval: 10,
             latest_index: 0,
