@@ -519,58 +519,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Arial, Avenir, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  background-color: rgba(110, 130, 238, 0.116);
-}
 
-
-.border{
-  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.637);
-}
-.drop-area {
-    background-color: auto;
-    margin: 5px;
-    padding: 20px;
-    border-style: dashed;
-    border-radius:12px;
-    border-width: 2px;
-    border-color: rgba(0, 0, 255, 0.4);
-  }
-
-
-#left-screen{
-  overflow: scroll;
-  max-height: 100vh;
-}
-
-#right-screen{
-  overflow: scroll;
-  max-height: 100vh;
-}
-
-#modal-show{
-  display: block;
-  
-}
-
-.primary-colour{
-  background-color: rgb(131, 129, 247); /*#e3f2fd;*/
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 
 </style>

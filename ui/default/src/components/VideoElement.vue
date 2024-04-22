@@ -14,14 +14,12 @@
       </div>
     </div>
 
-    <div class='row'>
-      <div class='col-6'>
+    <div class='d-flex flex-row'>
+      
         <toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar>
-      </div>
+      
 
-      <div class="col-2">
-        
-      </div>
+      
 
       <!-- <div class='col-4 d-flex flex-row-reverse'>
        
@@ -49,14 +47,6 @@
         
     </div>
 </div>    
-    
-    <!-- <div class='row' >
-      <div class='col-12' id='video-element'>
-        <canvas id="video-canvas"></canvas>
-        <toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar>
-      </div>
-    </div> -->
-    <!-- <div id='videoWrapper'></div> -->
 </template>
 
 <script>

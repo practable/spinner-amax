@@ -142,10 +142,6 @@ export default {
 </script>
 
 <style scoped>
-input{
-    min-width: 20%;
-    max-width: 50%;
-}
 .error{
     /* border:thick solid red */
     border: auto;

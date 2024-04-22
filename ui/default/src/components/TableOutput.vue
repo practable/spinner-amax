@@ -2,7 +2,7 @@
 //Orthogonality
 
 <template>
-<div class="m-0 bg-white border rounded table">
+<div class="container-fluid m-2 practable-component table">
     <div class="row justify-content-center">
 
     <table v-if='tableData.length != 0' class="table">
@@ -93,10 +93,5 @@ export default {
 .selected-row{
     background-color: red;
     color: white;
-}
-
-.table{
-    overflow: scroll;
-    max-height: 500px;
 }
 </style>

@@ -1,7 +1,7 @@
 //Vue3 updated
 
 <template>
-    <div class='m-2 p-2 bg-white border rounded'>
+    <div class='m-2 p-2 practable-component'>
         <div class='row m-2 p-2'>
             <div class='col-12'>
                 <h2>System Block Diagram</h2>

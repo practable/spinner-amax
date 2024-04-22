@@ -1,7 +1,7 @@
 //Vue3 update
 
 <template>
-    <div class='row m-1'>
+    <div>
         <download-image-button v-if='showDownload' :parentComponentName="getParentComponentName" :parentCanvasID="getCanvasID"/>
 
         <popup-help v-if='showPopupHelp' :parentDivID="getParentDivID"> 

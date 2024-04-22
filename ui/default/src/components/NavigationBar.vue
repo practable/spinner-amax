@@ -4,8 +4,11 @@
 
 <nav :class="getDarkTheme ? 'navbar navbar-light fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-dark fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
     <div class="container-fluid">
-      <img src="/images/practable-icon.png" width="30" height="30" alt="">
-      <a class="navbar-brand" href="#">Remote Lab: {{labName}}</a>
+      <div class="navbar-brand">
+        <img src="/images/practable-icon.png" width="30" height="30" alt="">
+        {{labName}}
+      </div>
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -16,7 +19,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="menudropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Menu
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" id='datarecordermenu' href="#" @click='toggleComponent("datarecorder")'>Data Recorder</a></li>
                     <li><a class="dropdown-item" id='graphmenu' href="#" @click='toggleComponent("graph")'>Graph</a></li>
                     <li><a class="dropdown-item" id='snapshotmenu' href="#" @click='toggleComponent("snapshot")'>Data Snapshot</a></li>
@@ -45,7 +48,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="layoutdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Layout
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown2">
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                     <li><a class="dropdown-item" id='layoutsinglecolumn' href="#" @click='toggleLayout(1)'>Single Column</a></li>
                     <li><a class="dropdown-item" id='layout25:75' href="#" @click='toggleLayout(0.25)'>25%:75%</a></li>
                     <li><a class="dropdown-item" id='layout50:50' href="#" @click='toggleLayout(0.5)'>50%:50%</a></li>
@@ -57,7 +60,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="settingsdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Settings
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown2">
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                     <li><a class="dropdown-item" id='toggleconsentbutton' href="#" @click='this.$emit("toggleconsent")'>Change consent</a></li>
                   </ul>
               </li>
@@ -68,40 +71,52 @@
                   </a>
               </li>
 
-          </ul>
-
-          <div class='d-flex'>
-              <ul class="navbar-nav dropstart">
-                  
-                <li class="nav-item">
+              <li class="nav-item">
                   <a class="nav-link" >
                     UUID: {{ getLogUUID }}
                   </a>
-                  
                 </li>
-                  
-                  <achievements id='achievements' v-if='getIsAchievementsAvailable' />
-                  
 
-                  <li class="nav-item">
-                    <clock class='nav-link' />
-                  </li>
+                <li class="nav-item">
+                  <clock class='nav-link' />
+                </li>
 
-                  <li class="nav-item me-1">
-                      <button type='button' class='button-toolbar button-secondary' id='download-button' @click='toggleTheme' :disabled="disableThemeButton">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
-                        </svg>
-                      </button>
-                  </li>
+          </ul>
 
-              </ul>
-
+         
+          <ul class="navbar-nav dropstart">
               
-
-
+              <achievements id='achievements' v-if='getIsAchievementsAvailable' />
               
-          </div>
+              <li class="nav-item me-1">
+                  <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
+                      <template v-slot:popup>
+                          <div class='row'>
+                          <div class='col-lg-6'>
+                              <h2>Hotkeys:</h2>
+                             
+                          </div>
+                          <div class='col-lg-6'>
+                              <h2>UI Control:</h2>
+                              
+                              
+                          </div>
+                          </div>
+                      </template>
+                  </toolbar>
+                </li>
+
+              <li class="nav-item me-1">
+                  <button type='button' class='button-toolbar button-secondary' id='download-button' @click='toggleTheme' :disabled="disableThemeButton">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
+                    </svg>
+                  </button>
+              </li>
+
+          </ul>
+
+         
 
       </div>
     </div>
@@ -113,7 +128,7 @@
 
 import Clock from "./Clock.vue";
 import Achievements from './Achievements.vue';
-
+import Toolbar from './elements/Toolbar.vue';
 import { mapGetters } from 'vuex';
 
 
@@ -123,6 +138,7 @@ export default {
   components: {
     Clock,
     Achievements,
+    Toolbar
   },
   props:{
       
