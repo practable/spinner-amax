@@ -661,92 +661,13 @@ export default {
 	height: 120px;
 }
 
-.slidecontainer {
-	width: 100%; /* Width of the outside container */
-}
-.slider {
-	-webkit-appearance: none;
-	width: 100%;
-	height: 15px;
-	border-radius: 5px;  
-	background: #d3d3d3;
-	outline: none;
-	opacity: 0.7;
-	-webkit-transition: .2s;
-	transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	border-radius: 50%; 
-	background: #5b7fa5ff; 
-	cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	border-radius: 50%;
-	background: #5b7fa5ff;
-	cursor: pointer;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-	opacity: 1; /* Fully shown on mouse-over */
-}
-
 .sliderlabel{ text-align: left;}
 
 select{
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
-    
     background-color: #4490d8;
 }
-
-#kp{
-    min-width: 100px;
-}
-
-#ki{
-    min-width: 100px;
-}
-
-#kd{
-    min-width: 100px;
-}
-
-
-/* #setmode       {background-color: rgb(3, 248, 12);}
-#setmode:hover {background-color: #3e8e41}  */
-
-/* #reset       {background-color: rgba(248, 72, 3, 0.658);}
-#reset:hover {background-color: #5f0f04}  */
-
-/* #stop       {background-color: rgb(255, 0, 0);}
-#stop:hover {background-color: #cc1e1eff;} */
-
-/* #pidspeed        {background-color: rgb(255, 187, 0);}
-#pidspeed:hover  {background-color: #cc9d1eff;}
-
-#pidposition        {background-color: rgb(115, 255, 0);}
-#pidposition:hover  {background-color: rgb(58, 92, 3);}
-
-#dcmotor        {background-color: rgb(217, 255, 0);}
-#dcmotor:hover  {background-color: rgb(190, 187, 2);} */
-
-/* #resetHeight         {background-color: #5b7fa5ff;}
-#resetHeight:hover   {background-color: #46627fff;}
-
-#configure         {background-color: rgb(220, 38, 236);}
-#configure:hover   {background-color: rgb(76, 19, 82);}
-
-#set         {background-color: rgb(30, 250, 1);}
-#set:hover   {background-color: rgb(30, 172, 2);} */
 
 </style>
