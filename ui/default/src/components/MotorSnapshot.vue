@@ -2,7 +2,7 @@
 //vastly streamlined
 
 <template>
-<div class="m-2 bg-white border rounded" id='motor-snapshot-div'>
+<div class="m-2 practable-component" id='motor-snapshot-div'>
     <div class="row justify-content-center align-items-center" >
 
         <table class="table">
@@ -29,9 +29,9 @@
 
 
     <div class='d-grid gap-2 d-sm-block'>
-        <button id="snapshot" type='button' class="btn btn-sm" @click="takeSnapshot">Record Snapshot</button>
-        <button id="reset_snaps" type='button' class="btn btn-sm" @click="toggleResetModal">Reset</button>
-        <button id="download_snaps" type='button' class="btn btn-sm" @click="outputToCSV">Download Snapshots</button>
+        <button id="snapshot_button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
+        <button id="reset_snaps" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
+        <button id="download_snaps" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
     </div>
     
      <toolbar parentCanvasID="" parentComponentName="snapshot" parentDivID="motor-snapshot-div" :showDownload='false' :showPopupHelp="true" :showOptions="false">  
@@ -61,8 +61,8 @@
               <p>Are you sure you want to Reset? This will clear all stored data.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="resetSnaps(); toggleResetModal();">Reset</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
+              <button type="button" class="button-xsm button-danger" @click="resetSnaps(); toggleResetModal();">Reset</button>
+              <button type="button" class="button-xsm button-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
             </div>
           </div>
         </div>
@@ -202,13 +202,6 @@ export default {
 </script>
 
 <style scoped>
-#snapshot        {background-color: rgb(217, 255, 0);}
-#snapshot:hover  {background-color: rgb(190, 187, 2);}
-#reset_snaps        {background-color: rgb(243, 117, 44);}
-#reset_snaps:hover  {background-color: rgb(243, 7, 7);}
-#download_snaps        {background-color: rgb(44, 243, 200);}
-#download_snaps:hover  {background-color: rgb(7, 82, 243);}
-
 
 .current{
     border: thin;

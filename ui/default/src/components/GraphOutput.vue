@@ -2,7 +2,7 @@
 //removed unit choices, since data has been streamlined to not include alternative units
 
 <template>
-<div class='container-sm m-2 bg-white border rounded'>
+<div class='container-sm m-2 practable-container'>
     <div class="row m-0 justify-content-center" id="chart-canvas">
         <div class="col-12">
             <canvas id='graph-canvas' @mousedown="startLine" @mouseup="endDrag" @mousemove="endLine"></canvas>

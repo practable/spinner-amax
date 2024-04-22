@@ -2,7 +2,7 @@
 
 <template>
 
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light primary-colour rounded">
+<nav :class="getDarkTheme ? 'navbar navbar-light fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-dark fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
     <div class="container-fluid">
       <img src="/images/practable-icon.png" width="30" height="30" alt="">
       <a class="navbar-brand" href="#">Remote Lab: {{labName}}</a>
@@ -87,9 +87,17 @@
                     <clock class='nav-link' />
                   </li>
 
+                  <li class="nav-item me-1">
+                      <button type='button' class='button-toolbar button-secondary' id='download-button' @click='toggleTheme' :disabled="disableThemeButton">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
+                        </svg>
+                      </button>
+                  </li>
+
               </ul>
 
-
+              
 
 
               
@@ -124,14 +132,15 @@ export default {
   ],
   data () {
     return {
-        
+      disableThemeButton: false,
     }
   },
   computed:{
     ...mapGetters([
       'getIsAchievementsAvailable',
       'getIsLoggingOn',
-      'getLogUUID'
+      'getLogUUID',
+      'getDarkTheme',
     ]),
       labName(){
         let lab = this.$store.getters.getRemoteLabVersion;
@@ -174,6 +183,14 @@ export default {
         {
           this.$emit('togglelayout', 1);
         }
+      },
+      toggleTheme(){
+          this.disableThemeButton = true;
+          setTimeout(() => {
+            this.disableThemeButton = false
+          }, 1000);
+          document.body.classList.toggle("dark-theme");
+          this.$store.dispatch('setDarkTheme', document.body.classList.contains("dark-theme"));
       }
   }
 }

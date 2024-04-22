@@ -11,6 +11,7 @@ const uiStore = {
        isAchievementsAvailable: false, // remove achievements from the UI
        usesLocalStorage: false,        //can only use localStorage if the browser allows it.
        colour_index: 0,
+       darkTheme: document.body.classList.contains('dark-theme') ? true : false
 
        }),
        mutations:{
@@ -29,6 +30,9 @@ const uiStore = {
          SET_COLOUR_INDEX(state, index){
             state.colour_index = index
          },
+         SET_DARK_THEME(state, set){
+            state.darkTheme = set;
+         }
          
 
        },
@@ -49,6 +53,9 @@ const uiStore = {
             let index = (context.state.colour_index + 1) % 6
             context.commit('SET_COLOUR_INDEX', index);
          },
+         setDarkTheme(context, set){
+            context.commit('SET_DARK_THEME', set);
+         }
 
        },
        getters:{
@@ -70,6 +77,9 @@ const uiStore = {
          getColourIndex(state){
             return state.colour_index;
          },
+         getDarkTheme(state){
+            return state.darkTheme;
+         }
          
        },  
   

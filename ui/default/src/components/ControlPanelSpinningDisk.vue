@@ -2,7 +2,7 @@
 
 <template>
 
-<div class='container-sm m-2 bg-white border rounded'>
+<div class='container-sm m-2 practable-component'>
 	<div class='row align-content-center m-1'>
 		<div class='col-12'>
 			<canvas v-show='getCurrentMode == "positionPid"' id="smoothie-chart_theta"></canvas>

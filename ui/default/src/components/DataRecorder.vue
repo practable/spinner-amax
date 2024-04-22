@@ -2,12 +2,12 @@
 //Streamlined data to not include alternative units
 
 <template>
-<div class='m-2 p-2 bg-white border rounded'>
+<div class='m-2 p-2 practable-component'>
     <div class="d-grid gap-2 d-sm-block">
-        <button type='button' class="btn btn-sm" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
-        <button type='button' class="btn btn-sm" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
-        <button type='button' class="btn btn-sm" id="clearButton" @click="toggleResetModal">Reset</button>
-        <button type='button' class="btn btn-sm" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
+        <button type='button' class="button-xsm button-primary" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
+        <button type='button' class="button-xsm button-danger" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
+        <button type='button' class="button-xsm button-warning" id="clearButton" @click="toggleResetModal">Reset</button>
+        <button type='button' class="button-xsm button-primary" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
     </div>
     <div class='row m-2 justify-content-center'>
       <div v-if='getIsRecording' class='col-2'>
@@ -32,8 +32,8 @@
               <p>Are you sure you want to Reset? This will clear all stored data.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='resetmodalclear' @click="clearData(); toggleResetModal();">Reset</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
+              <button type="button" class="button-xsm button-danger" id='resetmodalclear' @click="clearData(); toggleResetModal();">Reset</button>
+              <button type="button" class="button-xsm button-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
             </div>
           </div>
         </div>
@@ -214,18 +214,6 @@ export default {
 .error:focus{
     border:thick solid red
 }
-
-#recordButton       {background-color: rgb(0, 255, 8);}
-#recordButton:hover {background-color: #3e8e41} 
-
-#stopButton       {background-color: #e13131ff;}
-#stopButton:hover {background-color: #cc1e1eff;}
-
-#clearButton  {background-color: #e17a31ff;}
-#clearButton:hover  {background-color: #cc661eff;}
-
-#outputButton        {background-color: #e1b131ff;}
-#outputButton:hover  {background-color: #cc9d1eff;}
 
 .modal-show{
   display: block;
