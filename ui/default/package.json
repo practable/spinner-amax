@@ -1,7 +1,7 @@
 {
-  "name": "xstate-vue-demo",
+  "name": "spinner-amax",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@cycjimmy/jsmpeg-player": "github:timdrysdale/jsmpeg-player",
+    "@cycjimmy/jsmpeg-player": "github:practable/jsmpeg-player",
     "@popperjs/core": "^2.11.6",
     "axios": "^1.3.3",
     "bootstrap": "^5.2.3",
