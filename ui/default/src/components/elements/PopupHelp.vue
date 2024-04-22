@@ -10,18 +10,32 @@
     </button>
 
 
-    <transition name='fade' >
-        <div v-if='popup_showing' id='popup-div' >
-             <button type='button' class='btn-close btn-close-white' id='close-button' @click='toggleHelp'></button>
-            <slot id='popup-text'></slot>
+    <transition name='fade'>
+        <div v-if='popup_showing' class="modal" id='modal-show' tabindex="-1">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Help</h5>
+                    <button type='button' :class="getDarkTheme ? 'btn-close' : 'btn-close btn-close-white'" id='close-button' @click='toggleHelp'></button>
+                </div>
+                <div class="modal-body">
+                    <slot id='popup-text'></slot>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @click="toggleHelp">Close</button>
+                </div>
+            </div>
+            </div>
         </div>
-    </transition>
+        </transition>
     
 </div>
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -47,7 +61,9 @@ export default {
 
   },
   computed:{
-      
+    ...mapGetters([
+        'getDarkTheme'
+      ])
   },
   watch:{
       
@@ -78,35 +94,10 @@ export default {
 </script>
 
 <style>
-#popup-help{
-    position:relative;
-    max-height:40px;
-    max-width:40px;
-}
-
-
-#popup-div{
-    position: fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:50%;
-    border: 5px solid #000000;
-    z-index: 998;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    overflow: scroll;
-    max-height: 50vh;
-
-}
-
-.popup-image{
-    width:100%;
-}
 
 #close-button{
     position:absolute;
-    right:0px;
+    right:10px;
 }
 
 #popup-text{
