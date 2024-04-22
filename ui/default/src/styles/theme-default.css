@@ -18,6 +18,7 @@ body {
     --background-color-danger: #e00000;
     --button-color-primary: #090C9B;
     --button-color-secondary: #3066BE;
+    --button-color-tertiary: #70a3f5;
     --button-color-hover: #DDDEE4;
     --text-color-hover: #121629;
 }
@@ -34,6 +35,7 @@ body.dark-theme {
     --background-color-danger: #e00000;
     --button-color-primary: #B4E1F9;
     --button-color-secondary: #8A84E2;
+    --button-color-tertiary: #3e31f3;
     --button-color-hover: #232946;
     --text-color-hover: #DDDEE4;
 }
@@ -156,6 +158,19 @@ body.dark-theme {
 }
 
 .button-secondary:hover{
+    background-color: var(--button-color-hover);
+    color: var(--text-color-hover);
+}
+
+.button-tertiary{
+    background-color: var(--button-color-tertiary);
+    color: var(--text-color-inverted);
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-color-tertiary);
+}
+
+.button-tertiary:hover{
     background-color: var(--button-color-hover);
     color: var(--text-color-hover);
 }

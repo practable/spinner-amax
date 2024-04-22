@@ -42,10 +42,10 @@
 	<div id="buttons">
 		<div class='row'>
 			<div class='d-grid gap-1 d-md-block mb-1'>
-				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="btn btn-lg btn-success me-1" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="btn btn-lg btn-secondary me-1" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="btn btn-lg btn-primary me-1" @click="speedPid(); this.$store.dispatch('setAchievementCompleted', 'velocity-mode')">Velocity (PID)</button>
-				<button id="stop" v-if='getCurrentMode != "stopped"' class="btn btn-lg btn-danger" @click="stop">Exit mode</button>
+				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="button-lg button-primary me-1" @click="speedRaw">Voltage (open loop)</button>
+				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="button-lg button-secondary me-1" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" @click="speedPid(); this.$store.dispatch('setAchievementCompleted', 'velocity-mode')">Velocity (PID)</button>
+				<button id="stop" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" @click="stop">Exit mode</button>
 			</div>
 		</div>
 
@@ -126,7 +126,7 @@
 		</div>
         <div class='d-flex row justify-content-center m-2'>
             <div class='col-auto'>
-				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="btn btn-danger btn-sm" @click="resetParameters">Reset PID params</button>
+				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="button-xsm button-danger" @click="resetParameters">Reset PID params</button>
 			</div>
         </div>
 	</div>
