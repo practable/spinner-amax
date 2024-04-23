@@ -85,9 +85,6 @@
               <li class="nav-item me-1">
                   <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
                       <template v-slot:popup>
-                        <h4>Hotkeys</h4>
-                        <p></p>
-
                         <h4>Customise the UI</h4>
                         <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
                             to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
