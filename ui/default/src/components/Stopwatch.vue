@@ -3,7 +3,9 @@
 <template>
     <div class='container-fluid m-2 practable-component' id='stopwatch-container'>
         <div class="row-sm m-2">
-            <div class='form-group'><input type='text' class='form-control' id="stopwatch" :value="time_string" readonly></div>
+            <div class='form-group'>
+                <input type='text' class='form-control' id="stopwatch" :value="time_string" readonly>
+            </div>
         </div>
         <div class="col d-grid d-sm-block">
             <button class="button-sm button-primary" v-if="!isTiming" id="start" @click="startTimer">Start</button>

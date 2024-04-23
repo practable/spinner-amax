@@ -9,21 +9,19 @@
         </div>
     </div>
 
-    <div class="row justify-content-center align-items-center" id="chart-functions" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+    <div class="d-flex flex-row justify-content-center align-items-center" id="chart-functions" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
         
-        <div class='col-md-5 m-2'>
-            <div class='input-group'>
-                <span class='input-group-text' for="gradient">Gradient:</span>
-                <input class='form-control col-sm' id="gradient" :value="gradient.toFixed(2)" readonly > 
-            </div>
+        <div class='input-group'>
+            <label class='input-group-text' for="gradient">Gradient:</label>
+            <input type='text' class='form-control input' id="gradient" :value="gradient.toFixed(2)" readonly > 
         </div>
        
-        <div class='col-md-5 m-2'>
+        <div class='col-6 m-2'>
             <div class='row d-flex justify-content-center mb-2'>
                 <div class='col-auto'>
                     <div class='input-group'>
-                        <span class='input-group-text' for="graph">Plot function: </span>
-                        <select class='form-select form-select-sm' name="function" id="function" v-model="currentFunction">
+                        <label class='input-group-text' for="function">Plot function: </label>
+                        <select class='form-select form-select-sm' name="function" aria-label="select function" id="function" v-model="currentFunction">
                             <option value="linear">Linear</option>
                             <option value="quadratic">Quadratic</option>
                             <option value="trigonometric">Trigonometric</option>
@@ -40,7 +38,7 @@
                 
                 <div v-if="currentFunction === 'linear'">
                     <div class='row justify-content-center mb-2'>
-                        <img id='linear_function' src='/images/LinearFunction.png'>
+                        <img id='linear_function' src='/images/LinearFunction.png' alt="linear function equation">
                     </div>
 
                     <div class='row d-flex justify-content-center'>
@@ -72,7 +70,7 @@
                 <div v-else-if="currentFunction === 'quadratic'">
 
                     <div class='row justify-content-center mb-2'>
-                        <img id='linear_function' src='/images/QuadraticFunction.png'>
+                        <img id='linear_function' src='/images/QuadraticFunction.png' alt="quadratic function equation">
                     </div>
 
 
@@ -103,7 +101,7 @@
                 <div v-else-if="currentFunction === 'trigonometric'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='trig_function' src='/images/TrigFunction.png'>
+                        <img id='trig_function' src='/images/TrigFunction.png' alt="trigonometric function equation">
                     </div>
 
 
@@ -146,7 +144,7 @@
                 <div v-else-if="currentFunction === 'exponential'">
 
                     <div class='row justify-content-center'>
-                        <img id='linear_function' src='/images/ExpFunction.png'>
+                        <img id='linear_function' src='/images/ExpFunction.png' alt="exponential function equation">
                     </div>
 
 
@@ -177,7 +175,7 @@
                 <div v-else-if="currentFunction === 'step'">
                     
                     <div class='row justify-content-center mb-1'>
-                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png'>
+                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png' alt="step function equation">
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>
@@ -227,7 +225,7 @@
                 <div v-else-if="currentFunction === 'step2nd'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='second_order_transfer_function' src='/images/TransferFunction2ndOrder.png'>
+                        <img id='second_order_transfer_function' src='/images/TransferFunction2ndOrder.png' alt="step (2nd order) function equation">
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>
@@ -277,7 +275,7 @@
                 <div v-else-if="currentFunction === 'ramp'">
 
                     <div class='row justify-content-center mb-1'>
-                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png'>
+                        <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png' alt="ramp function equation">
                     </div>
 
                     <div class='row d-flex justify-content-center mb-1'>

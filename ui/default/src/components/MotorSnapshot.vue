@@ -14,7 +14,7 @@
                 <td v-for='key in Object.keys(row)' :key="key">{{row[key]}}</td>
             </tr>
 
-            <tr class='current'>
+            <tr :class="getDarkTheme ? 'current-dark' : 'current'">
                 <td>{{getTime.toFixed(2)}}</td>
                 <td>{{getCurrentAngle.toFixed(2)}}</td>
                 <td>{{getCurrentAngularVelocity.toFixed(2)}}</td>
@@ -104,6 +104,7 @@ export default {
             'getIsRecording',
             'getCurrentAngle',
             'getCurrentAngularVelocity',
+            'getDarkTheme'
         ]),
         getError(){
             let error = this.$store.getters.getError;
@@ -209,7 +210,13 @@ export default {
 .current{
     border: thin;
 	box-shadow: 0px 0px;
-    color: green
+    color: rgb(0, 75, 0)
+}
+
+.current-dark{
+    border: thin;
+	box-shadow: 0px 0px;
+    color: rgb(190, 250, 190)
 }
 
 .h-divider{
