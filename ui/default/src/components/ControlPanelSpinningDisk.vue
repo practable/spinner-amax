@@ -60,7 +60,7 @@
 					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode">
 						<option v-if='getCurrentMode == "speedRaw"' value="free">Free</option>
 						<option value="step">Step</option>
-						<option v-if='getRemoteLabVersion != "robot_arm"' value="ramp">Ramp</option>
+						<option value="ramp">Ramp</option>
 					</select> 
 				</div>
 			</div>
@@ -197,7 +197,6 @@ export default {
 		...mapGetters([
 			'getModeName',
 			'getDataURLObtained',
-			'getRemoteLabVersion',
 			'getCurrentMode',
 			'getSessionExpired',
 			'getMaxReached',

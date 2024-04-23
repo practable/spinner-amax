@@ -44,20 +44,14 @@ export default {
         max_position_step: 6, 
         max_speed_step: 100,
         max_voltage_step: 6,
-        //isStepRunning: false,     //updated to use vuex instead
     }
   },
   created(){
-      let version = this.$store.getters.getRemoteLabVersion;
-        if( version == 'variable_governor'){
-            this.max_position_step = Math.PI;             //variable governor can spin full circle
-        } else if(version == 'robot_arm'){
-            this.max_position_step = 3*Math.PI/10;          //robot arm is soft limited to 300 encoder steps from 0.
-        }
+      
 	},
     computed:{
-        ...mapGetters([
-            'getIsStepRunning'
+    ...mapGetters([
+        'getIsStepRunning'
         ])
     },
   methods: {

@@ -80,8 +80,6 @@
          
           <ul class="navbar-nav dropstart">
               
-              <achievements id='achievements' v-if='getIsAchievementsAvailable' />
-              
               <li class="nav-item me-1">
                   <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
                       <template v-slot:popup>
@@ -124,7 +122,6 @@
 <script>
 
 import Clock from "./Clock.vue";
-import Achievements from './Achievements.vue';
 import Toolbar from './elements/Toolbar.vue';
 import { mapGetters } from 'vuex';
 
@@ -134,7 +131,6 @@ export default {
   name: 'NavigationBar',
   components: {
     Clock,
-    Achievements,
     Toolbar
   },
   props:{
@@ -150,20 +146,12 @@ export default {
   },
   computed:{
     ...mapGetters([
-      'getIsAchievementsAvailable',
       'getIsLoggingOn',
       'getLogUUID',
       'getDarkTheme',
     ]),
       labName(){
-        let lab = this.$store.getters.getRemoteLabVersion;
-        if(lab == 'variable_governor'){
-          return 'Variable Governor';
-        } else if(lab == 'spinning_disk'){
-          return 'Spinning Disk';
-        } else{
-          return 'Robot Arm';
-        }
+        return 'Spinning Disk';
       }
   },
   methods: {

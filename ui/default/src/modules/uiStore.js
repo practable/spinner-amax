@@ -3,20 +3,13 @@
 
 const uiStore = {
     state: () => ({
-
-       remoteLabVersion: '',
        isDataRecorderOn: false,    //is the Data Recorder element active
        isDraggable: true,
-       
-       isAchievementsAvailable: false, // remove achievements from the UI
        usesLocalStorage: false,        //can only use localStorage if the browser allows it.
        darkTheme: document.body.classList.contains('dark-theme') ? true : false
 
        }),
        mutations:{
-         SET_REMOTE_LAB_VERSION(state, version){
-            state.remoteLabVersion = version;
-         },
          SET_DATA_RECORDER(state, set){
             state.isDataRecorderOn = set;
          },
@@ -33,9 +26,6 @@ const uiStore = {
 
        },
        actions:{
-         setRemoteLabVersion(context, version){
-            context.commit("SET_REMOTE_LAB_VERSION", version);
-         },
          setDataRecorder(context, set){
             context.commit("SET_DATA_RECORDER", set);
          },
@@ -51,17 +41,11 @@ const uiStore = {
 
        },
        getters:{
-         getRemoteLabVersion(state){
-            return state.remoteLabVersion;
-         },
          getIsDataRecorderOn(state){
             return state.isDataRecorderOn;
          },
          getDraggable(state){
              return state.isDraggable;
-         },
-         getIsAchievementsAvailable(state){
-            return state.isAchievementsAvailable;
          },
          getUsesLocalStorage(state){
             return state.usesLocalStorage;
