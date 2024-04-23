@@ -51,19 +51,19 @@
       <div v-if='!isMobile' class='row' id='component-grid'>
 
           <div :class='leftClass' id='left-screen'>
-            <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><webcam-stream id='webcam-stream' /></div>
-            <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><data-recorder v-if='isDataRecorderOn' id='data-recorder' /></div>
-            <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
-            <div class='col drop-area' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><table-output v-if='isTableOn' id='table' :selected_point="selected_graph_point"/></div>
-            <div class='col drop-area' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><stopwatch v-if='isStopwatchOn' id='stopwatch'/></div>
+            <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
+            <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><data-recorder v-if='isDataRecorderOn' id='data-recorder' /></div>
+            <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
+            <div class='col drop-area' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><table-output v-if='isTableOn' id='table' :selected_point="selected_graph_point"/></div>
+            <div class='col drop-area' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><stopwatch v-if='isStopwatchOn' id='stopwatch'/></div>
           </div>
 
           <div :class='rightClass' id='right-screen'>
-            <div class='col drop-area' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><data-stream id='data-stream' /></div>
-            <div class='col drop-area' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><graph-output v-if='isGraphOn' id='graph' @newselectedgraphpoint="selectedGraphPoint"/></div>
-            <div class='col drop-area' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><system-diagrams v-if='isSystemDiagramsOn' id='system-diagrams' /></div>
-            <div class='col drop-area' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><instructions v-if='isWorkspaceOn' id='instructions' :isWorkspaceOn="isWorkspaceOn"/></div>
-            <div class='col drop-area' id='drop_4_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent></div>
+            <div class='col drop-area' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><data-stream id='data-stream' /></div>
+            <div class='col drop-area' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><graph-output v-if='isGraphOn' id='graph' @newselectedgraphpoint="selectedGraphPoint"/></div>
+            <div class='col drop-area' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><system-diagrams v-if='isSystemDiagramsOn' id='system-diagrams' /></div>
+            <div class='col drop-area' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><instructions v-if='isWorkspaceOn' id='instructions' :isWorkspaceOn="isWorkspaceOn"/></div>
+            <div class='col drop-area' id='drop_4_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
           </div>
 
       </div>
@@ -73,14 +73,14 @@
 
       <div v-else class='row' id='component-grid'>
         <div class='col-12' id='full-screen'>
-          <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><webcam-stream id='webcam-stream' /></div>
-            <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><data-stream id='data-stream' /></div>
-            <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><data-recorder v-if='isDataRecorderOn' id='data-recorder' /></div>
-            <div class='col drop-area' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
-            <div class='col drop-area' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><graph-output v-if='isGraphOn' id='graph' @newselectedgraphpoint="selectedGraphPoint"/></div>
-            <div class='col drop-area' id='drop_5_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><table-output v-if='isTableOn' id='table' :tableHeadings="['id', 'Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']" :selected_point="selected_graph_point"/></div>
-            <div class='col drop-area' id='drop_6_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><stopwatch v-if='isStopwatchOn' id='stopwatch'/></div>
-            <div class='col drop-area' id='drop_7_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter.prevent><system-diagrams v-if='isSystemDiagramsOn' id='system-diagrams' /></div>
+          <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
+            <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><data-stream id='data-stream' /></div>
+            <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><data-recorder v-if='isDataRecorderOn' id='data-recorder' /></div>
+            <div class='col drop-area' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
+            <div class='col drop-area' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><graph-output v-if='isGraphOn' id='graph' @newselectedgraphpoint="selectedGraphPoint"/></div>
+            <div class='col drop-area' id='drop_5_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><table-output v-if='isTableOn' id='table' :tableHeadings="['id', 'Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']" :selected_point="selected_graph_point"/></div>
+            <div class='col drop-area' id='drop_6_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><stopwatch v-if='isStopwatchOn' id='stopwatch'/></div>
+            <div class='col drop-area' id='drop_7_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><system-diagrams v-if='isSystemDiagramsOn' id='system-diagrams' /></div>
         </div>
       </div>
 
@@ -192,10 +192,10 @@ export default {
   computed:{
     ...mapGetters([
 			'getDraggable',
-            'getUsesLocalStorage',
-            'getIsLoggingOn',
-            'getExperiment',
-            'getCourse'
+      'getUsesLocalStorage',
+      'getIsLoggingOn',
+      'getExperiment',
+      'getCourse'
 		]),
     isMobile(){
       if(window.screen.width < 992){
@@ -208,28 +208,31 @@ export default {
   methods: {
     dragComponent(event){
         event.dataTransfer.effectAllowed = 'move';
-         console.log(event.target.id);
+         console.log("Dragged id: " + event.target.id);
          let element = event.target;
-         if(element.classList.contains('drop-area') && element.childNodes[0].id != undefined){
-           console.log(element.childNodes[0].id)
-           //console.log(element.id);
-            event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
-            //console.log(element.childNodes[0]);
-         } else if(element.childNodes[0].id != undefined){
-           console.log(element.childNodes[0].id)
+         if(element.classList.contains('drop-area')){
+           if(element.childNodes[0] != null){
+              event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
+           } else{
+              event.dataTransfer.setData("text/html", element.id + "|" + 'empty');
+           }
+            
+         } else{
            while(element.parentNode){
               element = element.parentNode;
-              //console.log(element.id);
+              console.log(element.id);
               if(element.classList.contains('drop-area')){
-                event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
-                //console.log(element.childNodes[0]);
+                if(element.childNodes[0] != null){
+                  event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
+              } else{
+                  event.dataTransfer.setData("text/html", element.id + "|" + 'empty');
+              }
                 break;
               }
             }
          }
     },
     dropComponent(event){
-      console.log(event.target.id);
       event.preventDefault();
       event.stopPropagation();
       let dropData = event.dataTransfer.getData('text/html');
@@ -238,33 +241,49 @@ export default {
       let droppedElement = document.getElementById(event.target.id);
       let draggedID = dropItems[1];
       
-      if(droppedElement != null && droppedElement.classList.contains('drop-area') && draggedZone != null){
-        if(event.target.childNodes.length > 0){
-          draggedZone.appendChild(event.target.childNodes[0]);
-        }
-        //console.log(draggedID);
-        droppedElement.appendChild(document.getElementById(draggedID));
-        if(draggedZone != droppedElement){
-          this.$store.dispatch('setAchievementCompleted', 'custom-ui');
-        }
-        
-      } 
-      else if(droppedElement && draggedZone != null){
-        let element = droppedElement;
-        while(element.parentNode){
-          element = element.parentNode;
-          if(element.classList.contains('drop-area')){
-            //console.log(element.childNodes[0]);
-            draggedZone.appendChild(element.childNodes[0]);
-            element.appendChild(document.getElementById(draggedID));
-            if(draggedZone != droppedElement){
-              this.$store.dispatch('setAchievementCompleted', 'custom-ui');
+      // only try if the dragged element is not empty
+      if(draggedID != 'empty' && document.getElementById(draggedID) != null){
+          if(droppedElement != null && droppedElement.classList.contains('drop-area')){
+            if(event.target.childNodes.length > 0){
+              draggedZone.appendChild(event.target.childNodes[0]);
             }
-            break;
+            console.log(draggedID);
+            droppedElement.appendChild(document.getElementById(draggedID));
+            droppedElement.classList.remove('drop-area-highlighted');
+        } 
+        else if(droppedElement){
+          let element = droppedElement;
+          while(element.parentNode){
+            element = element.parentNode;
+            if(element.classList.contains('drop-area')){
+              console.log(element.childNodes[0]);
+              draggedZone.appendChild(element.childNodes[0]);
+              element.appendChild(document.getElementById(draggedID));
+              element.classList.remove('drop-area-highlighted');
+              break;
+            }
           }
         }
       }
+      
       return false;
+    },
+    dragEnter(event){
+      let dropData = event.dataTransfer.getData('text/html');
+      let dropItems = dropData.split("|");
+      let draggedID = dropItems[1];
+      if(draggedID != 'empty' && document.getElementById(draggedID) != null){
+        let element = document.getElementById(event.target.id);
+        if(element != null && element.classList.contains('drop-area')){
+          element.classList.add('drop-area-highlighted');
+        }
+      }
+    },
+    dragLeave(event){
+      let element = document.getElementById(event.target.id);
+      if(element != null){
+        element.classList.remove('drop-area-highlighted');
+      }
     },
     selectedGraphPoint(point){
       this.selected_graph_point = point;
