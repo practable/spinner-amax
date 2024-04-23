@@ -3,32 +3,28 @@
 //This component now just needs to send a slightly different command to the firmware.
 
 <template>
-    <div class="row d-flex justify-content-center m-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
-            <div class='col-auto'>
-                <div class='input-group' v-if='mode == "speedRaw"'>
-                    <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (Vs<sup>-1</sup>)</b></span>
-                    <input type="number" :max='max_voltage_ramp' :min='-max_voltage_ramp' :class="(parseFloat(ramp_gradient) >= -max_voltage_ramp && parseFloat(ramp_gradient) <= max_voltage_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                    <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
-                    <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
-                </div>
+    <div class="mt-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
 
-                <div class='input-group' v-else-if='mode == "speedPid"'>
-                    <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (rads<sup>-2</sup>)</b></span>
-                     <input type="number" :max='max_speed_ramp' :min='-max_speed_ramp' :class="(parseFloat(ramp_gradient) >= -max_speed_ramp && parseFloat(ramp_gradient) <= max_speed_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                     <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
-                     <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
-                </div>
+        <div class='d-flex flex-row align-items-center' v-if='mode == "speedRaw"'>
+            <span class='input-group-text' for="ramp_gradient">Ramp gradient [Vs<sup>-1</sup>]</span>
+            <input type="number" :max='max_voltage_ramp' :min='-max_voltage_ramp' :class="(parseFloat(ramp_gradient) >= -max_voltage_ramp && parseFloat(ramp_gradient) <= max_voltage_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
+            <button class='button-lg button-primary' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
+            <button class='button-lg button-danger' v-else id="stop" @click="stopRamp">Stop</button>
+        </div>
 
-                <div class='input-group' v-else-if='mode == "positionPid"'>
-                    <span class='input-group-text' for="ramp_gradient"><b>Ramp gradient (rads<sup>-1</sup>)</b></span>
-                    <input type="number" :max='max_position_ramp' :min='-max_position_ramp' :class="(parseFloat(ramp_gradient) >= -max_position_ramp && parseFloat(ramp_gradient) <= max_position_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
-                    <button class='btn btn-lg' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
-                    <button class='btn btn-lg btn-danger' v-else id="stop" @click="stopRamp">Stop</button>
-                </div>
+        <div class='d-flex flex-row align-items-center' v-else-if='mode == "speedPid"'>
+            <span class='input-group-text' for="ramp_gradient">Ramp gradient [rads<sup>-2</sup>]</span>
+                <input type="number" :max='max_speed_ramp' :min='-max_speed_ramp' :class="(parseFloat(ramp_gradient) >= -max_speed_ramp && parseFloat(ramp_gradient) <= max_speed_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
+                <button class='button-lg button-primary' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
+                <button class='button-lg button-danger' v-else id="stop" @click="stopRamp">Stop</button>
+        </div>
 
-
-            </div>
-
+        <div class='d-flex flex-row align-items-center' v-else-if='mode == "positionPid"'>
+            <span class='input-group-text' for="ramp_gradient">Ramp gradient [rads<sup>-1</sup>]</span>
+            <input type="number" :max='max_position_ramp' :min='-max_position_ramp' :class="(parseFloat(ramp_gradient) >= -max_position_ramp && parseFloat(ramp_gradient) <= max_position_ramp) ? 'form-control' : 'form-control is-invalid'" id="ramp_gradient" v-model="ramp_gradient">
+            <button class='button-lg button-primary' id="run" v-if='!getIsRampRunning' @click="runRamp">Run</button>
+            <button class='button-lg button-danger' v-else id="stop" @click="stopRamp">Stop</button>
+        </div>
 
      </div>   
 </template>
@@ -128,12 +124,5 @@ export default {
     /* border:thick solid red */
     border: auto;
 }
-
-#set       {background-color: rgb(74, 223, 37);}
-#set:hover {background-color: #0b7e0f} 
-
-#run       {background-color:  rgb(74, 223, 37);}
-#run:hover {background-color: #0b7e0f} 
-
 
 </style>
