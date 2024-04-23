@@ -472,11 +472,8 @@ export default {
       //need to check on App mount that a UUID exists already or create a new one - this UUID is used in logging and rasa conversations
       updateUUID(){
         let stored_uuid;
-        let course = this.getCourse;
-        let exp = this.getExperiment;
-        const item = `uuid-${exp}-${course}`
         if(this.getUsesLocalStorage){
-          stored_uuid = window.localStorage.getItem(item);
+          stored_uuid = window.localStorage.getItem('userName');
         } else {
           stored_uuid = null;
         }
@@ -484,12 +481,7 @@ export default {
         if(stored_uuid){
             this.$store.dispatch('setUUID', stored_uuid);
         } else{
-            let uuid = uuidv4();
-            this.$store.dispatch('setUUID', uuid);
-            if(this.getUsesLocalStorage){
-              window.localStorage.setItem(item, uuid);
-            }
-            
+          this.$store.dispatch('setUUID', 'NA');
         }
       },
       checkConsent(){
