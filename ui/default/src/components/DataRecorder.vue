@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
@@ -55,7 +55,7 @@ export default {
     return {
         stopped_recording: false,
         showResetConfirmModal: false,
-        data_set_index: 0,      //NEW for identifying different datasets
+        //data_set_index: 0,      //moved to dataStore vuex
     }
   },
   components: {
@@ -79,7 +79,8 @@ export default {
         'getTimeArray',
         'getCommandArray',
         'getDriveArray',
-        'getErrorArray'
+        'getErrorArray',
+        'getDatasetIndex'
         
     ]),
       hasData(){
@@ -107,12 +108,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'addToDatasetIndex',
+      'setDatasetIndex'
+    ]),
       record(){
           this.$store.dispatch('setStartTime', this.getCurrentTimeArray[0]);
       },
       stopRecording(){
         console.log('data recording stopped');
-        this.data_set_index += 1;
+        this.addToDatasetIndex();
       },
       // plot(){
       //     let angle = parseFloat(this.getCurrentAngle); //rad
@@ -136,7 +141,7 @@ export default {
           let errors = this.getErrorArray;
 
           angles.forEach((angle, index) => {
-              let data_object = {id: this.getNumData, t: parseFloat(times[index]), set: this.data_set_index, theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
+              let data_object = {id: this.getNumData, t: parseFloat(times[index]), set: this.getDatasetIndex, theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
               this.$store.dispatch('addData', data_object);
           })
           
@@ -144,7 +149,7 @@ export default {
       },
       clearData(){
           this.$store.dispatch('clearAllData');
-          this.data_set_index = 0;
+          this.setDatasetIndex(0);
       },
       toggleResetModal(){
           this.showResetConfirmModal = !this.showResetConfirmModal;

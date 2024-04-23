@@ -587,7 +587,7 @@ export default {
             scatterChart.destroy();
             this.createChart();
         },
-        getAllData(colour_index = 0){
+        getAllData(){
             if(this.current_data_index == 0){
                 this.clearData();
                 
@@ -607,7 +607,7 @@ export default {
 
                 }
 
-                this.addDataToChart({x: x_data, y: y_data}, data[i].set);
+                this.addDataToChart({x: x_data, y: y_data}, data.set);
 
                 if(i >= this.current_data_index + this.data_index_interval || i == this.getNumData - 1){
                     this.current_data_index = i + 1;

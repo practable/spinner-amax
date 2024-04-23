@@ -22,6 +22,7 @@ const dataStore = {
         inputMode: '',
         graphDataParameter: 'omega',   //'theta'
         data: [],
+        data_set_index: 0,
         max_data_points: 5000,
         p: 0,  
         i: 0,
@@ -143,6 +144,12 @@ const dataStore = {
          SET_IS_RECORDING(state, set){
             state.isRecording = set;
          },
+         SET_DATASET_INDEX(state, set){
+            state.data_set_index = set;
+         },
+         ADD_TO_DATASET_INDEX(state){
+            state.data_set_index += 1;
+         }
          
         
        },
@@ -235,6 +242,12 @@ const dataStore = {
          setIsRecording(context, set){
             context.commit("SET_IS_RECORDING", set);
          },
+         setDatasetIndex(context, set){
+            context.commit('SET_DATASET_INDEX', set);
+         },
+         addToDatasetIndex(context){
+            context.commit('ADD_TO_DATASET_INDEX');
+         }
         
       //   setShowDataPoint(context, options){
       //       context.commit('SET_SHOW_DATA_POINT', options);
@@ -389,7 +402,15 @@ const dataStore = {
           getDataSets(state){
             let datasets = helpers.GetDataSets(state.data);
             return datasets;
-         } 
+         },
+         getDatasetIndex(state){
+            return state.data_set_index;
+         },
+         getLatestDatasetIndex(state){
+            let latest_data = state.data[state.data.length - 1];
+            let index = latest_data.set;
+            return index;
+         }
        },  
   
   }

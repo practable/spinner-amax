@@ -182,7 +182,8 @@ export default {
       'getUsesLocalStorage',
       'getIsLoggingOn',
       'getExperiment',
-      'getCourse'
+      'getCourse',
+      'getLatestDatasetIndex'
 		]),
     isMobile(){
       if(window.screen.width < 992){
@@ -384,19 +385,19 @@ export default {
           for(let i=0; i<data.length;i++){
               this.$store.dispatch('addData', data[i]);
           }
+          
+          //ensure that the dataset index is updated since data has been loaded
+          let latest_index = this.getLatestDatasetIndex;
+          console.log(latest_index);
+          this.$store.dispatch('setDatasetIndex', latest_index + 1);
+
         }
         
       },
       saveDataToLocalStorage(){
-        let course = this.getCourse;
-        let exp = this.getExperiment;
-        const item = `uuid-${exp}-${course}`
-         if(this.getUsesLocalStorage && window.localStorage.getItem(item)){
-            
+         if(this.getUsesLocalStorage){
             this.saveData();
-
             return true;
-            
          } else{
             console.log('no localStorage allowed or uuid has been cleared');
             return false;
@@ -445,6 +446,7 @@ export default {
             }
         } else{
             this.$store.dispatch('setLoggingConsent', false);
+            this.showConsentModal = false;
 
             if(this.getUsesLocalStorage){
                 let course = this.getCourse;
