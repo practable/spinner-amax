@@ -385,9 +385,38 @@ const dataStore = {
             state.moving_avg_index = (state.moving_avg_index + 1) % state.moving_avg_k;
 
             return state.moving_avg;
-          },  
+          }, 
+          getDataSets(state){
+            let datasets = helpers.GetDataSets(state.data);
+            return datasets;
+         } 
        },  
   
   }
+
+  export const helpers = {
+   GetDataSets(data) {
+      let datasets = [];   //array of arrays storing each separate dataset
+      let next_dataset = [];
+      let current_index = 0;
+      data.forEach(d => {
+
+         if(d.set == current_index + 1){
+            datasets.push(next_dataset);
+            current_index += 1;
+
+            next_dataset = [];
+         }
+
+         next_dataset.push(d);
+      })
+
+      if(next_dataset.length > 0){
+         datasets.push(next_dataset);
+      }
+      
+      return datasets;
+   }
+}
 
   export default dataStore;
