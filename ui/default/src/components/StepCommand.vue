@@ -63,7 +63,6 @@ export default {
   methods: {
       ...mapActions([
           'setDraggable',
-          'updateColourIndex',
           'setIsStepRunning'
       ]),
      runStep(){
@@ -81,8 +80,6 @@ export default {
         //  this.$store.dispatch('setStep', step);
          
         this.sendCommand();
-
-        this.updateColourIndex();
              
      },
      sendCommand(){

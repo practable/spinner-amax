@@ -62,8 +62,8 @@
                        
 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(linear); (this.func_a != 0 || this.func_b != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-linear'):''">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(linear); (this.func_a != 0 || this.func_b != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-linear'):''">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                 </div>
 
@@ -94,8 +94,8 @@
                     </div>
 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(quadratic)">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(quadratic)">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                 </div>
 
@@ -137,8 +137,8 @@
                     
 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(trigonometric)">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(trigonometric)">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                 </div>
 
@@ -168,8 +168,8 @@
                     </div>
 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(exponential)">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(exponential)">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                 </div>
 
@@ -217,8 +217,8 @@
                     </div>
             
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(step); (this.func_a != 0 && this.func_b != 0 && this.func_c != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-1st-step'):''">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step); (this.func_a != 0 && this.func_b != 0 && this.func_c != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-1st-step'):''">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                     
                 </div>
@@ -267,8 +267,8 @@
                     </div>
                 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(step2nd); (this.func_a != 0 && this.func_b != 0 && this.func_c != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-2nd-step'):''">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step2nd); (this.func_a != 0 && this.func_b != 0 && this.func_c != 0) ? this.$store.dispatch('setAchievementCompleted', 'plot-2nd-step'):''">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                     
                 </div>
@@ -318,8 +318,8 @@
 
 
                     <div class="row-sm justify-content-center">
-                        <button class="btn btn-success btn-xs m-1" id="plotFunctionButton" @click="plotFunc(ramp)">Plot</button>
-                        <button class="btn btn-danger btn-xs m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                        <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(ramp)">Plot</button>
+                        <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
                     </div>
                 </div>
 
@@ -329,7 +329,7 @@
     </div>
 
     <div class="d-flex flex-row">
-        <div class="me-3">
+        <div class="col-auto me-2">
             <toolbar parentCanvasID="graph-canvas" parentComponentName="graph" parentDivID="graph" :showDownload='true' :showPopupHelp="true" :showOptions="false">  
                 
                 <template v-slot:popup id='graph-popup'>
@@ -374,7 +374,7 @@
             
         </div> 
         
-        <div class="mt-2">
+        <div class="col-auto mt-2">
             <span v-if="getNumData < maxDataPoints" class="align-middle">Plotted: {{ getNumData }} / {{ maxDataPoints }}</span>
             <span v-else class="align-middle">Plotted: {{ maxDataPoints }} / {{ maxDataPoints }} MAX REACHED</span>
         </div>
@@ -393,6 +393,8 @@ import { Chart } from 'chart.js';
 import { mapGetters, mapActions } from 'vuex';
 import Toolbar from "./elements/Toolbar.vue";
 
+var scatterChart = null;        //if part of the responsive Vue data then causes a recursion error on dynamically adding datasets.
+
 export default {
     
     name: 'GraphOutput',
@@ -402,7 +404,7 @@ export default {
     },
     data(){
         return{
-            chart: null,
+            //chart: null,
             gradient_start_point: {x:0, y:0},
             gradient_end_point: {x:0, y:0},
             gradient: 0,
@@ -421,7 +423,9 @@ export default {
             current_data_index: 0,
             data_index_interval: 10,
             latest_index: 0,
-            previous_t: 0,
+            light_colours: ['rgba(0, 0, 0, 1)', 'rgba(255, 0, 0, 1)', 'rgba(0, 0, 255, 1)', '#A3A3A3', '#F5A300', '#5B5F97'],
+            dark_colours: ['rgba(255, 255, 255, 1)', 'rgba(255, 0, 255, 1)', 'rgba(0, 255, 0, 1)', 'rgba(0, 255, 255, 1)', 'rgba(255, 255, 0, 1)', 'rgba(255, 0, 0, 1)']
+            
         }
     },
     mounted() {
@@ -435,12 +439,15 @@ export default {
             'getGraphDataParameter',
             'getNumData',
             'getIsRecording',
-            'getColourIndex'
+            'getDarkTheme'
         ]),
       },
     watch:{
         getData(){
             this.clearData(); //only runs if data array gets reset to [];
+        },
+        getDarkTheme(){
+            this.clearData();
         }
     },
     methods: {
@@ -456,8 +463,8 @@ export default {
                         this.getDataAtIndex(i);
                     }
                     this.latest_index = max_index;
-                    this.chart.options.scales.yAxes[0].scaleLabel.labelString = this.getGraphDataParameter;
-                    this.chart.update(0);                       //actually updating the chart moved to here!
+                    scatterChart.options.scales.yAxes[0].scaleLabel.labelString = this.getGraphDataParameter;
+                    scatterChart.update(0);                
                     
                 } 
             } 
@@ -468,52 +475,23 @@ export default {
             var _this = this;
             const canvas = document.getElementById('graph-canvas');
             const ctx = canvas.getContext('2d');
-            this.chart = new Chart(ctx, {
+            scatterChart = new Chart(ctx, {
             type: 'scatter',
             data: {
-                //6 colours to loop through
-                datasets: [{
-                    label: 'colour0',
-                    data: [],
-                    pointBackgroundColor: 'rgba(0, 0, 0, 1)',
-                },
-                {
-                    label: 'colour1',
-                    data: [],
-                    pointBackgroundColor: 'rgba(0, 0, 255, 1)',
-                },
-                {
-                    label: 'colour2',
-                    data: [],
-                    pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-                },
-                {
-                    label: 'colour3',
-                    data: [],
-                    pointBackgroundColor: 'rgba(255, 0, 0, 1)',
-                },
-                {
-                    label: 'colour4',
-                    data: [],
-                    pointBackgroundColor: 'rgba(255, 120, 0, 1)',
-                },
-                {
-                    label: 'colour5',
-                    data: [],
-                    pointBackgroundColor: 'rgba(150, 0, 150, 1)',
-                }]
+                datasets: []
             },
             options: {
                 animation: false,
                 parsing: false,
                 legend:{
-                    display: false
+                    display: true
                 },
                 scales: {
                     xAxes: [{
                         scaleLabel:{
                             display: true,
-                            labelString: 'time/s'
+                            labelString: 'time/s',
+                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
                         position: 'bottom',
@@ -523,7 +501,11 @@ export default {
                                 _this.updateXAxisMin(value, index);
                                 return value;
                             },
-                            
+                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                        },
+                        gridLines: {
+                            zeroLineColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
                         },
                         minRotation: 20,
                         maxRotation: 20,
@@ -532,7 +514,8 @@ export default {
                     yAxes: [{
                         scaleLabel:{
                             display: true,
-                            labelString: _this.getGraphDataParameter
+                            labelString: _this.getGraphDataParameter,
+                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
                         position: 'left',
@@ -541,7 +524,12 @@ export default {
                                 _this.updateYAxisMax(value, index);
                                 _this.updateYAxisMin(value, index, values);
                                 return value;
-                            }
+                            },
+                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                        },
+                        gridLines: {
+                            zeroLineColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
                         },
                         sampleSize: 2,
                     }],
@@ -550,13 +538,13 @@ export default {
             }
         });
 
-            canvas.onclick = function(event){
-                let active_points = _this.chart.getElementsAtEventForMode(event, 'index', { intersect: true }, false);
-                if(active_points[0]){
-                    _this.$emit('newselectedgraphpoint', active_points[0]._index);       //data point selected so send event to let other elements know.
-                }
+            // canvas.onclick = function(event){
+            //     let active_points = _this.chart.getElementsAtEventForMode(event, 'index', { intersect: true }, false);
+            //     if(active_points[0]){
+            //         _this.$emit('newselectedgraphpoint', active_points[0]._index);       //data point selected so send event to let other elements know.
+            //     }
                 
-            };
+            // };
         },
         updateYAxisMax(value, index){
             if(index == 0){
@@ -581,8 +569,14 @@ export default {
             }
         },
         addDataToChart(data, dataset_index) {
+            //check if the next dataset doesn't exist and create it
+            if(dataset_index == this.countDataSets()){
+                this.deleteFunctionDataset();   //remove any plotted functions to not conflict with dataset index
+                this.addEmptyDataSet(dataset_index);
+            }
+            //add data to the existing dataset
             try{
-                this.chart.data.datasets[dataset_index].data.push(data);
+                scatterChart.data.datasets[dataset_index].data.push(data);
             } catch(e){
                 console.log(e);
             }
@@ -590,7 +584,7 @@ export default {
         clearData(){
             this.latest_index = 0;          //NEW
             
-            this.chart.destroy();
+            scatterChart.destroy();
             this.createChart();
         },
         getAllData(colour_index = 0){
@@ -613,13 +607,7 @@ export default {
 
                 }
 
-                if(this.previous_t > x_data){
-                        colour_index = (colour_index + 1) % 6
-                    }
-
-                    this.previous_t = x_data;
-
-                this.addDataToChart({x: x_data, y: y_data}, colour_index);
+                this.addDataToChart({x: x_data, y: y_data}, data[i].set);
 
                 if(i >= this.current_data_index + this.data_index_interval || i == this.getNumData - 1){
                     this.current_data_index = i + 1;
@@ -630,9 +618,9 @@ export default {
 
                 if(this.current_data_index < this.getNumData && this.current_data_index <= this.maxDataPoints){
                     setTimeout(this.getAllData, 20);
-                    this.chart.update(0);
+                    scatterChart.update(0);
                 } else{
-                    this.chart.update(0);
+                    scatterChart.update(0);
                     this.count = 0;
                     this.current_data_index = 0;
                 }
@@ -654,7 +642,7 @@ export default {
                         break;
 
                     }
-                    this.addDataToChart({x: x_data, y: y_data}, this.getColourIndex);
+                    this.addDataToChart({x: x_data, y: y_data}, data.set);
                 } 
             
         },
@@ -673,11 +661,11 @@ export default {
                         break;
 
                     }
-                    this.addDataToChart({x: x_data, y: y_data}, this.getColourIndex);
+                    this.addDataToChart({x: x_data, y: y_data}, data.set);
                 } 
         },
         removeChart(){
-            this.chart.destroy();
+            scatterChart.destroy();
         },
         startLine(event){
             event.preventDefault();
@@ -722,7 +710,7 @@ export default {
             let canvas = document.getElementById('graph-canvas');
             const context = canvas.getContext('2d');
             context.clearRect(0, 0, canvas.width, canvas.height);
-            this.chart.update(0);       //instantly update with no animation
+            scatterChart.update(0);       //instantly update with no animation
 
             context.beginPath(); 
             // Staring point 
@@ -756,7 +744,7 @@ export default {
                 new_data.push(data);
             }
             
-            this.addNewDataSet('rgba(255, 0, 0, 0.5)', new_data);
+            this.addFunctionPlot('rgba(255, 0, 0, 0.5)', new_data);
         },
         linear(t){
             return (parseFloat(this.func_a)*t + parseFloat(this.func_b));
@@ -819,18 +807,30 @@ export default {
             }
             
         },
-        addNewDataSet(colour, data){
-            this.chart.data.datasets.push({
-                label:"plotted function",
+        addFunctionPlot(colour, data){
+            scatterChart.data.datasets.push({
+                label:"function",
                 pointBackgroundColor: colour,
                 data: data
                 });
-            this.chart.update(0);
+                scatterChart.update(0);
+        },
+        addEmptyDataSet(new_index){
+            scatterChart.data.datasets.push({
+                label:`dataset${new_index}`,
+                pointBackgroundColor: this.getDarkTheme ? this.dark_colours[new_index % this.dark_colours.length] : this.light_colours[new_index % this.light_colours.length],
+                data: []
+                });
+            scatterChart.update(0);
         },
         deleteFunctionDataset(){
-            this.chart.data.datasets = this.chart.data.datasets.filter(set => set.label !== "plotted function");
-            this.chart.update(0);
+            scatterChart.data.datasets = scatterChart.data.datasets.filter(set => set.label !== "function");
+            scatterChart.update(0);
         },
+        countDataSets(){
+                let datasets = scatterChart.data.datasets.filter(set => set.label.includes("dataset"));
+                return datasets.length;
+        }
 
       },
       
@@ -840,6 +840,11 @@ export default {
 
 
 <style scoped>
+
+#chart-canvas{
+    cursor: crosshair;
+    background-color: var(--background-color)
+}
 
 #transfer_function{
     width: 120px;
@@ -860,39 +865,5 @@ export default {
     width: 150px;
     height: 30px;
 }
-
-/* #plotFunctionButton       {background-color: #4CAF50FF; color: rgb(255, 255, 255)}
-#plotFunctionButton:hover {background-color: #3e8e41} 
-
-#clearFunctionButton        {background-color: #e13131ff; color: rgb(255, 255, 255)}
-#clearFunctionButton:hover {background-color: #cc1e1eff;} */
-
-#clearButton  {background-color: #e17a31ff;}
-#clearButton:hover  {background-color: #cc661eff;}
-
-#outputButton        {background-color: #e1b131ff;}
-#outputButton:hover  {background-color: #cc9d1eff;}
-
-
-label {
-    font-size:16px;
-    color: #0501f7;
-    font-weight: bold;
-    display: inline-block;
-    /* vertical-align: middle; */
-    /* width: 20px; */
-    /* padding-top: 20px; */
-    /* float: left; */
-}
-
-select{
-    color: white;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    
-    background-color: #4490d8;
-}
-
-
 
 </style>

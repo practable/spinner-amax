@@ -1,8 +1,8 @@
 //Vue3 update
 
 <template>
-    <div>
-        <download-image-button v-if='showDownload' :parentComponentName="getParentComponentName" :parentCanvasID="getCanvasID"/>
+    <div class="d-flex justify-content-center">
+        <download-image-button class="me-2" v-if='showDownload' :parentComponentName="getParentComponentName" :parentCanvasID="getCanvasID"/>
 
         <popup-help v-if='showPopupHelp' :parentDivID="getParentDivID"> 
                 <slot name='popup'></slot> 
