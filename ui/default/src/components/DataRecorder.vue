@@ -55,6 +55,7 @@ export default {
     return {
         stopped_recording: false,
         showResetConfirmModal: false,
+        data_set_index: 0,      //NEW for identifying different datasets
     }
   },
   components: {
@@ -111,6 +112,7 @@ export default {
       },
       stopRecording(){
         console.log('data recording stopped');
+        this.data_set_index += 1;
       },
       // plot(){
       //     let angle = parseFloat(this.getCurrentAngle); //rad
@@ -134,7 +136,7 @@ export default {
           let errors = this.getErrorArray;
 
           angles.forEach((angle, index) => {
-              let data_object = {id: this.getNumData, t: parseFloat(times[index]), theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
+              let data_object = {id: this.getNumData, t: parseFloat(times[index]), set: this.data_set_index, theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
               this.$store.dispatch('addData', data_object);
           })
           
@@ -142,64 +144,67 @@ export default {
       },
       clearData(){
           this.$store.dispatch('clearAllData');
+          this.data_set_index = 0;
       },
       toggleResetModal(){
           this.showResetConfirmModal = !this.showResetConfirmModal;
       },
       outputToCSV(){
+        let data = this.$store.getters.getData;
+        let current_dataset = 0;
+        let csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
+        let date = new Date();
 
-        if(this.getNumData > 100){
-          this.$store.dispatch('setAchievementCompleted', 'download-data');
-          
-        }
+        data.forEach(function(d){
+            if(d.set == current_dataset + 1){
+                let hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = `spinner-${date.getHours()}-${date.getMinutes()}-run${current_dataset}.csv`;
+                hiddenElement.click();
 
+                csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
+                current_dataset += 1;
+              }
 
-          let csv = '';
-          let filename = '';
-            let date = new Date();
-            filename = date.getDate().toString() + (date.getMonth() + 1).toString() + date.getFullYear().toString();
-              csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
-            let data = this.$store.getters.getData;
-            data.forEach(function(d){
-                csv += d.t.toString();
+              csv += d.t.toString();
+              csv += ",";
+              csv += d.theta.toString();
+              csv += ',';
+              csv += d.omega.toString();
+              if(d.command != null){
                 csv += ",";
-                csv += d.theta.toString();
-                csv += ',';
-                csv += d.omega.toString();
-                if(d.command != null){
-                  csv += ",";
-                  csv += d.command.toString();
-                } else {
-                  csv += ",";
-                  csv += "";
-                }
-                if(d.drive != null){
-                  csv += ",";
-                  csv += d.drive.toString();
-                } else{
-                  csv += ",";
-                  csv += "";
-                }
+                csv += d.command.toString();
+              } else {
+                csv += ",";
+                csv += "";
+              }
+              if(d.drive != null){
+                csv += ",";
+                csv += d.drive.toString();
+              } else{
+                csv += ",";
+                csv += "";
+              }
 
-                if(d.error != null){
-                  csv += ",";
-                  csv += d.error.toString();
-                } else{
-                  csv += ",";
-                  csv += "";
-                }    
-                
-                csv += "\n";
-            });
-          
-            filename += '.csv';
-         
-          let hiddenElement = document.createElement('a');
-          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-          hiddenElement.target = '_blank';
-          hiddenElement.download = filename;
-          hiddenElement.click();
-      },
+              if(d.error != null){
+                csv += ",";
+                csv += d.error.toString();
+              } else{
+                csv += ",";
+                csv += "";
+              }    
+              
+              csv += "\n";
+        });
+
+        //output the final dataset
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = `spinner-${date.getHours()}-${date.getMinutes()}-run${current_dataset}.csv`;
+        hiddenElement.click();
+    },
       
   }
 }
