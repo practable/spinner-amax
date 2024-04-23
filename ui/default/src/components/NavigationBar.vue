@@ -66,12 +66,6 @@
               </li>
 
               <li class="nav-item">
-                  <a class="nav-link" href="#" id="helpbutton" role="button" aria-expanded="false" @click='this.$emit("togglehelp")'>
-                   Help
-                  </a>
-              </li>
-
-              <li class="nav-item">
                   <a class="nav-link" >
                     UUID: {{ getLogUUID }}
                   </a>
@@ -91,17 +85,23 @@
               <li class="nav-item me-1">
                   <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
                       <template v-slot:popup>
-                          <div class='row'>
-                          <div class='col-lg-6'>
-                              <h2>Hotkeys:</h2>
-                             
-                          </div>
-                          <div class='col-lg-6'>
-                              <h2>UI Control:</h2>
-                              
-                              
-                          </div>
-                          </div>
+                        <h4>Hotkeys</h4>
+                        <p></p>
+
+                        <h4>Customise the UI</h4>
+                        <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
+                            to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
+                            changes.
+                        </p>
+
+                        <h4>Recording more than 5000 data points</h4>
+                        <p>For smooth running of the web app there is a limit of 5000 recorded data points and 2000 data points on the Graph tool. Please download this dataset or perform the necessary analysis
+                            and then reset the data and run again in order to collect more data. For collecting single data points over a long time you may be best to use the Snapshot tool which can continue to collect data beyond this limit.
+                        </p>
+
+                        <h4>Report issues</h4>
+                        <p>If you have any problems with the remote laboratory then you can contact us at support@practable.io
+                        </p>
                       </template>
                   </toolbar>
                 </li>
@@ -144,7 +144,7 @@ export default {
       
   },
   emits:[
-    'togglehelp', 'toggleconsent', 'togglelayout', 'togglegraph', 'toggledatarecorder', 'togglestopwatch', 'toggletable', 'togglesystemdiagrams', 'togglesnapshot', 'toggleworkspace', 'clearworkspace', 'addruler', 'addprotractor'
+    'toggleconsent', 'togglelayout', 'togglegraph', 'toggledatarecorder', 'togglestopwatch', 'toggletable', 'togglesystemdiagrams', 'togglesnapshot', 'toggleworkspace', 'clearworkspace', 'addruler', 'addprotractor'
   ],
   data () {
     return {

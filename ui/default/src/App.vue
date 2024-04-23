@@ -4,13 +4,12 @@
   <div id="app" class='container-fluid-sm m-0'>
 
     <!-- Components that do not conform to draggable grid -->
-    <navigation-bar @togglehelp="showHelpModal = true" @toggleconsent="showConsentModal = true" @togglelayout="toggleLayout" @togglegraph="toggleGraph" @toggledatarecorder="toggleDataRecorder" 
+    <navigation-bar @toggleconsent="showConsentModal = true" @togglelayout="toggleLayout" @togglegraph="toggleGraph" @toggledatarecorder="toggleDataRecorder" 
             @togglesnapshot="toggleSnapshot" @togglestopwatch="toggleStopwatch" @toggleworkspace="addWorkspace" @toggletable="toggleTable" 
                     @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
                     />
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
-      <help v-if='showHelpModal' @togglehelp="showHelpModal = false" />
 
     <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
@@ -106,9 +105,6 @@ import Consent from './components/Consent.vue';
 
 import { mapGetters } from 'vuex';
 
-
-import Help from './components/Help.vue';
-
 export default {
   name: 'App',
   components: {
@@ -125,7 +121,6 @@ export default {
     MotorSnapshot,
     Instructions,
     Consent,
-    Help
   },
   data() {
    return {
@@ -146,7 +141,6 @@ export default {
       disableTooltips: false,             //global tooltip setting
       showLoadDataModal: false,
       showConsentModal: true,
-      showHelpModal: false,
       saved_date: '',
       selected_graph_point: null,
       leftClass: 'col-lg-6',

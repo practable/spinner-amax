@@ -368,6 +368,8 @@ th{
 .modal-body{
     background-color: var(--background-color);
     color: var(--text-color);
+    max-height: 50vh;
+    overflow-y: scroll;
 }
 
 .modal-footer{
