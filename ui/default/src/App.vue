@@ -105,7 +105,6 @@ import Streams from './components/Streams.vue';
 import Consent from './components/Consent.vue';
 
 import { mapGetters } from 'vuex';
-import { v4 as uuidv4 } from 'uuid';
 
 
 import Help from './components/Help.vue';
@@ -158,12 +157,7 @@ export default {
   created(){
     this.$store.dispatch('setRemoteLabVersion', this.remoteLabVersion);    
     this.$store.dispatch('setDataRecorder', this.isDataRecorderOn);    
-    
-    //check if the browser allows localStorage and set the UI store accordingly
     this.$store.dispatch('setUsesLocalStorage', this.hasStorage());
-    //check if user has a UUID generated already and whether they have consented to take part in the study
-    
-    
   },
   mounted(){
     if(this.getUsesLocalStorage && this.hasDataToLoad()){
@@ -174,13 +168,6 @@ export default {
     }
       window.addEventListener('pagehide', () => {this.saveDataToLocalStorage()});				//closing window
       window.addEventListener('beforeunload', () => {this.saveDataToLocalStorage()});			//refreshing page, changing URL
-
-      this.loadAchievements();  //load the already achieved achievements.
-      //this.loadLogging();
-
-    // this.updateUUID();
-    // this.checkConsent();
-      
 
   },
   watch:{
@@ -208,7 +195,6 @@ export default {
   methods: {
     dragComponent(event){
         event.dataTransfer.effectAllowed = 'move';
-         console.log("Dragged id: " + event.target.id);
          let element = event.target;
          if(element.classList.contains('drop-area')){
            if(element.childNodes[0] != null){
@@ -220,7 +206,6 @@ export default {
          } else{
            while(element.parentNode){
               element = element.parentNode;
-              console.log(element.id);
               if(element.classList.contains('drop-area')){
                 if(element.childNodes[0] != null){
                   event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
@@ -290,8 +275,6 @@ export default {
     },
     addWorkspace(){
       this.isWorkspaceOn = true;
-
-      this.$store.dispatch('logComponent', {log:'component', name: 'workspace', open: true});
     },
     toggleGraph(){
       this.isGraphOn = !this.isGraphOn;
@@ -301,16 +284,11 @@ export default {
           this.toggleDataRecorder();
         }
       }
-
-      this.$store.dispatch('logComponent', {log:'component', name: 'graph', open: this.isGraphOn});
-      this.$store.dispatch('setFractionalAchievementCompleted', {name:'open-all', fractional:'graph'});
     },
     clearWorkspace(){
       this.isWorkspaceOn = false;
       this.rulerAdded = false;
       this.protractorAdded = false;
-
-      this.$store.dispatch('logComponent', {log:'component', name: 'workspace', open: false});
     },
     toggleDataRecorder(){
       this.isDataRecorderOn = !this.isDataRecorderOn;
@@ -323,9 +301,6 @@ export default {
     },
     toggleStopwatch(){
       this.isStopwatchOn = !this.isStopwatchOn;
-
-      this.$store.dispatch('logComponent', {log:'component', name: 'stopwatch', open: this.isStopwatchOn});
-      this.$store.dispatch('setFractionalAchievementCompleted', {name:'open-all', fractional:'stopwatch'});
     },
     toggleTable(){
       this.isTableOn = !this.isTableOn;
@@ -334,19 +309,12 @@ export default {
             this.toggleDataRecorder();
         }
       }
-      
-      this.$store.dispatch('logComponent', {log:'component', name: 'table', open: this.isTableOn});
-      this.$store.dispatch('setFractionalAchievementCompleted', {name:'open-all', fractional:'table'});
     },
     toggleInputGraph(){
       this.isInputGraphOn = !this.isInputGraphOn;
     },
     toggleSystemDiagrams(){
       this.isSystemDiagramsOn = !this.isSystemDiagramsOn;
-
-      this.$store.dispatch('logComponent', {log:'component', name: 'system-diagrams', open: this.isSystemDiagramsOn});
-      this.$store.dispatch('setFractionalAchievementCompleted', {name:'open-all', fractional:'diagrams'});
-
     },
     toggleSnapshot(){
       this.isSnapshotOn = !this.isSnapshotOn;
@@ -355,8 +323,6 @@ export default {
           this.toggleDataRecorder();
         }
       }
-      this.$store.dispatch('logComponent', {log:'component', name: 'snapshot', open: this.isSnapshotOn});
-      this.$store.dispatch('setFractionalAchievementCompleted', {name:'open-all', fractional:'snapshot'});
     },
     toggleLayout(ratio){
       if(ratio == 0.25){
@@ -421,20 +387,6 @@ export default {
         }
         
       },
-      loadAchievements(){
-        if(this.getUsesLocalStorage && window.localStorage.getItem('achievementsSpinningDisk')){
-          let data = window.localStorage.getItem('achievementsSpinningDisk');
-          data = JSON.parse(data);
-          this.$store.dispatch('loadAchievements', data);
-        }
-      },
-      // loadLogging(){
-      //   if(this.getUsesLocalStorage && window.localStorage.getItem('loggingSpinningDisk')){
-      //     let data = window.localStorage.getItem('loggingSpinningDisk');
-      //     let data_json = JSON.parse(data);
-      //     this.$store.dispatch('setTotalTime', data_json.time);
-      //   }
-      // },
       saveDataToLocalStorage(){
         let course = this.getCourse;
         let exp = this.getExperiment;
@@ -442,8 +394,6 @@ export default {
          if(this.getUsesLocalStorage && window.localStorage.getItem(item)){
             
             this.saveData();
-            //this.saveLogging();
-            this.saveAchievements();
 
             return true;
             
@@ -460,16 +410,6 @@ export default {
           window.localStorage.setItem('dateSavedSpinningDisk', date);
         }
       },
-      // saveLogging(){
-      //   let data = {time: this.$store.getters.getLogTotalTime};
-      //   let data_json = JSON.stringify(data);
-      //   window.localStorage.setItem('loggingSpinningDisk', data_json);
-      // },
-      saveAchievements(){
-        let data_json = JSON.stringify(this.$store.getters.getAchievements);
-        window.localStorage.setItem('achievementsSpinningDisk', data_json);
-      },
-      //need to check on App mount that a UUID exists already or create a new one - this UUID is used in logging and rasa conversations
       updateUUID(){
         let stored_uuid;
         if(this.getUsesLocalStorage){

@@ -48,7 +48,7 @@
 			<div class='d-grid gap-1 d-md-block mb-1'>
 				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="button-lg button-primary me-1" @click="speedRaw">Voltage (open loop)</button>
 				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="button-lg button-secondary me-1" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" @click="speedPid(); this.$store.dispatch('setAchievementCompleted', 'velocity-mode')">Velocity (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" @click="speedPid">Velocity (PID)</button>
 				<button id="stop" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" @click="stop">Exit mode</button>
 			</div>
 		</div>
@@ -536,7 +536,6 @@ export default {
 					
 					if(obj.error){
 						_this.hasStopped(obj.error);
-						_this.$store.dispatch('setAchievementCompleted', 'hardware-error');
 					}
 					else if(obj.t){
 

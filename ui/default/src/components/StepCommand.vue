@@ -6,7 +6,7 @@
                 <div class="d-flex flex-row align-items-center" v-if='mode == "speedRaw"'>
                     <span class='input-group-text' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</span>
                     <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step_raw" v-model="step_size">
-                    <button class='button-lg button-primary' id="run" @click="runStep(); this.$store.dispatch('setAchievementCompleted', 'speedRaw-step-input')" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
+                    <button class='button-lg button-primary' id="run" @click="runStep" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
                     <button class='button-lg button-danger' v-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
                 </div>
             
@@ -21,7 +21,7 @@
                 <div class='d-flex flex-row align-items-center' v-else-if='mode == "positionPid"'>
                     <span class='input-group-text' for="step_speed">Step size (0 - {{max_position_step.toFixed(2)}} rad)</span>
                     <input type="number" step='0.01' :max='max_position_step.toFixed(2)' :min='-max_position_step.toFixed(2)' :class="(parseFloat(step_size) >= -max_position_step && parseFloat(step_size) <= max_position_step) ? 'form-control' : 'form-control is-invalid'" id="step_position" v-model="step_size" >
-                    <button class='button-lg button-primary' v-if='!getIsStepRunning' id="run" @click="runStep(); this.$store.dispatch('checkPIDControllerConditions')">Run</button>
+                    <button class='button-lg button-primary' v-if='!getIsStepRunning' id="run" @click="runStep">Run</button>
                     <button class='button-lg button-danger' v-else-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
                 </div>
         </div>
@@ -105,9 +105,6 @@ export default {
              this.$store.dispatch('setSpeed', rad_s);
 
          }
-
-         
-         this.$store.dispatch('addMultipleAchievement','multiple-runs');
          
      },
      stopStep(){
