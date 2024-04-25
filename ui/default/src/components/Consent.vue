@@ -86,10 +86,8 @@ export default {
       consent(){
           this.$store.dispatch('setLoggingConsent', this.logging);
           if(this.getUsesLocalStorage){
-            let course = this.getCourse;
-            let exp = this.getExperiment;
-            const item = `consent-${exp}-${course}`
-              window.localStorage.setItem(item, this.logging);
+            const item = 'practable-consent'
+            window.localStorage.setItem(item, this.logging);
           }
           
 

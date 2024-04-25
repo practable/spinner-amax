@@ -147,6 +147,8 @@ export default {
   created(){  
     this.$store.dispatch('setDataRecorder', this.isDataRecorderOn);    
     this.$store.dispatch('setUsesLocalStorage', this.hasStorage());
+    this.updateUUID();
+    this.checkConsent();
   },
   mounted(){
     if(this.getUsesLocalStorage && this.hasDataToLoad()){
@@ -160,18 +162,13 @@ export default {
 
   },
   watch:{
-    getCourse(){
-        this.updateUUID();
-        this.checkConsent();
-    }
+    
   },
   computed:{
     ...mapGetters([
 			'getDraggable',
       'getUsesLocalStorage',
       'getIsLoggingOn',
-      'getExperiment',
-      'getCourse',
       'getLatestDatasetIndex'
 		]),
     isMobile(){
@@ -403,7 +400,7 @@ export default {
       updateUUID(){
         let stored_uuid;
         if(this.getUsesLocalStorage){
-          stored_uuid = window.localStorage.getItem('userName');
+          stored_uuid = window.localStorage.getItem('userName');    //userName is set by practable booking system
         } else {
           stored_uuid = null;
         }
@@ -411,22 +408,20 @@ export default {
         if(stored_uuid){
             this.$store.dispatch('setUUID', stored_uuid);
         } else{
-          this.$store.dispatch('setUUID', 'NA');
+          this.$store.dispatch('setUUID', 'null');
         }
       },
       checkConsent(){
         let logging_consent;
         if(this.getIsLoggingOn){
             if(this.getUsesLocalStorage){
-                let course = this.getCourse;
-                let exp = this.getExperiment;
-                const item = `consent-${exp}-${course}`
+                const item = 'practable-consent'
                 logging_consent = window.localStorage.getItem(item);
             } else {
                 logging_consent = null;
             }
             
-            if(logging_consent == null){
+            if(logging_consent == null || logging_consent == 'false'){
                 this.showConsentModal = true;
             
             } else{
@@ -438,9 +433,7 @@ export default {
             this.showConsentModal = false;
 
             if(this.getUsesLocalStorage){
-                let course = this.getCourse;
-                let exp = this.getExperiment;
-                const item = `consent-${exp}-${course}`
+                const item = 'practable-consent'
                 window.localStorage.setItem(item, false);
             }
         }
