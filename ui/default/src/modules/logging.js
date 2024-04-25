@@ -11,7 +11,7 @@ const loggingStore = {
     state: () => ({
         logSocket: null,
         uuid: '',
-        isLoggingOn: true,                  //set for difference UI versions
+        isLoggingOn: false,                  //set for difference UI versions
         logging_consent_given: false,
         hardware: '',           //will be set from the LoggingStream.vue component 
         exp: 'spinner',         //hardcoded for this UI

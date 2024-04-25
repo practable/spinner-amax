@@ -799,6 +799,7 @@ export default {
             scatterChart.data.datasets.push({
                 label:"function",
                 pointBackgroundColor: colour,
+                borderColor: colour,
                 data: data
                 });
                 scatterChart.update(0);
@@ -807,6 +808,7 @@ export default {
             scatterChart.data.datasets.push({
                 label:`dataset${new_index}`,
                 pointBackgroundColor: this.getDarkTheme ? this.dark_colours[new_index % this.dark_colours.length] : this.light_colours[new_index % this.light_colours.length],
+                borderColor: this.getDarkTheme ? this.dark_colours[new_index % this.dark_colours.length] : this.light_colours[new_index % this.light_colours.length],
                 data: []
                 });
             scatterChart.update(0);
