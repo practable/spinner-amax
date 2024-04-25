@@ -4,10 +4,10 @@
 <template>
 <div class='m-2 p-2 practable-component'>
     <div class="d-grid gap-2 d-sm-block">
-        <button type='button' class="button-xsm button-primary" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
-        <button type='button' class="button-xsm button-danger" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
-        <button type='button' class="button-xsm button-warning" id="clearButton" @click="toggleResetModal">Reset</button>
-        <button type='button' class="button-xsm button-primary" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
+        <button type='button' class="button-xsm button-primary" aria-label="record" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
+        <button type='button' class="button-xsm button-danger" aria-label="stop" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
+        <button type='button' class="button-xsm button-warning" aria-label="reset" id="clearButton" @click="toggleResetModal">Reset</button>
+        <button type='button' class="button-xsm button-primary" aria-label="download csv" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
     </div>
     <div class='row m-2 justify-content-center'>
       <div v-if='getIsRecording' class='col-2'>
@@ -24,7 +24,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Reset Data</h5>
-              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @click='toggleResetModal'>
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close reset modal" @click='toggleResetModal'>
                 
               </button>
             </div>
@@ -32,8 +32,8 @@
               <p>Are you sure you want to Reset? This will clear all stored data.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="button-xsm button-danger" id='resetmodalclear' @click="clearData(); toggleResetModal();">Reset</button>
-              <button type="button" class="button-xsm button-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
+              <button type="button" class="button-xsm button-danger" id='resetmodalclear' aria-label="reset" @click="clearData(); toggleResetModal();">Reset</button>
+              <button type="button" class="button-xsm button-secondary" data-dismiss="modal" data-bs-dismiss="modal" aria-label="cancel reset" @click="toggleResetModal">Cancel</button>
             </div>
           </div>
         </div>
