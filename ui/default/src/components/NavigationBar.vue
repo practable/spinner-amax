@@ -149,10 +149,19 @@ export default {
       'getIsLoggingOn',
       'getLogUUID',
       'getDarkTheme',
+      'getConfigJSON'
     ]),
       labName(){
-        return 'Spinning Disk';
-      }
+        return this.getLabID == '' ? 'Spinner Lab': ('Spinner Lab: ' + this.getLabID);
+      },
+      getLabID(){
+        let config = this.getConfigJSON;
+        if(config.parameters != undefined){
+          return config.name;
+        } else{
+          return '';
+        }
+      },
   },
   methods: {
       addTool(tool){
