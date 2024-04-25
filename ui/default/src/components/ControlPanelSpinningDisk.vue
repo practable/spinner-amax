@@ -55,9 +55,9 @@
 
 		<div class='row d-flex justify-content-center'>
 			<div class='col-auto'>
-				<div class='input-group' v-show='showInputType'>
+				<div class='input-group' v-if='getCurrentMode != "stopped"'>
 					<span class="input-group-text" for="inputSelect">Input type</span>
-					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode">
+					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode" :disabled='!showInputType'>
 						<option v-if='getCurrentMode == "speedRaw"' value="free">Free</option>
 						<option value="step">Step</option>
 						<option value="ramp">Ramp</option>
