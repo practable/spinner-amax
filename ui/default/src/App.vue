@@ -437,8 +437,6 @@ export default {
                 window.localStorage.setItem(item, false);
             }
         }
-        
-        
       },
       closeConsentModal(){
         this.showConsentModal = false;

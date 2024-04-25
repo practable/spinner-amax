@@ -15,19 +15,19 @@
 			<template v-slot:options>
 				<h2>Live graph options</h2>
 				<div class='row'>
-					<div class='col-6'>
+					<div class='col-12'>
 						<label class='m-2' for="smoothie_y_max">Y Axis Max</label>
 						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_max" v-model="smoothie_y_max_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
 						<input v-else id="smoothie_y_max" v-model="smoothie_y_max_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-
+					</div>
+					<div class="col-12">		
 						<label class='m-2' for="smoothie_y_min">Y Axis Min</label>
 						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_min" v-model="smoothie_y_min_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
 						<input v-else id="smoothie_y_min" v-model="smoothie_y_min_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
 					</div>
-					<div class='col-6'>
+					<div class='col-12'>
 						<label class='m-2' for="smoothie_millis_per_pixel">Milliseconds per pixel</label>
 						<input id="smoothie_millis_per_pixel" v-model="smoothie_millis_per_pixel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-						
 					</div>
 				</div>
 			</template>
