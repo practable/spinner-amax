@@ -3,20 +3,20 @@
 <template>
   <div>
     <!-- A non-rendered component that sets up the streams -->
-    <logging-stream />
+    <!-- <logging-stream /> -->
   </div>
 </template> 
 
 <script>
 
-import LoggingStream from './LoggingStream.vue'; 
+//import LoggingStream from './LoggingStream.vue'; //Deprecated, new logging system in development
 import dayjs from "dayjs";
 import { mapGetters } from 'vuex';
 
 export default {
   name: "Streams",
   components: {
-    LoggingStream,
+    //LoggingStream, //deprecated for new logging system
   },
   data(){
     return{

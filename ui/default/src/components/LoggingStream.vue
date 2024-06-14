@@ -1,5 +1,5 @@
 //vue3 update
-
+//Deprecated for new logging system based on HTTP server
 <template>
 
     <div>

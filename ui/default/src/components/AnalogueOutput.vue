@@ -1,6 +1,3 @@
-//Vue3 update
-//Orthogonal
-
 <template>
 
     <canvas id='output'></canvas>
