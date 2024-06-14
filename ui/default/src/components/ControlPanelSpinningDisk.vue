@@ -58,9 +58,9 @@
 				<div class='input-group' v-if='getCurrentMode != "stopped"'>
 					<span class="input-group-text" for="inputSelect">Input type</span>
 					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode" :disabled='!showInputType'>
-						<option v-if='getCurrentMode == "speedRaw"' value="free">Free</option>
-						<option value="step">Step</option>
-						<option value="ramp">Ramp</option>
+						<option v-if='getCurrentMode == "speedRaw"' id="free-mode-select" value="free">Free</option>
+						<option id="step-mode-select" value="step">Step</option>
+						<option id="ramp-mode-select" value="ramp">Ramp</option>
 					</select> 
 				</div>
 			</div>

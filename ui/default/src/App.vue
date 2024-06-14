@@ -11,13 +11,13 @@
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
 
-    <transition name='fade'>
+      <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Load data</h5>
-              <button type="button" class="btn btn-close" aria-label="Close" @click='showLoadDataModal = false'>
+              <button type="button" id="close-load-modal" class="btn btn-close" aria-label="Close" @click='showLoadDataModal = false'>
                 
               </button>
             </div>
@@ -26,8 +26,8 @@
               <p>Data was saved on {{ saved_date }}. Do you want to load this previous data?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="load">Load</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal" @click='showLoadDataModal = false'>Cancel</button>
+              <button type="button" class="btn btn-primary" id="load-data" @click="load">Load</button>
+              <button type="button" class="btn btn-danger" id="do-not-load-data" data-dismiss="modal" data-bs-dismiss="modal" @click='showLoadDataModal = false'>Cancel</button>
             </div>
           </div>
         </div>
