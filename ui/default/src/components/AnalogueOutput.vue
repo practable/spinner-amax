@@ -13,7 +13,7 @@ export default {
 
   name: 'AnalogueOutput',
   props: {
-      outputValue: String,
+      outputValue: Number,
       minValue: Number,
       maxValue: Number,
       intervalValue: Number,
