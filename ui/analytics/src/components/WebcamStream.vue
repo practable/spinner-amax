@@ -1,7 +1,7 @@
 //Vue3 updated
 
 <template>
-<div class='container-sm m-2 bg-white border rounded'>
+<div class='container-fluid m-2 practable-component'>
 <div class='row' id="video">
 	<div class='col-12'>
 		<video-element :url="url" />

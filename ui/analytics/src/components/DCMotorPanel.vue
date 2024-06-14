@@ -5,16 +5,16 @@
    <div class="form-group row justify-content-center align-items-center">
         <label class="col-lg-2 col-sm-6 col-form-label" for="voltage">Input voltage ({{getVoltageAsString}}V)</label>
         <div class="col-lg-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-            <input type="range" class="form-range" :min="-maxV" :max="maxV" step="0.01" v-model="voltage" list='tickmarks' id="voltage" @change='setVoltage'>
+            <input type="range" class="slider" :min="-maxV" :max="maxV" step="0.01" v-model="voltage" list='tickmarks' id="voltage" @change='setVoltage'>
             <div class='row'>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' @click='incrementVoltage(-0.1)'>-</button></div>
+                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' aria-label="increment voltage negative tenth" @click='incrementVoltage(-0.1)'>-</button></div>
                 <div class='col-4'><label type='label' class='col-form-label'>0.1V</label></div>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' @click='incrementVoltage(+0.1)'>+</button></div>
+                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' aria-label="increment voltage positive tenth" @click='incrementVoltage(+0.1)'>+</button></div>
             </div>
             <div class='row'>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' @click='incrementVoltage(-0.01)'>-</button></div>
+                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' aria-label="increment voltage negative hundredth" @click='incrementVoltage(-0.01)'>-</button></div>
                 <div class='col-4'><label class='col-form-label'>0.01V</label></div>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' @click='incrementVoltage(+0.01)'>+</button></div>
+                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' aria-label="increment voltage positive hundredth" @click='incrementVoltage(+0.01)'>+</button></div>
             </div>
         </div>
 

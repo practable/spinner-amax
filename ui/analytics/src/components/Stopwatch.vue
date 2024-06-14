@@ -1,14 +1,16 @@
 //Vue3 updated
 
 <template>
-    <div class='m-2 p-2 bg-white border rounded stopwatch-container' id='stopwatch-container'>
-        <div class="row-sm mb-2">
-            <div class='form-group'><input type='text' class='form-control' id="stopwatch" :value="time_string" readonly></div>
+    <div class='container-fluid m-2 practable-component' id='stopwatch-container'>
+        <div class="row-sm m-2">
+            <div class='form-group'>
+                <input type='text' class='form-control' id="stopwatch" :value="time_string" readonly>
+            </div>
         </div>
-        <div class="col pb-2 d-grid gap-2 d-md-block">
-            <button class="btn btn-default btn-xs me-2" v-if="!isTiming" id="start" @click="startTimer">Start</button>
-            <button class="btn btn-default btn-xs me-2" v-if="isTiming" id="pause" @click="pauseTimer">Pause</button>
-            <button class="btn btn-default btn-xs me-2" id="reset" @click="resetTimer">Reset</button>
+        <div class="col d-grid d-sm-block">
+            <button class="button-sm button-primary" v-if="!isTiming" id="start" @click="startTimer">Start</button>
+            <button class="button-sm button-danger" v-if="isTiming" id="pause" @click="pauseTimer">Stop</button>
+            <button class="button-sm button-warning" id="reset" @click="resetTimer">Reset</button>
         </div>
     </div> 
 </template>
@@ -83,27 +85,10 @@ export default {
 </script>
 
 <style scoped>
-.stopwatch-container{
-    position: relative;
-    max-width: 40%;
-    min-width: 300px;
-    min-height: 100px;
-}
 
 #stopwatch{
     font-size: 14;
     text-align: center;
-    width: 100%;
 }
-
-
-#start       {background-color: rgb(3, 248, 12);}
-#start:hover {background-color: #3e8e41} 
-
-#pause       {background-color: #e13131ff;}
-#pause:hover {background-color: #cc1e1eff;}
-
-#reset  {background-color: #e17a31ff;}
-#reset:hover  {background-color: #cc661eff;}
 
 </style>

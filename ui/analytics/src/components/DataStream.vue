@@ -2,7 +2,7 @@
 
 <template>
 
-    <div v-if='version == "spinning_disk"'>
+    <div>
 		<control-panel-spinning-disk :url="url"/>
 	</div>
 
@@ -24,19 +24,12 @@ export default {
         }
     },
 	mounted(){
-		// var _this = this;
-		// var reconnect = function() {
-		// 	console.log('reconnect running');
-		// 	_this.getWebsocketConnection();
-		// };
-		//make second and subsequent connections
 		document.addEventListener("streams:dropped", this.getWebsocketConnection);
 	},
     computed:{
 		...mapGetters({
 			urlOK: 'getDataURLObtained',
-			url: 'getDataURL',
-			version: 'getRemoteLabVersion',
+			url: 'getDataURL'
 		}),
 		streamOK(){
 			return this.$store.getters.getStream("data");

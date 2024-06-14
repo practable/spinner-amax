@@ -2,32 +2,29 @@
 
 <template>
         
-        <div class="row d-flex justify-content-center m-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
-            <div class='col-auto'>
-                <div class='input-group' v-if='mode == "speedRaw"'>
-                    <span class='input-group-text' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</span>
-                    <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step_raw" v-model="step_size">
-                    <button class='btn btn-lg' id="run" @click="runStep(); this.$store.dispatch('setAchievementCompleted', 'speedRaw-step-input')" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
-                    <button class='btn btn-lg btn-danger' v-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
-                </div>
-            
-
-                <div class='input-group' v-else-if='mode == "speedPid"'>
-                    <span class='input-group-text' for="step_speed">Step size (0 - {{max_speed_step}} rad/s)</span>
-                    <input type="number" :max='max_speed_step' :min='-max_speed_step' :class="(parseFloat(step_size) >= -max_speed_step && parseFloat(step_size) <= max_speed_step) ? 'form-control' : 'form-control is-invalid'" id="step_speed" v-model="step_size">
-                    <button class='btn btn-lg' id="run" @click="runStep" :disabled='Math.abs(step_size) > max_speed_step'>Run</button>
-                    <button class='btn btn-lg btn-danger' v-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
-                </div>
-
-                <div class='input-group' v-else-if='mode == "positionPid"'>
-                    <span class='input-group-text' for="step_speed">Step size (0 - {{max_position_step.toFixed(2)}} rad)</span>
-                    <input type="number" step='0.01' :max='max_position_step.toFixed(2)' :min='-max_position_step.toFixed(2)' :class="(parseFloat(step_size) >= -max_position_step && parseFloat(step_size) <= max_position_step) ? 'form-control' : 'form-control is-invalid'" id="step_position" v-model="step_size" >
-                    <button class='btn btn-lg' v-if='!getIsStepRunning' id="run" @click="runStep(); this.$store.dispatch('checkPIDControllerConditions')">Run</button>
-                    <button class='btn btn-lg btn-danger' v-else-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
-                </div>
-
-            </div>
+    <div class="mt-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
+        <div class="d-lg-flex align-items-center" v-if='mode == "speedRaw"'>
+            <span class='input-group-text' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</span>
+            <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step_raw" v-model="step_size">
+            <button class='button-lg button-primary' id="run" @click="runStep" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
+            <button class='button-lg button-danger' v-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
         </div>
+    
+
+        <div class='d-lg-flex align-items-center' v-else-if='mode == "speedPid"'>
+            <span class='input-group-text' for="step_speed">Step size (0 - {{max_speed_step}} rad/s)</span>
+            <input type="number" :max='max_speed_step' :min='-max_speed_step' :class="(parseFloat(step_size) >= -max_speed_step && parseFloat(step_size) <= max_speed_step) ? 'form-control' : 'form-control is-invalid'" id="step_speed" v-model="step_size">
+            <button class='button-lg button-primary' id="run" @click="runStep" :disabled='Math.abs(step_size) > max_speed_step'>Run</button>
+            <button class='button-lg button-danger' v-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
+        </div>
+
+        <div class='d-lg-flex align-items-center' v-else-if='mode == "positionPid"'>
+            <span class='input-group-text' for="step_speed">Step size (0 - {{max_position_step.toFixed(2)}} rad)</span>
+            <input type="number" step='0.01' :max='max_position_step.toFixed(2)' :min='-max_position_step.toFixed(2)' :class="(parseFloat(step_size) >= -max_position_step && parseFloat(step_size) <= max_position_step) ? 'form-control' : 'form-control is-invalid'" id="step_position" v-model="step_size" >
+            <button class='button-lg button-primary' v-if='!getIsStepRunning' id="run" @click="runStep">Run</button>
+            <button class='button-lg button-danger' v-else-if='getIsStepRunning' id="wait" @click="stopStep">Stop</button>
+        </div>
+    </div>
        
 </template>
 
@@ -47,26 +44,19 @@ export default {
         max_position_step: 6, 
         max_speed_step: 100,
         max_voltage_step: 6,
-        //isStepRunning: false,     //updated to use vuex instead
     }
   },
   created(){
-      let version = this.$store.getters.getRemoteLabVersion;
-        if( version == 'variable_governor'){
-            this.max_position_step = Math.PI;             //variable governor can spin full circle
-        } else if(version == 'robot_arm'){
-            this.max_position_step = 3*Math.PI/10;          //robot arm is soft limited to 300 encoder steps from 0.
-        }
+      
 	},
     computed:{
-        ...mapGetters([
-            'getIsStepRunning'
+    ...mapGetters([
+        'getIsStepRunning'
         ])
     },
   methods: {
       ...mapActions([
           'setDraggable',
-          'updateColourIndex',
           'setIsStepRunning'
       ]),
      runStep(){
@@ -84,8 +74,6 @@ export default {
         //  this.$store.dispatch('setStep', step);
          
         this.sendCommand();
-
-        this.updateColourIndex();
              
      },
      sendCommand(){
@@ -111,9 +99,6 @@ export default {
              this.$store.dispatch('setSpeed', rad_s);
 
          }
-
-         
-         this.$store.dispatch('addMultipleAchievement','multiple-runs');
          
      },
      stopStep(){
@@ -142,10 +127,6 @@ export default {
 </script>
 
 <style scoped>
-input{
-    min-width: 20%;
-    max-width: 50%;
-}
 .error{
     /* border:thick solid red */
     border: auto;
@@ -155,11 +136,6 @@ input{
     /* border:thick solid red */
     border: auto;
 }
-
-#run       {background-color:  rgb(74, 223, 37);}
-#run:hover {background-color: #0b7e0f} 
-#wait       {background-color:  rgb(255, 30, 0);}
-#wait:hover {background-color: #520303} 
 
 
 </style>
