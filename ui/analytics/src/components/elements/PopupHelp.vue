@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" @click="closeHelp">Close</button>
+                    <button type="button" class="btn btn-danger" id="close-modal" @click="closeHelp">Close</button>
                 </div>
             </div>
             </div>

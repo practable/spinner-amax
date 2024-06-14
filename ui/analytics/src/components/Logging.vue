@@ -166,7 +166,7 @@ export default {
       //should check if new inputs exists that are not in the input_listener_ids array and add if not
       document.querySelectorAll('input').forEach(el => {
           if(el.id != '' && !this.input_listener_ids.includes(el.id)){
-            //console.log(el.id)
+            console.log(el.id)
             this.input_listener_ids.push(el.id);
             this.AddInputChangeListener(el.id)
           }
@@ -282,7 +282,6 @@ export default {
       return log;
   },
     createClickLog(event){
-      console.log(event.target.id)
       let log = {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
@@ -578,7 +577,7 @@ export default {
       return log;
     },
     sendLog(log){
-      //console.log(log)
+      console.log(log)
         var accessURL = `${this.instance_path}${config.logging_path}?username=${this.getLogUUID}&course=${this.course}&hardware=${this.hardware}`; 
         axios
         .post(accessURL, 

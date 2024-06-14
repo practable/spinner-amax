@@ -11,9 +11,7 @@
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
 
-      <logging id="logging-component" />
-
-    <transition name='fade'>
+      <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -104,7 +102,6 @@ import MotorSnapshot from "./components/MotorSnapshot.vue";
 import Instructions from "./components/Instructions.vue";
 import Streams from './components/Streams.vue';
 import Consent from './components/Consent.vue';
-import Logging from './components/Logging.vue'
 
 import { mapGetters } from 'vuex';
 
@@ -124,7 +121,6 @@ export default {
     MotorSnapshot,
     Instructions,
     Consent,
-    Logging
   },
   data() {
    return {
