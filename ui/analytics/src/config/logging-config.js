@@ -5,6 +5,9 @@ const config = {
 
     //UPDATE this with your remote lab version
     remote_lab_ui: 'spinner-3.0',
+
+    click_logs_on: true,
+    mouse_enter_logs_on: false,
     
     //Add any hotkeys that you want to log
     hotkeys: [

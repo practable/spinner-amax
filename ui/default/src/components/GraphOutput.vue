@@ -22,13 +22,13 @@
                     <div class='input-group'>
                         <label class='input-group-text' for="function">Plot function: </label>
                         <select class='form-select form-select-sm' name="function" aria-label="select function" id="function" v-model="currentFunction">
-                            <option value="linear">Linear</option>
-                            <option value="quadratic">Quadratic</option>
-                            <option value="trigonometric">Trigonometric</option>
-                            <option value="exponential">Exponential</option>
-                            <option v-if='getGraphDataParameter != "theta"' value="step">Step (1st Order)</option>
-                            <option v-if='getGraphDataParameter != "theta"' value="ramp">Ramp (1st Order)</option>
-                            <option v-if='getGraphDataParameter == "theta"' value="step2nd">Step (2nd Order)</option>
+                            <option id='select-linear-option' value="linear">Linear</option>
+                            <option id='select-quadratic-option' value="quadratic">Quadratic</option>
+                            <option id='select-trigonometric-option' value="trigonometric">Trigonometric</option>
+                            <option id='select-exponential-option' value="exponential">Exponential</option>
+                            <option id='select-first-step-option' v-if='getGraphDataParameter != "theta"' value="step">Step (1st Order)</option>
+                            <option id='select-first-ramp-option' v-if='getGraphDataParameter != "theta"' value="ramp">Ramp (1st Order)</option>
+                            <option id='select-second-step-option' v-if='getGraphDataParameter == "theta"' value="step2nd">Step (2nd Order)</option>
                         </select> 
                     </div>
                 </div>

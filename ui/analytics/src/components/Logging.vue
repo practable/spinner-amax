@@ -20,7 +20,8 @@ export default {
       hardware: 'spinner',             //from query param - not yet implemented
 
       //required - get from URL params
-      instance_path: '',
+      //FOR DEVELOPMENT - hardcoded
+      instance_path: 'https://app.practable.io/ed-log-dev/',
       //for storing the elements that already have listeners attached
       input_listener_ids: [],
       
@@ -44,14 +45,15 @@ export default {
             this.createSessionExpiredLog();
           }
       },
-      getNumMessages(){
-        let messages = this.getMessages;
-        let latest_message_level = messages[messages.length - 1].level;
-          if(latest_message_level == 'WARN' || latest_message_level == 'ERROR' || latest_message_level == 'FATAL'){
-            let log = this.createExperimentLog(messages[messages.length - 1]);
-            this.sendLog(log);
-          }
-      },
+      //INCLUDE THIS ONCE THE CHAT COMPONENT IS BACK IN
+      // getNumMessages(){
+      //   let messages = this.getMessages;
+      //   let latest_message_level = messages[messages.length - 1].level;
+      //     if(latest_message_level == 'WARN' || latest_message_level == 'ERROR' || latest_message_level == 'FATAL'){
+      //       let log = this.createExperimentLog(messages[messages.length - 1]);
+      //       this.sendLog(log);
+      //     }
+      // },
 
   },
   created(){
@@ -61,13 +63,16 @@ export default {
     window.addEventListener("DOMContentLoaded", (event) => {
 
       try {
+        
         let query = new URLSearchParams(window.location.search);
-        let la_auth = query.get('la');
-        let decoded_la_auth = decodeURIComponent(la_auth);
-        console.log(decoded_la_auth)
 
-        let la_host = query.get('lh');
-        this.instance_path = decodeURIComponent(la_host);
+        //ADD THIS BACK IN WHEN THESE ARE ADDED TO THE URL PARAMS
+        // let la_auth = query.get('la');
+        // let decoded_la_auth = decodeURIComponent(la_auth);
+        // console.log(decoded_la_auth)
+
+        // let la_host = query.get('lh');
+        // this.instance_path = decodeURIComponent(la_host);
 
         //get course query parameter
         let course = query.get('course');
@@ -92,21 +97,21 @@ export default {
       this.createAndSendSessionStartLog();   //will run everytime the component mounts
 
       //all click events are logged
+      if(config.click_logs_on){
         window.addEventListener("click", (event) => {
               let log = this.createClickLog(event);
               this.sendLog(log);
           });
+      }
+
+      if(config.mouse_enter_logs_on){
+        this.AddMouseEnterListeners();
+      }
+        
       
       this.AddNewInputListeners();
-
-
-      this.AddMouseEnterListeners();
-
       this.AddHotkeyListener();
-
       this.AddDragDropListeners();
-
-      //this.AddPageClosedListener();    //should run on window/tab close or refresh
 
       config.interval_logs.forEach(log => {
             this.AddIntervalLog(log);
@@ -293,7 +298,7 @@ export default {
         "object": 
           {
             "id": event.target.id,
-            "parent": event.target.parentNode.id,
+            "parent": event.target.parentNode ? event.target.parentNode.id : 'none',
             "ui": config.remote_lab_ui
           },
         "context": 

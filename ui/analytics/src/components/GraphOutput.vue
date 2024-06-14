@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <label class='input-group-text' for="function">Plot function: </label>
                         <select class='form-select form-select-sm' name="function" aria-label="select function" id="function" v-model="currentFunction">
-                            <option value="linear">Linear</option>
+                            <option id='select-linear-option' value="linear">Linear</option>
                             <option value="quadratic">Quadratic</option>
                             <option value="trigonometric">Trigonometric</option>
                             <option value="exponential">Exponential</option>
