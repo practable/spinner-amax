@@ -2,7 +2,7 @@
 
 <template>
 
-<div class='container-sm m-2 bg-white border rounded'>
+<div class='container-fluid m-2 practable-component'>
 	<div class='row align-content-center m-1'>
 		<div class='col-12'>
 			<canvas v-show='getCurrentMode == "positionPid"' id="smoothie-chart_theta"></canvas>
@@ -10,27 +10,31 @@
 		</div>
 	</div>
 
-	<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-		<template v-slot:options>
-			<h2>Live graph options</h2>
-			<div class='row'>
-				<div class='col-6'>
-					<label class='m-2' for="smoothie_y_max">Y Axis Max</label>
-					<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_max" v-model="smoothie_y_max_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					<input v-else id="smoothie_y_max" v-model="smoothie_y_max_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+	<div class="d-flex flex-row">
+		<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+			<template v-slot:options>
+				<h2>Live graph options</h2>
+				<div class='row'>
+					<div class='col-12'>
+						<label class='m-2' for="smoothie_y_max">Y Axis Max</label>
+						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_max" v-model="smoothie_y_max_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+						<input v-else id="smoothie_y_max" v-model="smoothie_y_max_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+					</div>
+					<div class="col-12">		
+						<label class='m-2' for="smoothie_y_min">Y Axis Min</label>
+						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_min" v-model="smoothie_y_min_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+						<input v-else id="smoothie_y_min" v-model="smoothie_y_min_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+					</div>
+					<div class='col-12'>
+						<label class='m-2' for="smoothie_millis_per_pixel">Milliseconds per pixel</label>
+						<input id="smoothie_millis_per_pixel" v-model="smoothie_millis_per_pixel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
+					</div>
+				</div>
+			</template>
+		</toolbar>
+	</div>
 
-					<label class='m-2' for="smoothie_y_min">Y Axis Min</label>
-					<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_min" v-model="smoothie_y_min_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					<input v-else id="smoothie_y_min" v-model="smoothie_y_min_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-				</div>
-				<div class='col-6'>
-					<label class='m-2' for="smoothie_millis_per_pixel">Milliseconds per pixel</label>
-					<input id="smoothie_millis_per_pixel" v-model="smoothie_millis_per_pixel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					
-				</div>
-			</div>
-		</template>
-	</toolbar>
+	
 	
 
 	<div class="panel panel-default m-2">
@@ -42,21 +46,21 @@
 	<div id="buttons">
 		<div class='row'>
 			<div class='d-grid gap-1 d-md-block mb-1'>
-				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="btn btn-lg btn-success me-1" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="btn btn-lg btn-secondary me-1" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="btn btn-lg btn-primary me-1" @click="speedPid(); this.$store.dispatch('setAchievementCompleted', 'velocity-mode')">Velocity (PID)</button>
-				<button id="stop" v-if='getCurrentMode != "stopped"' class="btn btn-lg btn-danger" @click="stop">Exit mode</button>
+				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
+				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="button-lg button-secondary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
+				<button id="stop" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
 			</div>
 		</div>
 
 		<div class='row d-flex justify-content-center'>
 			<div class='col-auto'>
-				<div class='input-group' v-show='showInputType'>
+				<div class='input-group' v-if='getCurrentMode != "stopped"'>
 					<span class="input-group-text" for="inputSelect">Input type</span>
-					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode">
+					<select class="form-select form-select-sm" name="inputSelect" id="inputSelect" v-model="inputMode" :disabled='!showInputType'>
 						<option v-if='getCurrentMode == "speedRaw"' value="free">Free</option>
 						<option value="step">Step</option>
-						<option v-if='getRemoteLabVersion != "robot_arm"' value="ramp">Ramp</option>
+						<option value="ramp">Ramp</option>
 					</select> 
 				</div>
 			</div>
@@ -126,7 +130,7 @@
 		</div>
         <div class='d-flex row justify-content-center m-2'>
             <div class='col-auto'>
-				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="btn btn-danger btn-sm" @click="resetParameters">Reset PID params</button>
+				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
 			</div>
         </div>
 	</div>
@@ -193,7 +197,6 @@ export default {
 		...mapGetters([
 			'getModeName',
 			'getDataURLObtained',
-			'getRemoteLabVersion',
 			'getCurrentMode',
 			'getSessionExpired',
 			'getMaxReached',
@@ -532,7 +535,6 @@ export default {
 					
 					if(obj.error){
 						_this.hasStopped(obj.error);
-						_this.$store.dispatch('setAchievementCompleted', 'hardware-error');
 					}
 					else if(obj.t){
 
@@ -661,92 +663,13 @@ export default {
 	height: 120px;
 }
 
-.slidecontainer {
-	width: 100%; /* Width of the outside container */
-}
-.slider {
-	-webkit-appearance: none;
-	width: 100%;
-	height: 15px;
-	border-radius: 5px;  
-	background: #d3d3d3;
-	outline: none;
-	opacity: 0.7;
-	-webkit-transition: .2s;
-	transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	border-radius: 50%; 
-	background: #5b7fa5ff; 
-	cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	border-radius: 50%;
-	background: #5b7fa5ff;
-	cursor: pointer;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-	opacity: 1; /* Fully shown on mouse-over */
-}
-
 .sliderlabel{ text-align: left;}
 
 select{
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
-    
     background-color: #4490d8;
 }
-
-#kp{
-    min-width: 100px;
-}
-
-#ki{
-    min-width: 100px;
-}
-
-#kd{
-    min-width: 100px;
-}
-
-
-/* #setmode       {background-color: rgb(3, 248, 12);}
-#setmode:hover {background-color: #3e8e41}  */
-
-/* #reset       {background-color: rgba(248, 72, 3, 0.658);}
-#reset:hover {background-color: #5f0f04}  */
-
-/* #stop       {background-color: rgb(255, 0, 0);}
-#stop:hover {background-color: #cc1e1eff;} */
-
-/* #pidspeed        {background-color: rgb(255, 187, 0);}
-#pidspeed:hover  {background-color: #cc9d1eff;}
-
-#pidposition        {background-color: rgb(115, 255, 0);}
-#pidposition:hover  {background-color: rgb(58, 92, 3);}
-
-#dcmotor        {background-color: rgb(217, 255, 0);}
-#dcmotor:hover  {background-color: rgb(190, 187, 2);} */
-
-/* #resetHeight         {background-color: #5b7fa5ff;}
-#resetHeight:hover   {background-color: #46627fff;}
-
-#configure         {background-color: rgb(220, 38, 236);}
-#configure:hover   {background-color: rgb(76, 19, 82);}
-
-#set         {background-color: rgb(30, 250, 1);}
-#set:hover   {background-color: rgb(30, 172, 2);} */
 
 </style>

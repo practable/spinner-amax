@@ -3,7 +3,6 @@ import streamStore from './modules/streamStore.js'
 import dataStore from './modules/dataStore.js'
 import uiStore from './modules/uiStore.js'
 import commandStore from './modules/commandStore.js'
-import achievementStore from './modules/achievementStore.js'
 import loggingStore from './modules/logging.js';
 
 const store = createStore({
@@ -12,7 +11,6 @@ const store = createStore({
         data: dataStore,
         ui: uiStore,
         command: commandStore,
-        achievement: achievementStore,
         logging: loggingStore,
     }
 })

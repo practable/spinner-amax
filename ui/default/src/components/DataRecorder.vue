@@ -2,12 +2,12 @@
 //Streamlined data to not include alternative units
 
 <template>
-<div class='m-2 p-2 bg-white border rounded'>
+<div class='m-2 p-2 practable-component'>
     <div class="d-grid gap-2 d-sm-block">
-        <button type='button' class="btn btn-sm" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
-        <button type='button' class="btn btn-sm" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
-        <button type='button' class="btn btn-sm" id="clearButton" @click="toggleResetModal">Reset</button>
-        <button type='button' class="btn btn-sm" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
+        <button type='button' class="button-xsm button-primary" aria-label="record" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
+        <button type='button' class="button-xsm button-danger" aria-label="stop" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
+        <button type='button' class="button-xsm button-warning" aria-label="reset" id="clearButton" @click="toggleResetModal">Reset</button>
+        <button type='button' class="button-xsm button-primary" aria-label="download csv" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
     </div>
     <div class='row m-2 justify-content-center'>
       <div v-if='getIsRecording' class='col-2'>
@@ -24,7 +24,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Reset Data</h5>
-              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @click='toggleResetModal'>
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close reset modal" @click='toggleResetModal'>
                 
               </button>
             </div>
@@ -32,8 +32,8 @@
               <p>Are you sure you want to Reset? This will clear all stored data.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='resetmodalclear' @click="clearData(); toggleResetModal();">Reset</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal" @click="toggleResetModal">Cancel</button>
+              <button type="button" class="button-xsm button-danger" id='resetmodalclear' aria-label="reset" @click="clearData(); toggleResetModal();">Reset</button>
+              <button type="button" class="button-xsm button-secondary" data-dismiss="modal" data-bs-dismiss="modal" aria-label="cancel reset" @click="toggleResetModal">Cancel</button>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
@@ -55,6 +55,7 @@ export default {
     return {
         stopped_recording: false,
         showResetConfirmModal: false,
+        //data_set_index: 0,      //moved to dataStore vuex
     }
   },
   components: {
@@ -78,7 +79,8 @@ export default {
         'getTimeArray',
         'getCommandArray',
         'getDriveArray',
-        'getErrorArray'
+        'getErrorArray',
+        'getDatasetIndex'
         
     ]),
       hasData(){
@@ -106,11 +108,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'addToDatasetIndex',
+      'setDatasetIndex'
+    ]),
       record(){
           this.$store.dispatch('setStartTime', this.getCurrentTimeArray[0]);
       },
       stopRecording(){
         console.log('data recording stopped');
+        this.addToDatasetIndex();
       },
       // plot(){
       //     let angle = parseFloat(this.getCurrentAngle); //rad
@@ -134,7 +141,7 @@ export default {
           let errors = this.getErrorArray;
 
           angles.forEach((angle, index) => {
-              let data_object = {id: this.getNumData, t: parseFloat(times[index]), theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
+              let data_object = {id: this.getNumData, t: parseFloat(times[index]), set: this.getDatasetIndex, theta: angle.toFixed(2), omega: ang_vels[index].toFixed(2), command: commands[index], drive: drives[index], error: errors[index]};
               this.$store.dispatch('addData', data_object);
           })
           
@@ -142,64 +149,67 @@ export default {
       },
       clearData(){
           this.$store.dispatch('clearAllData');
+          this.setDatasetIndex(0);
       },
       toggleResetModal(){
           this.showResetConfirmModal = !this.showResetConfirmModal;
       },
       outputToCSV(){
+        let data = this.$store.getters.getData;
+        let current_dataset = 0;
+        let csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
+        let date = new Date();
 
-        if(this.getNumData > 100){
-          this.$store.dispatch('setAchievementCompleted', 'download-data');
-          
-        }
+        data.forEach(function(d){
+            if(d.set == current_dataset + 1){
+                let hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = `spinner-${date.getHours()}-${date.getMinutes()}-run${current_dataset}.csv`;
+                hiddenElement.click();
 
+                csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
+                current_dataset += 1;
+              }
 
-          let csv = '';
-          let filename = '';
-            let date = new Date();
-            filename = date.getDate().toString() + (date.getMonth() + 1).toString() + date.getFullYear().toString();
-              csv = 'Time/s,Angle/rad,AngVel/rad/s,Command,Drive,Error\n';
-            let data = this.$store.getters.getData;
-            data.forEach(function(d){
-                csv += d.t.toString();
+              csv += d.t.toString();
+              csv += ",";
+              csv += d.theta.toString();
+              csv += ',';
+              csv += d.omega.toString();
+              if(d.command != null){
                 csv += ",";
-                csv += d.theta.toString();
-                csv += ',';
-                csv += d.omega.toString();
-                if(d.command != null){
-                  csv += ",";
-                  csv += d.command.toString();
-                } else {
-                  csv += ",";
-                  csv += "";
-                }
-                if(d.drive != null){
-                  csv += ",";
-                  csv += d.drive.toString();
-                } else{
-                  csv += ",";
-                  csv += "";
-                }
+                csv += d.command.toString();
+              } else {
+                csv += ",";
+                csv += "";
+              }
+              if(d.drive != null){
+                csv += ",";
+                csv += d.drive.toString();
+              } else{
+                csv += ",";
+                csv += "";
+              }
 
-                if(d.error != null){
-                  csv += ",";
-                  csv += d.error.toString();
-                } else{
-                  csv += ",";
-                  csv += "";
-                }    
-                
-                csv += "\n";
-            });
-          
-            filename += '.csv';
-         
-          let hiddenElement = document.createElement('a');
-          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-          hiddenElement.target = '_blank';
-          hiddenElement.download = filename;
-          hiddenElement.click();
-      },
+              if(d.error != null){
+                csv += ",";
+                csv += d.error.toString();
+              } else{
+                csv += ",";
+                csv += "";
+              }    
+              
+              csv += "\n";
+        });
+
+        //output the final dataset
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = `spinner-${date.getHours()}-${date.getMinutes()}-run${current_dataset}.csv`;
+        hiddenElement.click();
+    },
       
   }
 }
@@ -214,18 +224,6 @@ export default {
 .error:focus{
     border:thick solid red
 }
-
-#recordButton       {background-color: rgb(0, 255, 8);}
-#recordButton:hover {background-color: #3e8e41} 
-
-#stopButton       {background-color: #e13131ff;}
-#stopButton:hover {background-color: #cc1e1eff;}
-
-#clearButton  {background-color: #e17a31ff;}
-#clearButton:hover  {background-color: #cc661eff;}
-
-#outputButton        {background-color: #e1b131ff;}
-#outputButton:hover  {background-color: #cc9d1eff;}
 
 .modal-show{
   display: block;
