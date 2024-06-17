@@ -281,7 +281,7 @@ export default {
       return log;
   },
     createClickLog(event){
-      console.log(event.target.id)
+      //console.log(event.target.id)
       let log = {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
@@ -577,7 +577,6 @@ export default {
       return log;
     },
     sendLog(log){
-      //console.log(log)
         var accessURL = `${this.instance_path}${config.logging_path}?username=${this.getLogUUID}&course=${this.course}&hardware=${this.hardware}`; 
         axios
         .post(accessURL, 
