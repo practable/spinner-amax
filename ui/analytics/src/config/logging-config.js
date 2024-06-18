@@ -9,6 +9,17 @@ const config = {
     click_logs_on: true,
     mouse_enter_logs_on: false,
     
+    //For generating graphs in the analytics system, you need to map the appropriate buttons (that send hardware commands to the lab) with the 
+    // names of the nodes that will appear on the graph (or a coded name)
+    graph_nodes: {
+        "run-voltage-step": 'voltage_step',
+        "run-voltage-ramp": 'voltage_ramp',
+        "run-position-step": 'position_step',
+        "run-position-step": 'position_ramp',
+        "run-speed-step": 'speed_step',
+        "run-speed-step": 'speed_ramp',
+    },
+    
     //Add any hotkeys that you want to log
     hotkeys: [
       'a',
