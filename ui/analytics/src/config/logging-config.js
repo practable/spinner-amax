@@ -15,9 +15,9 @@ const config = {
         "run-voltage-step": 'voltage_step',
         "run-voltage-ramp": 'voltage_ramp',
         "run-position-step": 'position_step',
-        "run-position-step": 'position_ramp',
+        "run-position-ramp": 'position_ramp',
         "run-speed-step": 'speed_step',
-        "run-speed-step": 'speed_ramp',
+        "run-speed-ramp": 'speed_ramp',
     },
     
     //Add any hotkeys that you want to log
