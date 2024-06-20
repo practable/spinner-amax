@@ -18,6 +18,11 @@ const config = {
         "run-position-ramp": 'position_ramp',
         "run-speed-step": 'speed_step',
         "run-speed-ramp": 'speed_ramp',
+        "voltage-slider": 'voltage_step',
+        "voltage-negative-0.1-increment": 'voltage_step',
+        "voltage-positive-0.1-increment": 'voltage_step',
+        "voltage-negative-0.01-increment": 'voltage_step',
+        "voltage-positive-0.01-increment": 'voltage_step',
     },
     
     //Add any hotkeys that you want to log

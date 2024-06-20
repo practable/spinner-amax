@@ -378,6 +378,11 @@ export default {
           }
       }
 
+      //IF updating this input is associated with sending a hardware command and a graph node for TaskCompare, then add that information to context
+      if(event.target.id in config.graph_nodes){
+        log.context['graph_node'] = config.graph_nodes[event.target.id]
+      }
+
       return log;
     },
     createHotkeyLog(event){
@@ -406,6 +411,11 @@ export default {
             "event_timestamp": event.timeStamp,
             "previous_click": event.originalTarget.id
           }
+      }
+
+      //IF pressing this hotkey is associated with sending a hardware command and a graph node for TaskCompare, then add that information to context
+      if(event.key in config.graph_nodes){
+        log.context['graph_node'] = config.graph_nodes[event.key]
       }
 
       return log;
