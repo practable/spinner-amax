@@ -8,9 +8,9 @@
             </div>
         </div>
         <div class="col d-grid d-sm-block">
-            <button class="button-sm button-primary" v-if="!isTiming" id="start" @click="startTimer">Start</button>
-            <button class="button-sm button-danger" v-if="isTiming" id="pause" @click="pauseTimer">Stop</button>
-            <button class="button-sm button-warning" id="reset" @click="resetTimer">Reset</button>
+            <button class="button-sm button-primary" v-if="!isTiming" id="start-stopwatch" @click="startTimer">Start</button>
+            <button class="button-sm button-danger" v-if="isTiming" id="pause-stopwatch" @click="pauseTimer">Stop</button>
+            <button class="button-sm button-warning" id="reset-stopwatch" @click="resetTimer">Reset</button>
         </div>
     </div> 
 </template>

@@ -833,7 +833,7 @@ export default {
 
 #chart-canvas{
     cursor: crosshair;
-    background-color: var(--background-color)
+    background-color: var(--background-color-highlight)
 }
 
 #transfer_function{

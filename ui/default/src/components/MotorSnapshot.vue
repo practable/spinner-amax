@@ -29,9 +29,9 @@
 
 
     <div class='d-grid gap-2 d-sm-block'>
-        <button id="snapshot_button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
-        <button id="reset_snaps" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
-        <button id="download_snaps" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
+        <button id="record-snapshot-button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
+        <button id="reset-snapshot-button" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
+        <button id="download-snapshot-button" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
     </div>
     
     <div class="d-flex flex-row">

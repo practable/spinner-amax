@@ -46,10 +46,10 @@
 	<div id="buttons">
 		<div class='row'>
 			<div class='d-grid gap-1 d-md-block mb-1'>
-				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="button-lg button-secondary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
-				<button id="stop" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-open-loop-mode-button" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-secondary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-tertiary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
+				<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
 			</div>
 		</div>
 
@@ -104,7 +104,7 @@
                     <span v-else class="text-center" id="kp-param-label">K<sub>p</sub></span>
                 </div>
                     
-                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp-input" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 			</div>
 
 			<div class='col-md-4'>
@@ -113,7 +113,7 @@
 					<span v-else class="text-center" id="ki-param-label">K<sub>i</sub></span>
 				</div>
 
-                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki-input" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 					
 			</div>
 
@@ -122,7 +122,7 @@
 					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="kd-param-label">K<sub>d</sub> &nbsp; [x10<sup>-2</sup>]</span>
 					<span v-else class="text-center" id="kd-param-label">K<sub>d</sub></span>
 				</div>
-				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd-input" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
 					
 			</div>
 			
@@ -130,7 +130,7 @@
 		</div>
         <div class='d-flex row justify-content-center m-2'>
             <div class='col-auto'>
-				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
+				<button v-if='getCurrentMode != "stopped"' id="reset-pid-parameters-button" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
 			</div>
         </div>
 	</div>

@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'es6-promise/auto'
 
 // Load CSS style sheets for main components
-import '@/styles/theme-default.css'
+import '@/styles/theme-test-four.css'
 
 const app = createApp(App)
 app.use(store)
