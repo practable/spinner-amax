@@ -31,7 +31,7 @@ describe('DataRecorder.vue tests', () => {
         await store.dispatch('setInputMode', 'free');
 
         
-        expect(wrapper.find('#recordButton').exists()).toBe(true);    //button to record snapshot is displayed
+        expect(wrapper.find('#record-data-button').exists()).toBe(true);    //button to record snapshot is displayed
     })
 
   test('Clicking record reveals the stop button', async () => {
@@ -46,10 +46,10 @@ describe('DataRecorder.vue tests', () => {
     await store.dispatch('setIsRecording', false);
 
     //Act - perform interactions as if the user is interacting with the app
-    await wrapper.find('#recordButton').trigger('click');
+    await wrapper.find('#record-data-button').trigger('click');
 
     //Assert - what are the expectations for the state of the app.
-    expect(wrapper.find('#stopButton').exists()).toBe(true);
+    expect(wrapper.find('#stop-data-button').exists()).toBe(true);
   
   })
 

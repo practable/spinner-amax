@@ -79,6 +79,10 @@
 
          
           <ul class="navbar-nav dropstart">
+
+            <li class="nav-item me-1">
+              <show-hardware-config-button />
+            </li>
               
               <li class="nav-item me-1">
                   <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
@@ -123,6 +127,7 @@
 
 import Clock from "./Clock.vue";
 import Toolbar from './elements/Toolbar.vue';
+import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
 import { mapGetters } from 'vuex';
 
 
@@ -131,7 +136,8 @@ export default {
   name: 'NavigationBar',
   components: {
     Clock,
-    Toolbar
+    Toolbar,
+    ShowHardwareConfigButton
   },
   props:{
       
