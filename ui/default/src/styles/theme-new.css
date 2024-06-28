@@ -4,6 +4,9 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     margin-top:60px;
+    margin-bottom:0px;
+    margin-right:0px;
+    margin-right:0px;
     --practable-body-font-stack: CircularSp,CircularSp-Arab,CircularSp-Hebr,CircularSp-Cyrl,CircularSp-Grek,CircularSp-Deva,sans-serif;
 }
   
@@ -66,25 +69,72 @@ body.dark-theme {
 .drop-area {
     background-color: var(--background-color-highlight);
     margin: 5px;
-    padding: 20px;
+    padding: 10px;
     border-style: solid;
     border-radius:12px;
     border-width: 1px;
     border-color: var(--background-color);
+    resize: horizontal;
+    overflow: auto;
+    display: block;
+    min-width: 10vw;
 }
 
 .drop-area-highlighted {
     background-color: var(--background-color-highlight);
-    margin: 5px;
-    padding: 20px;
     border-style: dashed;
-    border-radius:12px;
     border-width: 2px;
     border-color: var(--background-color-inverted);
 }
 
+.drop-area-full{
+    width: 100dvw;
+}
+
+.drop-area-half{
+    width: 50dvw;
+}
+
+.drop-area-three-quarters{
+    width: 75dvw;
+}
+
+.drop-area-one-quarter{
+    width: 25dvw;
+}
+
+.drop-area-one-fifth{
+    width: 20dvw;
+}
+
+.drop-area-two-fifths{
+    width: 40dvw;
+}
+
+.drop-area-three-fifths{
+    width: 60dvw;
+}
+
+.drop-area-four-fifths{
+    width: 80dvw;
+}
+
+.drop-area-one-third{
+    width: 33dvw;
+}
+
+.drop-area-two-thirds{
+    width: 66dvw;
+}
+
+.drop-area-mobile{
+    resize: none;
+    overflow: auto;
+}
+
 .practable-component{
     background-color: var(--background-color-highlight);
+    
 }
 
 .button-lg{
@@ -94,7 +144,7 @@ body.dark-theme {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 8px 4px;
     transition-duration: 0.2s;
     cursor: pointer;
@@ -247,14 +297,18 @@ body.dark-theme {
 
 /* Only have scrollable left and right screen divs if on a large screen size or bigger. */
 @media only screen and (min-width: 992px){
-    #left-screen{
-        overflow: scroll;
-        max-height: 100vh;
+    #top-screen{
+        overflow: auto;
+        height: 60dvh;
+        max-height: 60dvh;
+        max-width: 100dvw;
     }
 
-    #right-screen{
-        overflow: scroll;
-        max-height: 100vh;
+    #bottom-screen{
+        overflow: auto;
+        height: 30dvh;
+        max-height: 30dvh;
+        max-width: 100dvw;
     }
 }
 
