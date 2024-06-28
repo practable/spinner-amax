@@ -16,7 +16,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Help</h5>
-                    <button type='button' :class="getDarkTheme ? 'btn-close' : 'btn-close btn-close-white'" id='close-button' aria-label="Close" @click='closeHelp'></button>
+                    <button type='button' :class="getDarkTheme ? 'btn-close-white' : 'btn-close'" id='close-button' aria-label="Close" @click='closeHelp'></button>
                 </div>
                 <div class="modal-body">
                     <slot id='popup-text'></slot>
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="close-modal" @click="closeHelp">Close</button>
+                    <button type="button" class="button-sm button-danger" id="close-modal" @click="closeHelp">Close</button>
                 </div>
             </div>
             </div>

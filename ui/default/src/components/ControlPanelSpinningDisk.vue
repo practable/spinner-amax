@@ -47,8 +47,8 @@
 		<div class='row'>
 			<div class='d-grid gap-1 d-md-block mb-1'>
 				<button v-if='getCurrentMode == "stopped"' id="enter-open-loop-mode-button" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-secondary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-tertiary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-primary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-primary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
 				<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
 			</div>
 		</div>

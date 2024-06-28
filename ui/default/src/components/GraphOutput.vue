@@ -13,7 +13,7 @@
         
         <div class='input-group'>
             <label class='input-group-text' for="gradient">Gradient:</label>
-            <input type='text' class='form-control input' id="gradient" :value="gradient.toFixed(2)" readonly > 
+            <input type='text' class='form-control' id="gradient" :value="gradient.toFixed(2)" readonly > 
         </div>
        
         <div class='col-6 m-2'>

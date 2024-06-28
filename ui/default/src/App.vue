@@ -26,8 +26,8 @@
               <p>Data was saved on {{ saved_date }}. Do you want to load this previous data?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id="load-data" @click="load">Load</button>
-              <button type="button" class="btn btn-danger" id="do-not-load-data" data-dismiss="modal" data-bs-dismiss="modal" @click='showLoadDataModal = false'>Cancel</button>
+              <button type="button" class="button-xsm button-primary" id="load-data" @click="load">Load</button>
+              <button type="button" class="button-xsm button-danger" id="do-not-load-data" data-dismiss="modal" data-bs-dismiss="modal" @click='showLoadDataModal = false'>Cancel</button>
             </div>
           </div>
         </div>
