@@ -15,7 +15,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Help</h5>
-                    <button type='button' :class="getDarkTheme ? 'btn-close-white' : 'btn-close'" id='close-button' @click='toggleHelp'></button>
+                    <button type='button' :class="getDarkTheme ? 'btn-close btn-close-white' : 'btn-close'" id='close-button' @click='toggleHelp'></button>
                 </div>
                 <div class="modal-body">
                     <slot id='popup-text'></slot>

@@ -15,7 +15,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Hardware Configuration</h5>
-                    <button type='button' :class="getDarkTheme ? 'btn-close-white' : 'btn-close'" id='close-button' aria-label="Close" @click='closeHelp'></button>
+                    <button type='button' :class="getDarkTheme ? 'btn-close btn-close-white' : 'btn-close'" id='close-button' aria-label="Close" @click='closeHelp'></button>
                 </div>
                 <div class="modal-body">
                     
