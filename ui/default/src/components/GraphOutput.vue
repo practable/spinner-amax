@@ -397,6 +397,7 @@ export default {
                 datasets: []
             },
             options: {
+                responsive: true,
                 animation: false,
                 normalized: true,
                 parsing: true,
@@ -409,7 +410,7 @@ export default {
                         title:{
                             display: true,
                             text: 'time/s',
-                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
                         position: 'bottom',
@@ -419,10 +420,9 @@ export default {
                                 _this.updateXAxisMin(value, index);
                                 return value;
                             },
-                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
-                        gridLines: {
-                            zeroLineColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                        grid: {
                             color: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
                         },
                         minRotation: 20,
@@ -433,7 +433,7 @@ export default {
                         title:{
                             display: true,
                             text: _this.getGraphDataParameter,
-                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
                         position: 'left',
@@ -443,16 +443,15 @@ export default {
                                 _this.updateYAxisMin(value, index, values);
                                 return value;
                             },
-                            fontColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
-                        gridLines: {
-                            zeroLineColor: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
-                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
+                        grid: {
+                            color: _this.getDarkTheme ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
                         },
                         sampleSize: 2,
                     },
-                },
-                responsive: true
+                }
+                
             }
         });
 
