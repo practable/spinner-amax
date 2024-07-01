@@ -3,7 +3,7 @@
 
 <template>
 <div class='practable-component'>
-    <div class="d-flex flex-row mb-2 align-items-center">
+    <div class="d-flex flex-row mb-4 align-items-center">
 
         <toolbar parentCanvasID="graph-canvas" parentComponentName="graph" parentDivID="graph" :showDownload='true' :showPopupHelp="true" :showOptions="false">  
             
