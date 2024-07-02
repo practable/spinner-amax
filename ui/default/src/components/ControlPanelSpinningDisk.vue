@@ -3,12 +3,12 @@
 <template>
 
 <div class='container-fluid m-2 practable-component'>
-	<div class='row align-content-center m-1'>
+	<!-- <div class='row align-content-center m-1'>
 		<div class='col-12'>
 			<canvas v-show='getCurrentMode == "positionPid"' id="smoothie-chart_theta"></canvas>
 			<canvas v-show='getCurrentMode != "positionPid"' id="smoothie-chart_omega"></canvas>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="d-flex flex-row">
 		<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
@@ -172,17 +172,17 @@ export default {
 			kspeed_scale: 0.01,
 			message: '',				//for sending user messages to screen
 			error:'',					//for sending errors to screen
-			chart_omega: null,
-			canvas_omega: null,
-			chart_theta: null,
-			canvas_theta: null,
-			smoothie_y_min_vel: -400,
-			smoothie_y_max_vel: 400,
-			smoothie_y_min_pos: -1,
-			smoothie_y_max_pos: 10.0,
-			smoothie_y_speedmode_abs: 100,
-			smoothie_y_voltmode_abs: 400,
-			smoothie_millis_per_pixel: 10,
+			// chart_omega: null,
+			// canvas_omega: null,
+			// chart_theta: null,
+			// canvas_theta: null,
+			// smoothie_y_min_vel: -400,
+			// smoothie_y_max_vel: 400,
+			// smoothie_y_min_pos: -1,
+			// smoothie_y_max_pos: 10.0,
+			// smoothie_y_speedmode_abs: 100,
+			// smoothie_y_voltmode_abs: 400,
+			// smoothie_millis_per_pixel: 10,
 			showInputType: false,				//don't show input types until a mode has been selected
         }
     },
@@ -201,7 +201,13 @@ export default {
 			'getSessionExpired',
 			'getMaxReached',
             'getIsStepRunning',
-            'getIsRampRunning'
+            'getIsRampRunning',
+			'getChartTheta',
+			'getChartOmega',
+			'getCanvasTheta',
+			'getCanvasOmega',
+			'getSpeedModeAbs',
+			'getVoltModeAbs'
 		]),
 		inputMode: {
 			get(){
@@ -221,6 +227,30 @@ export default {
 				return "error-message panel-body border border-danger";
 			}
 		},
+		smoothie_y_max_vel: {
+			get(){
+				return this.$store.getters.getYMaxVel;
+			},
+			set(val){
+				this.$store.dispatch('setYMaxVel', val);
+			}
+		},
+		smoothie_y_min_vel: {
+			get(){
+				return this.$store.getters.getYMinVel;
+			},
+			set(val){
+				this.$store.dispatch('setYMinVel', val);
+			}
+		},
+		smoothie_millis_per_pixel: {
+			get(){
+				return this.$store.getters.getMillisPerPixel;
+			},
+			set(val){
+				this.$store.dispatch('setMillisPerPixel', val);
+			}
+		}
 		
 	},
 	watch:{
@@ -259,7 +289,11 @@ export default {
 			'setDraggable',
             'setIsRecording',
             'setIsStepRunning',
-            'setIsRampRunning'
+            'setIsRampRunning',
+			'setChartTheta',
+			'setChartOmega',
+			'setCanvasTheta',
+			'setCanvasOmega'
 		]),
 		stop(){
 			//this.clearMessages();
@@ -277,8 +311,8 @@ export default {
 		speedPid(){
 			this.clearMessages();
 			this.setGraphDataParameter('omega');
-			this.smoothie_y_min_vel = -this.smoothie_y_speedmode_abs;
-			this.smoothie_y_max_vel = this.smoothie_y_speedmode_abs;
+			this.smoothie_y_min_vel = -this.getSpeedModeAbs;
+			this.smoothie_y_max_vel = this.getSpeedModeAbs;
 			this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedPid');
@@ -294,8 +328,8 @@ export default {
 		speedRaw(){
 			this.clearMessages();
 			this.setGraphDataParameter('omega');
-			this.smoothie_y_min_vel = -this.smoothie_y_voltmode_abs;
-			this.smoothie_y_max_vel = this.smoothie_y_voltmode_abs;
+			this.smoothie_y_min_vel = -this.getVoltModeAbs;
+			this.smoothie_y_max_vel = this.getVoltModeAbs;
 			this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedRaw');
@@ -354,16 +388,15 @@ export default {
 		},
 		updateSmoothieChart(){
 			if(this.getCurrentMode == 'positionPid'){
-				this.chart_theta.options.maxValue = this.smoothie_y_max_pos;
-				this.chart_theta.options.minValue = this.smoothie_y_min_pos;
+				this.getChartTheta.options.maxValue = this.smoothie_y_max_pos;
+				this.getChartTheta.options.minValue = this.smoothie_y_min_pos;
+				this.getChartTheta.options.millisPerPixel = this.smoothie_millis_per_pixel;
 			} 
 			else{
-				this.chart_omega.options.maxValue = this.smoothie_y_max_vel;
-				this.chart_omega.options.minValue = this.smoothie_y_min_vel;
+				this.getChartOmega.options.maxValue = this.smoothie_y_max_vel;
+				this.getChartOmega.options.minValue = this.smoothie_y_min_vel;
+				this.getChartOmega.options.millisPerPixel = this.smoothie_millis_per_pixel;	
 			}
-
-			this.chart_omega.options.millisPerPixel = this.smoothie_millis_per_pixel;			
-			
 		},
 		// connect(){
 
@@ -508,21 +541,25 @@ export default {
 			//let thisTime;
 			
 			var chart_omega = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#eeeeee'},maxValue:_this.smoothie_y_max_vel,minValue:_this.smoothie_y_min_vel, interpolation:"linear",labels:{fillStyle:'#000000',precision:2}});
-			this.canvas_omega = document.getElementById("smoothie-chart_omega");
+			let canvas_omega = document.getElementById("smoothie-chart_omega");
 			let series_omega = new TimeSeries();
 			chart_omega.addTimeSeries(series_omega, {lineWidth:2,strokeStyle:'#000000'});
-			chart_omega.streamTo(this.canvas_omega, 0);
+			chart_omega.streamTo(canvas_omega, 0);
+			this.setChartOmega(chart_omega);
+			this.setCanvasOmega(canvas_omega);
 
 			//smoothie chart for displaying angle data
 			var chart_theta = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#eeeeee'}, maxValue:_this.smoothie_y_max_pos,minValue:_this.smoothie_y_min_pos, interpolation:"linear",labels:{fillStyle:'#000000',precision:2}});
-			this.canvas_theta = document.getElementById("smoothie-chart_theta");
+			let canvas_theta = document.getElementById("smoothie-chart_theta");
 			let series_theta = new TimeSeries();
 			chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#000000'});
-			chart_theta.streamTo(this.canvas_theta, 0);
+			chart_theta.streamTo(canvas_theta, 0);
+			this.setChartTheta(chart_theta);
+			this.setCanvasTheta(canvas_theta);
 
 			//in order to update the charts
-			_this.chart_omega = chart_omega;
-			_this.chart_theta = chart_theta;
+			// _this.chart_omega = chart_omega;
+			// _this.chart_theta = chart_theta;
 
 			this.dataSocket.onopen = () => {
 				console.log('data connection opened');
@@ -653,7 +690,7 @@ export default {
 	border: auto;
 }
 
-#smoothie-chart_omega{
+/* #smoothie-chart_omega{
 	width:100%;
 	height: 120px;
 }
@@ -661,7 +698,7 @@ export default {
 #smoothie-chart_theta{
 	width:100%;
 	height: 120px;
-}
+} */
 
 .sliderlabel{ text-align: left;}
 

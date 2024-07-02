@@ -1,12 +1,16 @@
 //Vue3 updated
 
 <template>
-<div class='container-fluid m-2 practable-component'>
-<div class='row' id="video">
-	<div class='col-12'>
-		<video-element :url="url" />
+<div class='container-fluid practable-component'>
+	<div class='d-flex flex-column' id="video">
+
+		<canvas class="mb-2" v-show="getCurrentMode == 'positionPid'" id="smoothie-chart_theta"></canvas>
+		<canvas class="mb-2" v-show="getCurrentMode != 'positionPid'" id="smoothie-chart_omega"></canvas>
+		
+		<video-element :url="getVideoURL" />
+
 	</div>
-</div>
+
 </div>
 </template>
 
@@ -26,10 +30,11 @@ export default {
         }
     },
     computed:{
-		...mapGetters({
-			url: 'getVideoURL',
-			urlOK: 'getVideoURLObtained'
-		}),
+		...mapGetters([
+			'getVideoURL',
+			'getVideoURLObtained',
+			'getCurrentMode'
+		]),
 		streamOK(){			
 			return this.$store.getters.getStream("video");
 		},
@@ -82,6 +87,16 @@ export default {
 <style scoped>
 #video-canvas{
 	width:80%;
-	height: 100%;
+	height: 50%;
+}
+
+#smoothie-chart_omega{
+	width:100%;
+	height: 60px;
+}
+
+#smoothie-chart_theta{
+	width:100%;
+	height: 60px;
 }
 </style>
