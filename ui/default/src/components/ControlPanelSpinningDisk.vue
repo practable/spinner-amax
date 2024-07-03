@@ -235,12 +235,28 @@ export default {
 				this.$store.dispatch('setYMaxVel', val);
 			}
 		},
+		smoothie_y_max_pos: {
+			get(){
+				return this.$store.getters.getYMaxPos;
+			},
+			set(val){
+				this.$store.dispatch('setYMaxPos', val);
+			}
+		},
 		smoothie_y_min_vel: {
 			get(){
 				return this.$store.getters.getYMinVel;
 			},
 			set(val){
 				this.$store.dispatch('setYMinVel', val);
+			}
+		},
+		smoothie_y_min_pos: {
+			get(){
+				return this.$store.getters.getYMinPos;
+			},
+			set(val){
+				this.$store.dispatch('setYMinPos', val);
 			}
 		},
 		smoothie_millis_per_pixel: {
@@ -545,8 +561,8 @@ export default {
 			let series_omega = new TimeSeries();
 			chart_omega.addTimeSeries(series_omega, {lineWidth:2,strokeStyle:'#000000'});
 			chart_omega.streamTo(canvas_omega, 0);
-			this.setChartOmega(chart_omega);
-			this.setCanvasOmega(canvas_omega);
+			_this.setChartOmega(chart_omega);
+			_this.setCanvasOmega(canvas_omega);
 
 			//smoothie chart for displaying angle data
 			var chart_theta = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#eeeeee'}, maxValue:_this.smoothie_y_max_pos,minValue:_this.smoothie_y_min_pos, interpolation:"linear",labels:{fillStyle:'#000000',precision:2}});
@@ -554,8 +570,9 @@ export default {
 			let series_theta = new TimeSeries();
 			chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#000000'});
 			chart_theta.streamTo(canvas_theta, 0);
-			this.setChartTheta(chart_theta);
-			this.setCanvasTheta(canvas_theta);
+			_this.setChartTheta(chart_theta);
+			console.log(chart_theta)
+			_this.setCanvasTheta(canvas_theta);
 
 			//in order to update the charts
 			// _this.chart_omega = chart_omega;

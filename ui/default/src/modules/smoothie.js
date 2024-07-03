@@ -92,31 +92,31 @@ const smoothieStore = {
          getChartOmega(state){
             return state.chart_omega;
          },
-         setCanvasTheta(state){
+         getCanvasTheta(state){
             return state.canvas_theta;
          },
-         setCanvasOmega(state){
+         getCanvasOmega(state){
             return state.canvas_omega;
          },
-         setYMinVel(state){
+         getYMinVel(state){
             return state.y_min_vel;
          },
-         setYMaxVel(state){
+         getYMaxVel(state){
             return state.y_max_vel;
          },
-         setYMinPos(state){
+         getYMinPos(state){
             return state.y_min_pos;
          },
-         setYMaxPos(state){
+         getYMaxPos(state){
             return state.y_max_pos;
          },
-         setMillisPerPixel(state){
+         getMillisPerPixel(state){
             return state.millis_per_pixel;
          },
-         setSpeedModeAbs(state){
+         getSpeedModeAbs(state){
             return state.y_speedmode_abs;
          },
-         setVoltModeAbs(state){
+         getVoltModeAbs(state){
             return state.y_voltmode_abs;
          }
          
