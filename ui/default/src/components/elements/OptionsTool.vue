@@ -14,15 +14,16 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Help</h5>
+                  <!-- <slot name="header"></slot> -->
                     <button type='button' :class="getDarkTheme ? 'btn-close btn-close-white' : 'btn-close'" id='close-button' @click='toggleHelp'></button>
                 </div>
                 <div class="modal-body">
-                    <slot id='popup-text'></slot>
+                    <slot></slot>
 
                 </div>
 
                 <div class="modal-footer">
+                    <!-- <slot name="footer"></slot> -->
                     <button type="button" class="button-sm button-danger" id="close-modal" @click="toggleHelp">Close</button>
                 </div>
             </div>

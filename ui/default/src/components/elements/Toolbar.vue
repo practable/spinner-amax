@@ -9,7 +9,7 @@
         </popup-help>
         
         <options-tool v-if='showOptions'>
-            <slot name='options'></slot>
+            <slot name='options'></slot> 
         </options-tool>
     </div>
 </template>

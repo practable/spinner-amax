@@ -10,7 +10,7 @@
 		</div>
 	</div> -->
 
-	<div class="d-flex flex-row">
+	<!-- <div class="d-flex flex-row">
 		<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
 			<template v-slot:options>
 				<h2>Live graph options</h2>
@@ -32,7 +32,7 @@
 				</div>
 			</template>
 		</toolbar>
-	</div>
+	</div> -->
 
 	
 	
@@ -147,7 +147,7 @@ import DCMotorPanel from './DCMotorPanel.vue';
 import StepCommand from './StepCommand.vue';
 import RampCommand from './RampCommand.vue';
 import { mapActions, mapGetters } from 'vuex';
-import Toolbar from './elements/Toolbar.vue';
+//import Toolbar from './elements/Toolbar.vue';
 
 export default {
 	name: "ControlPanelSpinningDisk",
@@ -159,7 +159,7 @@ export default {
 		DCMotorPanel,
 		StepCommand,
 		RampCommand,
-		Toolbar,
+		//Toolbar,
 	},
     data(){
         return{
@@ -329,7 +329,7 @@ export default {
 			this.setGraphDataParameter('omega');
 			this.smoothie_y_min_vel = -this.getSpeedModeAbs;
 			this.smoothie_y_max_vel = this.getSpeedModeAbs;
-			this.updateSmoothieChart();
+			// this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedPid');
 			setTimeout(this.setParameters, 100);					//when entering pid mode ensure parameters are set
@@ -346,7 +346,7 @@ export default {
 			this.setGraphDataParameter('omega');
 			this.smoothie_y_min_vel = -this.getVoltModeAbs;
 			this.smoothie_y_max_vel = this.getVoltModeAbs;
-			this.updateSmoothieChart();
+			// this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedRaw');
 		},
@@ -402,18 +402,18 @@ export default {
 		toggleInputType(on){
 			this.showInputType = on;
 		},
-		updateSmoothieChart(){
-			if(this.getCurrentMode == 'positionPid'){
-				this.getChartTheta.options.maxValue = this.smoothie_y_max_pos;
-				this.getChartTheta.options.minValue = this.smoothie_y_min_pos;
-				this.getChartTheta.options.millisPerPixel = this.smoothie_millis_per_pixel;
-			} 
-			else{
-				this.getChartOmega.options.maxValue = this.smoothie_y_max_vel;
-				this.getChartOmega.options.minValue = this.smoothie_y_min_vel;
-				this.getChartOmega.options.millisPerPixel = this.smoothie_millis_per_pixel;	
-			}
-		},
+		// updateSmoothieChart(){
+		// 	if(this.getCurrentMode == 'positionPid'){
+		// 		this.getChartTheta.options.maxValue = this.smoothie_y_max_pos;
+		// 		this.getChartTheta.options.minValue = this.smoothie_y_min_pos;
+		// 		this.getChartTheta.options.millisPerPixel = this.smoothie_millis_per_pixel;
+		// 	} 
+		// 	else{
+		// 		this.getChartOmega.options.maxValue = this.smoothie_y_max_vel;
+		// 		this.getChartOmega.options.minValue = this.smoothie_y_min_vel;
+		// 		this.getChartOmega.options.millisPerPixel = this.smoothie_millis_per_pixel;	
+		// 	}
+		// },
 		// connect(){
 
 		// 	let _store = this.$store;

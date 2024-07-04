@@ -14,6 +14,15 @@ const smoothieStore = {
         y_speedmode_abs: 100,
         y_voltmode_abs: 200,
         millis_per_pixel: 10,
+        default_settings:{
+            y_min_vel: -200,
+            y_max_vel: 200,
+            y_min_pos: -1,
+            y_max_pos: 10.0,
+            y_speedmode_abs: 100,
+            y_voltmode_abs: 200,
+            millis_per_pixel: 10,
+        }
        }),
        mutations:{
         SET_CHART_THETA(state, chart){
@@ -30,24 +39,38 @@ const smoothieStore = {
          },
          SET_Y_MIN_VEL(state, value){
             state.y_min_vel = value;
+            state.chart_omega.options.minValue = value;
          },
          SET_Y_MAX_VEL(state, value){
             state.y_max_vel = value;
+            state.chart_omega.options.maxValue = value;
          },
          SET_Y_MIN_POS(state, value){
             state.y_min_pos = value;
+            state.chart_theta.options.minValue = value;
          },
          SET_Y_MAX_POS(state, value){
             state.y_max_pos = value;
+            state.chart_theta.options.maxValue = value;
          },
          SET_MILLIS_PER_PIXEL(state, value){
             state.millis_per_pixel = value;
+            state.chart_theta.options.millisPerPixel = value;
+            state.chart_omega.options.millisPerPixel = value;
          },
          SET_SPEED_MODE_ABS(state, value){
             state.y_speedmode_abs = value;
          },
          SET_VOLT_MODE_ABS(state, value){
             state.y_voltmode_abs = value;
+         },
+         RESET_SMOOTHIE_SETTINGS(state){
+            state.y_min_vel = state.default_settings.y_min_vel;
+            state.y_max_vel = state.default_settings.y_max_vel;
+            state.y_min_pos = state.default_settings.y_min_pos;
+            state.y_max_pos = state.default_settings.y_max_pos;
+            state.y_speedmode_abs = state.default_settings.y_speedmode_abs;
+            state.y_voltmode_abs = state.default_settings.y_voltmode_abs;
          }
        },
        actions:{
@@ -83,6 +106,9 @@ const smoothieStore = {
          },
          setVoltModeAbs(context, value){
             context.commit('SET_VOLT_MODE_ABS', value)
+         },
+         resetSmoothieSettings(context){
+            context.commit('RESET_SMOOTHIE_SETTINGS');
          }
        },
        getters:{
