@@ -9,14 +9,15 @@
 		
 		<video-element :url="getVideoURL" />
 
-		<!-- <toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar> -->
 		<div class="d-flex flex-row">
-			<toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload="true" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-				<template v-slot:options>
-					
-						<h4>Live graph options</h4>
+			<download-image-button class="me-2" id="download-image-webcam" parentCanvasID="video-canvas" parentComponentName="webcam"></download-image-button>
+			
+			<options-tool id="options-live-stream" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+				<template v-slot:header>
+					<h4>Live graph options</h4>
+				</template>
 				
-					
+				<template v-slot:body>
 					<div class='row'>
 						<div class='col-lg-12'>
 							<div class="d-flex flex-row justify-content-start align-items-center">
@@ -35,11 +36,13 @@
 							</div>
 						</div>
 					</div>
-					<div class='d-flex justify-content-center'>
-						<button class="button-sm button-danger" id="reset-smoothie-options" aria-label="reset smoothie options">Reset</button>
-					</div>
 				</template>
-			</toolbar>
+
+				<template v-slot:footer>
+					<button class="button-sm button-danger" id="reset-smoothie-options" aria-label="reset smoothie options">Reset</button>
+				</template>
+			</options-tool>
+
 		</div>
 	</div>
 
@@ -50,13 +53,15 @@
 import axios from "axios";
 import VideoElement from "./VideoElement.vue";
 import { mapGetters, mapActions } from 'vuex';
-import Toolbar from "./elements/Toolbar.vue";
+import DownloadImageButton from "./elements/DownloadImageButton.vue";
+import OptionsTool from './elements/OptionsTool.vue';
 
 export default {
 	name: "WebcamStream",
 	components:{
 		VideoElement,
-		Toolbar
+		DownloadImageButton,
+		OptionsTool
 	},
     data(){
         return{

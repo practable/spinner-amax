@@ -4,20 +4,23 @@
 <template>
 <div class='practable-component'>
     <div class="d-flex flex-row mb-4 align-items-center">
-
-        <toolbar parentCanvasID="graph-canvas" parentComponentName="graph" parentDivID="graph" :showDownload='true' :showPopupHelp="true" :showOptions="false">  
-            
-            <template v-slot:popup id='graph-popup'>
+        <download-image-button class="me-2" id="download-graph-image" parentCanvasID="graph-canvas" parentComponentName="graph"></download-image-button>
+        
+        <popup-help class="me-2" id="popup-help-graph">
+            <template v-slot:header>
+                <h5> Graph Help </h5>
+            </template>
+            <template v-slot:body>
                 <div class='row mb-2' id='gradient-div'>
                     <div class='col'>
-                        <h3> Gradient tool </h3>
+                        <h5> Gradient tool </h5>
                         <p> Click and drag on the graph in order to draw a straight line segment. The gradient of this line is displayed in the Gradient box.</p>
                     </div>
                 </div>
 
                 <div class='row mb-2' id='data-point-div'>
                     <div class='col'>
-                        <h3> Interactive data points </h3>
+                        <h5> Interactive data points </h5>
                         <p> Hover over a graph point to display the corresponding data.
                         </p>
                     </div>
@@ -26,24 +29,22 @@
 
                 <div class='row mb-2' id='functions-div'>
                     <div class='col'>
-                        <h3> Function Plotting </h3>
+                        <h5> Function Plotting </h5>
                         <p> Select the function type from the dropdown menu. Input the function parameters. Angular parameters are in radians. Click plot to display the function.
                             The function is plotted up to the maximum time value currently displayed on the x-axis.
                         </p>
                     </div>
-
                 </div>
             </template>
-            
-        </toolbar>
+        </popup-help>
 
-        <button type='button' class="button-toolbar button-secondary ms-2" id="show-plotting-button" aria-label="show plotting functions" @click="showPlotting = !showPlotting">
+        <button type='button' class="button-toolbar button-secondary me-2" id="show-plotting-button" aria-label="show plotting functions" @click="showPlotting = !showPlotting">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
             </svg>
         </button>
         
-        <div class="ms-2">
+        <div>
             <span v-if="getNumData < maxDataPoints" class="align-middle">Plotted: {{ getNumData }} / {{ maxDataPoints }}</span>
             <span v-else class="align-middle">Plotted: {{ maxDataPoints }} / {{ maxDataPoints }} MAX REACHED</span>
             <span class="align-middle ms-2" for="gradient">Gradient: {{ gradient.toFixed(2) }}</span>
@@ -307,7 +308,8 @@
 
 import Chart from 'chart.js/auto';
 import { mapGetters, mapActions } from 'vuex';
-import Toolbar from "./elements/Toolbar.vue";
+import DownloadImageButton from './elements/DownloadImageButton.vue';
+import PopupHelp from './elements/PopupHelp.vue';
 
 var scatterChart = null;        //if part of the responsive Vue data then causes a recursion error on dynamically adding datasets.
 
@@ -316,7 +318,8 @@ export default {
     name: 'GraphOutput',
     emits: ['newselectedgraphpoint'],
     components:{
-        Toolbar,
+        DownloadImageButton,
+        PopupHelp
     },
     data(){
         return{

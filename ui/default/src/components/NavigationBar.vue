@@ -85,24 +85,28 @@
             </li>
               
               <li class="nav-item me-1">
-                  <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
-                      <template v-slot:popup>
-                        <h4>Customise the UI</h4>
+                  <popup-help id="popup-help-navbar">
+                      <template v-slot:header>
+                        <h5>Help</h5>
+                      </template>
+
+                      <template v-slot:body>
+                        <h5>Customise the UI</h5>
                         <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
                             to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
                             changes.
                         </p>
 
-                        <h4>Recording more than 5000 data points</h4>
+                        <h5>Recording more than 5000 data points</h5>
                         <p>For smooth running of the web app there is a limit of 5000 recorded data points and 2000 data points on the Graph tool. Please download this dataset or perform the necessary analysis
                             and then reset the data and run again in order to collect more data. For collecting single data points over a long time you may be best to use the Snapshot tool which can continue to collect data beyond this limit.
                         </p>
 
-                        <h4>Report issues</h4>
+                        <h5>Report issues</h5>
                         <p>If you have any problems with the remote laboratory then you can contact us at support@practable.io
                         </p>
                       </template>
-                  </toolbar>
+                  </popup-help>
                 </li>
 
               <li class="nav-item me-1">
@@ -126,7 +130,7 @@
 <script>
 
 import Clock from "./Clock.vue";
-import Toolbar from './elements/Toolbar.vue';
+import PopupHelp from "./elements/PopupHelp.vue";
 import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
 import { mapGetters } from 'vuex';
 
@@ -136,7 +140,7 @@ export default {
   name: 'NavigationBar',
   components: {
     Clock,
-    Toolbar,
+    PopupHelp,
     ShowHardwareConfigButton
   },
   props:{

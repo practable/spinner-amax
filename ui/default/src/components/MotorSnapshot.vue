@@ -35,11 +35,13 @@
     </div>
     
     <div class="d-flex flex-row">
-        <toolbar parentCanvasID="" parentComponentName="snapshot" parentDivID="motor-snapshot-div" :showDownload='false' :showPopupHelp="true" :showOptions="false">  
-            <template v-slot:popup id='snapshot-popup'>
+        <popup-help id="popup-help-snapshot">
+            <template v-slot:header>
+                <h5> Snapshot tool </h5>
+            </template>
+            <template v-slot:body>
                 <div class='row mb-2'>
                     <div class='col'>
-                        <h3> Snapshot tool </h3>
                         <p> Click 'Record Snapshot' to save the current state to the snapshot table. Every time you click a new data set will be added. Click 'Download Snapshots'
                             to download all the snapshots as a .csv file.
                         </p>
@@ -47,7 +49,7 @@
                 </div>
 
             </template>
-        </toolbar>
+        </popup-help>
     </div>
     
 
@@ -76,7 +78,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Toolbar from "./elements/Toolbar.vue"
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
     name: 'MotorSnapshot',
@@ -84,7 +86,7 @@ export default {
       'headings'
     ],
     components:{
-        Toolbar,
+        PopupHelp,
     },
     data(){
         return{

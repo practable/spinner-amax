@@ -1,42 +1,6 @@
-//commandStore update
-
 <template>
 
 <div class='container-fluid m-2 practable-component'>
-	<!-- <div class='row align-content-center m-1'>
-		<div class='col-12'>
-			<canvas v-show='getCurrentMode == "positionPid"' id="smoothie-chart_theta"></canvas>
-			<canvas v-show='getCurrentMode != "positionPid"' id="smoothie-chart_omega"></canvas>
-		</div>
-	</div> -->
-
-	<!-- <div class="d-flex flex-row">
-		<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-			<template v-slot:options>
-				<h2>Live graph options</h2>
-				<div class='row'>
-					<div class='col-12'>
-						<label class='m-2' for="smoothie_y_max">Y Axis Max</label>
-						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_max" v-model="smoothie_y_max_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-						<input v-else id="smoothie_y_max" v-model="smoothie_y_max_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-					<div class="col-12">		
-						<label class='m-2' for="smoothie_y_min">Y Axis Min</label>
-						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_min" v-model="smoothie_y_min_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-						<input v-else id="smoothie_y_min" v-model="smoothie_y_min_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-					<div class='col-12'>
-						<label class='m-2' for="smoothie_millis_per_pixel">Milliseconds per pixel</label>
-						<input id="smoothie_millis_per_pixel" v-model="smoothie_millis_per_pixel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-				</div>
-			</template>
-		</toolbar>
-	</div> -->
-
-	
-	
-
 	<div class="panel panel-default m-2">
 		<div v-if='getCurrentMode != ""' class='panel-heading'><h3>Current mode: {{getModeName}}</h3></div>
 		<div class='panel-body'>{{message}}</div>
@@ -89,15 +53,6 @@
 
 	<div v-if='getCurrentMode == "speedPid" || getCurrentMode == "positionPid" || getCurrentMode == "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
 		<div class='d-flex row justify-content-center m-2'>
-		
-			<!-- <div class='col-md-4'>
-				<div class="input-group">
-					<span class="input-group-text" id="basic-addon1">K<sub>p</sub></span>
-					<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
-					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
-				</div>	
-			</div> -->
-
             <div class='col-md-4'>
                 <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
                     <span v-if='getCurrentMode == "speedPid"' class="text-center" id="kp-param-label">K<sub>p</sub> &nbsp; [x10<sup>-2</sup>]</span>
@@ -147,7 +102,6 @@ import DCMotorPanel from './DCMotorPanel.vue';
 import StepCommand from './StepCommand.vue';
 import RampCommand from './RampCommand.vue';
 import { mapActions, mapGetters } from 'vuex';
-//import Toolbar from './elements/Toolbar.vue';
 
 export default {
 	name: "ControlPanelSpinningDisk",
@@ -159,7 +113,6 @@ export default {
 		DCMotorPanel,
 		StepCommand,
 		RampCommand,
-		//Toolbar,
 	},
     data(){
         return{
@@ -172,17 +125,6 @@ export default {
 			kspeed_scale: 0.01,
 			message: '',				//for sending user messages to screen
 			error:'',					//for sending errors to screen
-			// chart_omega: null,
-			// canvas_omega: null,
-			// chart_theta: null,
-			// canvas_theta: null,
-			// smoothie_y_min_vel: -400,
-			// smoothie_y_max_vel: 400,
-			// smoothie_y_min_pos: -1,
-			// smoothie_y_max_pos: 10.0,
-			// smoothie_y_speedmode_abs: 100,
-			// smoothie_y_voltmode_abs: 400,
-			// smoothie_millis_per_pixel: 10,
 			showInputType: false,				//don't show input types until a mode has been selected
         }
     },
@@ -191,7 +133,7 @@ export default {
 		this.$store.dispatch('setInputMode',  'step');
 	},
 	mounted(){
-		//this.connectWithArrays();		//testing============================================================
+		
 	},
 	computed: {
 		...mapGetters([
