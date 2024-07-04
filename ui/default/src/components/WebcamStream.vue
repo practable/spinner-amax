@@ -39,7 +39,7 @@
 				</template>
 
 				<template v-slot:footer>
-					<button class="button-sm button-danger" id="reset-smoothie-options" aria-label="reset smoothie options">Reset</button>
+					<button class="button-sm button-warning" id="reset-smoothie-options" aria-label="reset smoothie options" @click="resetSmoothieSettings">Reset</button>
 				</template>
 			</options-tool>
 
@@ -130,7 +130,8 @@ export default {
 	},
 	methods:{
 		...mapActions([
-			'setDraggable'
+			'setDraggable',
+			'resetSmoothieSettings'
 		]),
 		accessVideo(){
 			this.stream = this.$store.getters.getStream("video");

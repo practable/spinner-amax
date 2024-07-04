@@ -13,16 +13,7 @@ const smoothieStore = {
         y_max_pos: 10.0,
         y_speedmode_abs: 100,
         y_voltmode_abs: 200,
-        millis_per_pixel: 10,
-        default_settings:{
-            y_min_vel: -200,
-            y_max_vel: 200,
-            y_min_pos: -1,
-            y_max_pos: 10.0,
-            y_speedmode_abs: 100,
-            y_voltmode_abs: 200,
-            millis_per_pixel: 10,
-        }
+        millis_per_pixel: 10
        }),
        mutations:{
         SET_CHART_THETA(state, chart){
@@ -64,14 +55,6 @@ const smoothieStore = {
          SET_VOLT_MODE_ABS(state, value){
             state.y_voltmode_abs = value;
          },
-         RESET_SMOOTHIE_SETTINGS(state){
-            state.y_min_vel = state.default_settings.y_min_vel;
-            state.y_max_vel = state.default_settings.y_max_vel;
-            state.y_min_pos = state.default_settings.y_min_pos;
-            state.y_max_pos = state.default_settings.y_max_pos;
-            state.y_speedmode_abs = state.default_settings.y_speedmode_abs;
-            state.y_voltmode_abs = state.default_settings.y_voltmode_abs;
-         }
        },
        actions:{
          setChartTheta(context, chart){
@@ -108,7 +91,13 @@ const smoothieStore = {
             context.commit('SET_VOLT_MODE_ABS', value)
          },
          resetSmoothieSettings(context){
-            context.commit('RESET_SMOOTHIE_SETTINGS');
+            context.dispatch('setYMinVel', default_settings.y_min_vel)
+            context.dispatch('setYMaxVel', default_settings.y_max_vel)
+            context.dispatch('setYMinPos', default_settings.y_min_pos)
+            context.dispatch('setYMaxPos', default_settings.y_max_pos)
+            context.dispatch('setMillisPerPixel', default_settings.millis_per_pixel)
+            context.dispatch('setSpeedModeAbs', default_settings.y_speedmode_abs)
+            context.dispatch('setVoltModeAbs', default_settings.y_voltmode_abs)
          }
        },
        getters:{
@@ -147,7 +136,16 @@ const smoothieStore = {
          }
          
        },  
-  
+  }
+
+  export const default_settings = {
+      y_min_vel: -200,
+      y_max_vel: 200,
+      y_min_pos: -1,
+      y_max_pos: 10.0,
+      y_speedmode_abs: 100,
+      y_voltmode_abs: 200,
+      millis_per_pixel: 10
   }
 
   export default smoothieStore;
