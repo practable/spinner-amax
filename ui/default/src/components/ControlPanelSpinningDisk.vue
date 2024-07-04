@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-lg-3">
 			<div class="d-flex flex-column">
-				<div class="mb-2">
+				<div class="mb-lg-2">
 					<label for="hardware-select-dropdown">Select Hardware Mode</label>
 					<div class="dropdown">
 						<button class="button-sm button-primary dropdown-toggle" type="button" id="hardware-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,11 +25,11 @@
 					</div>
 				</div>
 
-				<div class="mb-2">
+				<div class="mb-lg-2">
 					<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-sm button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
 				</div>
 				
-				<div class="mb-2">
+				<div class="mb-lg-2">
 					<label for="input-select-dropdown">Select Input Mode</label>
 					<div class="dropdown">
 						<button class="button-sm button-primary dropdown-toggle" type="button" id="input-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
