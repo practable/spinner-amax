@@ -1,25 +1,25 @@
 //vue3 update
 
 <template>
-        
-    <div class="mt-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
-        <div class="d-lg-flex align-items-center" v-if='mode == "speedRaw"'>
-            <span class='input-group-text' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</span>
+    <div @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
+        <div class="d-flex flex-column" v-if='mode == "speedRaw"'>
+            <label class='mb-2' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</label>
             <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step-size-voltage-input" v-model="step_size">
-            <button class='button-lg button-primary' id="run-voltage-step" @click="runStep" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
             <button class='button-lg button-danger' v-if='getIsStepRunning' id="wait-voltage-step" @click="stopStep">Stop</button>
+            <button class='button-lg button-primary' id="run-voltage-step" @click="runStep" :disabled='Math.abs(step_size) > max_voltage_step'>Run</button>
         </div>
     
 
-        <div class='d-lg-flex align-items-center' v-else-if='mode == "speedPid"'>
-            <span class='input-group-text' for="step_speed">Step size (0 - {{max_speed_step}} rad/s)</span>
+        <div class='d-flex flex-column' v-else-if='mode == "speedPid"'>
+            <label class='mb-2' for="step_speed">Step size (0 - {{max_speed_step}} rad/s)</label>
             <input type="number" :max='max_speed_step' :min='-max_speed_step' :class="(parseFloat(step_size) >= -max_speed_step && parseFloat(step_size) <= max_speed_step) ? 'form-control' : 'form-control is-invalid'" id="step-size-speed-input" v-model="step_size">
-            <button class='button-lg button-primary' id="run-speed-step" @click="runStep" :disabled='Math.abs(step_size) > max_speed_step'>Run</button>
             <button class='button-lg button-danger' v-if='getIsStepRunning' id="wait-speed-step" @click="stopStep">Stop</button>
+            <button class='button-lg button-primary' id="run-speed-step" @click="runStep" :disabled='Math.abs(step_size) > max_speed_step'>Run</button>
+            
         </div>
 
-        <div class='d-lg-flex align-items-center' v-else-if='mode == "positionPid"'>
-            <span class='input-group-text' for="step_position">Step size (0 - {{max_position_step.toFixed(2)}} rad)</span>
+        <div class='d-flex flex-column' v-else-if='mode == "positionPid"'>
+            <label class='mb-2' for="step_position">Step size (0 - {{max_position_step.toFixed(2)}} rad)</label>
             <input type="number" step='0.01' :max='max_position_step.toFixed(2)' :min='-max_position_step.toFixed(2)' :class="(parseFloat(step_size) >= -max_position_step && parseFloat(step_size) <= max_position_step) ? 'form-control' : 'form-control is-invalid'" id="step-size-position-input" v-model="step_size" >
             <button class='button-lg button-primary' v-if='!getIsStepRunning' id="run-position-step" @click="runStep">Run</button>
             <button class='button-lg button-danger' v-else-if='getIsStepRunning' id="wait-position-step" @click="stopStep">Stop</button>

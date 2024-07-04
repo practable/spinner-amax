@@ -1,23 +1,107 @@
 <template>
 
-<div class='container-fluid m-2 practable-component'>
-	<div class="panel panel-default m-2">
-		<div v-if='getCurrentMode != ""' class='panel-heading'><h3>Current mode: {{getModeName}}</h3></div>
+<div class='container-fluid practable-component'>
+	<div class="m-2">
+		<!-- <div v-if='getCurrentMode != ""' class='panel-heading'><h3>Current mode: {{getModeName}}</h3></div> -->
 		<div class='panel-body'>{{message}}</div>
 		<div :class='getErrorClass'><h3>{{ error }}</h3></div>
 	</div>
 
-	<div id="buttons">
-		<div class='row'>
-			<div class='d-grid gap-1 d-md-block mb-1'>
-				<button v-if='getCurrentMode == "stopped"' id="enter-open-loop-mode-button" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-primary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-primary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
-				<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="d-flex flex-column">
+				<div class="mb-2">
+					<label for="hardware-select-dropdown">Select Hardware Mode</label>
+					<div class="dropdown">
+						<button class="button-sm button-primary dropdown-toggle" type="button" id="hardware-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ getModeName }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="hardware-dropdown-menu">
+							<li v-if="getCurrentMode != 'stopped'"><a class="dropdown-item" id="enter-stopped-mode-select" aria-label="stopped mode" @click="stop">stopped</a></li>
+							<li v-if="getCurrentMode == 'stopped'"><a class="dropdown-item" id="enter-open-loop-mode-select" aria-label="voltage mode" @click="speedRaw">voltage (open loop)</a></li>
+							<li v-if="getCurrentMode == 'stopped' && inputMode != 'free'"><a class="dropdown-item" id="enter-pid-position-mode-select" aria-label="position mode" @click="positionPid">position (PID)</a></li>
+							<li v-if="getCurrentMode == 'stopped' && inputMode != 'free'"><a class="dropdown-item" id="enter-pid-speed-mode-select" aria-label="speed mode" @click="speedPid">velocity (PID)</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="mb-2">
+					<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-sm button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+				</div>
+				
+				<div class="mb-2">
+					<label for="input-select-dropdown">Select Input Mode</label>
+					<div class="dropdown">
+						<button class="button-sm button-primary dropdown-toggle" type="button" id="input-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ inputMode }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="input-dropdown-menu">
+							<li v-if='getCurrentMode == "speedRaw"'><a class="dropdown-item" id="free-input-select" aria-label="free input" @click="inputMode = 'free'">free</a></li>
+							<li><a class="dropdown-item" id="step-input-select" aria-label="step input"  @click="inputMode = 'step'">step</a></li>
+							<li><a class="dropdown-item" id="ramp-input-select" aria-label="ramp input"  @click="inputMode = 'ramp'">ramp</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div class='row d-flex justify-content-center'>
+		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+			<div class='d-flex flex-column'>
+					<div class="d-flex flex-row mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="kp-input" class="me-2" id="kp-param-label">K<sub>p</sub></label>
+						<label v-else class="me-2" for="kp-input" id="kp-param-label">K<sub>p</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp-input" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="kp-input" id="kp-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+						
+					<div class="d-flex flex-row flex-fill mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" class="me-2" id="ki-param-label">K<sub>i</sub></label>
+						<label v-else for="ki-input" class="me-2" id="ki-param-label">K<sub>i</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki-input" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" id="ki-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+
+					<div class="d-flex flex-row flex-fill mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" class="me-2" id="kd-param-label">K<sub>d</sub></label>
+						<label v-else class="me-2" for="ki-input" id="kd-param-label">K<sub>d</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd-input" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="kd-input" id="kd-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+			</div>
+
+			<div class='d-flex row justify-content-center m-2'>
+				<div class='col-auto'>
+					<button v-if='getCurrentMode != "stopped"' id="reset-pid-parameters-button" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
+				</div>
+			</div>
+			
+		</div>
+
+		<div :class="getCurrentMode == 'speedRaw' ? 'col-lg-9' : 'col-lg-5'">
+			<div v-if='getCurrentMode != "stopped"'>
+				<div v-if='inputMode == "free"'>
+					<div v-if='getCurrentMode == "speedRaw"'>
+						<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
+					</div>
+				</div>
+
+				<div v-else-if="inputMode == 'step'">
+					<StepCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
+				</div>
+
+				<div v-else-if="inputMode == 'ramp'">
+					<RampCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	
+	
+
+	<!-- <div class='row d-flex justify-content-center'>
 			<div class='col-auto'>
 				<div class='input-group' v-if='getCurrentMode != "stopped"'>
 					<span class="input-group-text" for="inputSelect">Input type</span>
@@ -28,67 +112,26 @@
 					</select> 
 				</div>
 			</div>
+		</div> -->
+
+	<!-- <div id="buttons">
+		<div class='row'>
+			<div class='d-grid gap-1 d-md-block mb-1'>
+				<button v-if='getCurrentMode == "stopped"' id="enter-open-loop-mode-button" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-primary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-primary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
+				<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+			</div>
 		</div>
 
-	</div>
+		
 
-<div v-if='getCurrentMode == "positionPid" || getCurrentMode == "speedPid" || getCurrentMode == "speedRaw"'>
+	</div> -->
 
-	<div v-if='inputMode == "free"'>
-		<div v-if='getCurrentMode == "speedRaw"'>
-			<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
-		</div>
-	</div>
 
-	<div v-else-if="inputMode == 'step'">
-		<StepCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
-	</div>
-
-	<div v-else-if="inputMode == 'ramp'">
-		<RampCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
-	</div>
-
-</div>
 	
 
-	<div v-if='getCurrentMode == "speedPid" || getCurrentMode == "positionPid" || getCurrentMode == "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-		<div class='d-flex row justify-content-center m-2'>
-            <div class='col-md-4'>
-                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-                    <span v-if='getCurrentMode == "speedPid"' class="text-center" id="kp-param-label">K<sub>p</sub> &nbsp; [x10<sup>-2</sup>]</span>
-                    <span v-else class="text-center" id="kp-param-label">K<sub>p</sub></span>
-                </div>
-                    
-                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp-input" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-			</div>
-
-			<div class='col-md-4'>
-				<div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="ki-param-label">K<sub>i</sub> &nbsp; [x10<sup>-2</sup>]</span>
-					<span v-else class="text-center" id="ki-param-label">K<sub>i</sub></span>
-				</div>
-
-                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki-input" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-					
-			</div>
-
-			<div class='col-md-4'>
-                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="kd-param-label">K<sub>d</sub> &nbsp; [x10<sup>-2</sup>]</span>
-					<span v-else class="text-center" id="kd-param-label">K<sub>d</sub></span>
-				</div>
-				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd-input" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-					
-			</div>
-			
-		
-		</div>
-        <div class='d-flex row justify-content-center m-2'>
-            <div class='col-auto'>
-				<button v-if='getCurrentMode != "stopped"' id="reset-pid-parameters-button" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
-			</div>
-        </div>
-	</div>
+	
 
 </div>
 
