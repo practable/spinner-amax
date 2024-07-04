@@ -17,7 +17,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="menudropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   Menu
+                   Add Component
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" id='datarecordermenu' href="#" @click='toggleComponent("datarecorder")'>Data Recorder</a></li>
@@ -44,7 +44,7 @@
                   <a class="nav-link" id='clearworkspacemenu' href="#" tabindex="-1" @click='clearWorkspace'>Clear Workspace</a>
               </li> -->
 
-               <li class="nav-item dropdown">
+               <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="layoutdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Layout
                   </a>
@@ -54,7 +54,7 @@
                     <li><a class="dropdown-item" id='layout50:50' href="#" @click='toggleLayout(0.5)'>50%:50%</a></li>
                     <li><a class="dropdown-item" id= 'layout75:25' href="#" @click='toggleLayout(0.75)'>75%:25%</a></li>
                   </ul>
-              </li>
+              </li> -->
 
               <li v-if='getIsLoggingOn' class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="settingsdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,20 +65,14 @@
                   </ul>
               </li>
 
-              <li class="nav-item">
-                  <a class="nav-link" >
-                    UUID: {{ getLogUUID }}
-                  </a>
-                </li>
-
-                <li class="nav-item">
-                  <clock class='nav-link' />
-                </li>
-
           </ul>
 
          
           <ul class="navbar-nav dropstart">
+
+            <li class="nav-item">
+                  <clock class='nav-link' />
+                </li>
 
             <li class="nav-item me-1">
               <show-hardware-config-button />
@@ -87,10 +81,12 @@
               <li class="nav-item me-1">
                   <popup-help id="popup-help-navbar">
                       <template v-slot:header>
-                        <h5>Help</h5>
+                        <h5>Information</h5>
                       </template>
 
                       <template v-slot:body>
+                        <h5>Student user ID: {{ getLogUUID }}</h5>
+                        <p>Your unique user ID is given above. This helps us provide support through learning analytics.</p>
                         <h5>Customise the UI</h5>
                         <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
                             to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
