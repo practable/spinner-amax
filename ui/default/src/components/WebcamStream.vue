@@ -9,6 +9,8 @@
 		
 		<video-element :url="getVideoURL" />
 
+		<toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar>
+
 	</div>
 
 </div>
@@ -18,11 +20,13 @@
 import axios from "axios";
 import VideoElement from "./VideoElement.vue";
 import { mapGetters } from 'vuex';
+import Toolbar from "./elements/Toolbar.vue";
 
 export default {
 	name: "WebcamStream",
 	components:{
 		VideoElement,
+		Toolbar
 	},
     data(){
         return{

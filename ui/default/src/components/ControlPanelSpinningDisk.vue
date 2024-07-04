@@ -571,7 +571,6 @@ export default {
 			chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#000000'});
 			chart_theta.streamTo(canvas_theta, 0);
 			_this.setChartTheta(chart_theta);
-			console.log(chart_theta)
 			_this.setCanvasTheta(canvas_theta);
 
 			//in order to update the charts

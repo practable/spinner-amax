@@ -14,9 +14,9 @@
       </div>
     </div>
 
-    <div class='d-flex flex-row'>
+   
       
-        <toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar>
+        
       
 
       
@@ -45,20 +45,19 @@
         
       </div>   -->
         
-    </div>
+   
 </div>    
 </template>
 
 <script>
 import JSMpeg from "@cycjimmy/jsmpeg-player";
 import { mapGetters } from 'vuex';
-import Toolbar from "./elements/Toolbar.vue";
 
 export default {
   name: "VideoElement",
   props: ["url"],
   components:{
-      Toolbar,
+      
     },
   data(){
       return{
