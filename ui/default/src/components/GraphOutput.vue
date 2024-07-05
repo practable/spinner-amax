@@ -605,21 +605,22 @@ export default {
                 this.gradient_end_point.y = event.offsetY;
 
                 let pointer_ratio = (this.gradient_start_point.y - this.gradient_end_point.y) / (this.gradient_end_point.x - this.gradient_start_point.x);  //pointer ratio
-
-                let canvas_offset = 32;         //might need to change/check this 
+        
+                let canvas_width_offset = 61;
+                let canvas_height_offset = 83;
                 let canvas = document.getElementById('graph-canvas');
-                let canvas_height = canvas.clientHeight - canvas_offset;
-                let canvas_width = canvas.clientWidth;
+                let canvas_height = canvas.clientHeight - canvas_height_offset;
+                let canvas_width = canvas.clientWidth - canvas_width_offset;
                 let canvas_ratio = canvas_height/canvas_width;      //canvas ratio
                 
                 let y_diff = this.YAxisMax - this.YAxisMin;
                 let x_diff = this.XAxisMax - this.XAxisMin;
                 let axis_ratio = y_diff/x_diff;         //axis ratio
 
-                if(this.getNumData > 1){
-                    this.gradient = axis_ratio*pointer_ratio/canvas_ratio;
-                    this.drawLine(this.gradient_start_point, this.gradient_end_point);
-                }
+                
+                this.gradient = -axis_ratio*pointer_ratio/canvas_ratio; //negative comes from difference in direction of Y increase between axis and screen
+                this.drawLine(this.gradient_start_point, this.gradient_end_point);
+                
             }
             
         },
