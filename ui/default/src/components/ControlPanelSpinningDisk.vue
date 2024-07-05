@@ -7,7 +7,7 @@
 		<div :class='getErrorClass'><h3>{{ error }}</h3></div>
 	</div>
 
-	<div class="row">
+	<div class="d-flex flex-column-reverse flex-lg-row">
 		<div class="col-lg-3">
 			<div class="d-flex flex-column">
 				<div class="mb-lg-2">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw" && getCurrentMode != "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
 			<div class='d-flex flex-column'>
 					<div class="d-flex flex-row mb-2 align-items-center">
 						<label v-if='getCurrentMode == "speedPid"' for="kp-input" class="me-2" id="kp-param-label">K<sub>p</sub></label>
@@ -78,7 +78,7 @@
 		</div>
 
 		<div :class="getCurrentMode == 'speedRaw' ? 'col-lg-9' : 'col-lg-5'">
-			<div v-if='getCurrentMode != "stopped"'>
+			<div class="me-lg-2" v-if='getCurrentMode != "stopped"'>
 				<div v-if='inputMode == "free"'>
 					<div v-if='getCurrentMode == "speedRaw"'>
 						<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
@@ -89,12 +89,14 @@
 					<StepCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
 				</div>
 
-				<div v-else-if="inputMode == 'ramp'">
+				<div  v-else-if="inputMode == 'ramp'">
 					<RampCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
 				</div>
 
 			</div>
 		</div>
+
+		
 	</div>
 
 
