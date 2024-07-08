@@ -10,6 +10,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+
       },
     },
     test:{
