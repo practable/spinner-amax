@@ -10,9 +10,9 @@
     </button>
 
 
-    <transition name='fade'>
-        <div v-if='popup_showing' class="modal" id='modal-show' tabindex="-1">
-            <div class="modal-dialog">
+    <!-- <transition name='fade'> -->
+        <div v-show='popup_showing' class="modal" id='modal-popup-help' tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <slot name="header"></slot>
@@ -30,7 +30,7 @@
             </div>
             </div>
         </div>
-    </transition>
+    <!-- </transition> -->
 
     
     
@@ -60,7 +60,7 @@ export default {
       
   },
   mounted(){
-      
+    
 
   },
   computed:{
@@ -74,9 +74,15 @@ export default {
   
   methods: {
       openHelp(){
-          this.popup_showing = true;
+        let modal = document.getElementById('modal-popup-help');
+        document.body.appendChild(modal);
+        this.popup_showing = true;
       },
       closeHelp(){
+        let modal = document.getElementById('modal-popup-help');
+        document.body.removeChild(modal);
+        let here = document.getElementById(this.id);
+        here.appendChild(modal);
         this.popup_showing = false;
       }
   }
@@ -84,14 +90,13 @@ export default {
 </script>
 
 <style>
+#modal-popup-help{
+  display: block;
+}
 
 #close-button{
     position:absolute;
     right:10px;
-}
-
-#popup-text{
-    z-index: 999;
 }
 
 .fade-enter-active,

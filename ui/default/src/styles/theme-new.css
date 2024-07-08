@@ -163,6 +163,11 @@ body.dark-theme {
     max-height: 100%;
 }
 
+.toolbar-bottom{
+    position: sticky; 
+    bottom: 0; 
+}
+
 .button-lg{
     border: none;
     border-radius: 8px;
@@ -439,8 +444,8 @@ th{
 .modal-body{
     background-color: var(--background-color-highlight);
     color: var(--text-color);
-    max-height: 50vh;
-    overflow-y: scroll;
+    /* max-height: 50vh;
+    overflow-y: scroll; */
 }
 
 .modal-footer{
@@ -450,5 +455,4 @@ th{
 
 #modal-show{
     display: block;
-    
   }

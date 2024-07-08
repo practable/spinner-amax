@@ -9,7 +9,7 @@
 		
 		<video-element :url="getVideoURL" />
 
-		<div class="d-flex flex-row">
+		<div class="d-flex flex-row toolbar-bottom">
 			<download-image-button class="me-2" id="download-image-webcam" parentCanvasID="video-canvas" parentComponentName="webcam"></download-image-button>
 			
 			<options-tool id="options-live-stream" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
