@@ -269,7 +269,6 @@ export default {
           this.toggleDataRecorder();
         }
       }
-      document.getElementById("graph").scrollIntoView();
     },
     clearWorkspace(){
       this.isWorkspaceOn = false;
@@ -283,9 +282,6 @@ export default {
       } else{
         this.$store.dispatch('setDataRecorder', false);
       }
-
-      document.getElementById("data-recorder").scrollIntoView();
-      
     },
     toggleStopwatch(){
       this.isStopwatchOn = !this.isStopwatchOn;
@@ -297,7 +293,6 @@ export default {
             this.toggleDataRecorder();
         }
       }
-      document.getElementById("table").scrollIntoView();
     },
     toggleInputGraph(){
       this.isInputGraphOn = !this.isInputGraphOn;
@@ -312,7 +307,6 @@ export default {
           this.toggleDataRecorder();
         }
       }
-      document.getElementById("snapshot").scrollIntoView();
     },
     toggleLayout(ratio){
       if(ratio == 0.25){
