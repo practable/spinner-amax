@@ -3,7 +3,7 @@
 
 <template>
 <div class='practable-component'>
-    <div class="d-flex flex-row mb-4 align-items-center">
+    <div class="d-flex flex-row mb-4 align-items-center toolbar-top">
         <download-image-button class="me-2" id="download-graph-image" parentCanvasID="graph-canvas" parentComponentName="graph"></download-image-button>
         
         <popup-help class="me-2" id="popup-help-graph">
