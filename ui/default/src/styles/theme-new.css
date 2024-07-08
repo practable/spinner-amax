@@ -419,7 +419,7 @@ input[type=range]::-ms-track {
 
 .table{
     overflow: scroll;
-    max-height: 500px;
+    max-height: 100%;
     color: var(--text-color);
     
 }

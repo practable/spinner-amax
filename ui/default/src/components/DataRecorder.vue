@@ -39,11 +39,30 @@
         </div>
       </div>
     </transition>
+
+    <div class="d-flex flex-row">
+		<popup-help class="me-2" id="popup-help-data-recorder">
+            <template v-slot:header>
+                <h5> Data Recorder Help </h5>
+            </template>
+            <template v-slot:body>
+                <p>For this remote lab, data is automatically recorded when <b>Run</b> is clicked in the control panel. </p>    
+                <p>Clicking <b>Reset</b> will delete all recorded data, including clearing the graph component.</p>
+                <p>If you want to save data prior to resetting then click <b>Download CSV</b>
+                to save the data to your local computer.</p>  
+                <p>A maximum of 5000 data points can be recorded for download and 2000 for display in the graph component. It is recommended to perform
+                  runs in batches and download data in between.
+                </p>         
+
+            </template>
+        </popup-help>
+	</div>
 </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
 
@@ -59,7 +78,7 @@ export default {
     }
   },
   components: {
-    
+    PopupHelp
   },
   created(){
     

@@ -99,7 +99,26 @@
 		
 	</div>
 
+	<div class="d-flex flex-row">
+		<popup-help class="me-2" id="popup-help-control-panel">
+            <template v-slot:header>
+                <h5> Control Panel Help </h5>
+            </template>
+            <template v-slot:body>
+                <p>To interact with the spinning disk hardware:</p>
+				
+				<p>1) Select <b>hardware</b> mode</p>
+				<p>2) Select <b>input</b> mode (default is step input)</p>
+				<p>3) If in a PID mode then update PID parameters as required</p>
+				<p>4) Input the desired <b>step size</b> or <b>ramp gradient</b></p>
+				<p>5) Click <b>Run</b></p>
+				<p>6) Click <b>Stop</b> when sufficient data collected</p>
 
+                
+
+            </template>
+        </popup-help>
+	</div>
 	
 	
 
@@ -147,6 +166,7 @@ import DCMotorPanel from './DCMotorPanel.vue';
 import StepCommand from './StepCommand.vue';
 import RampCommand from './RampCommand.vue';
 import { mapActions, mapGetters } from 'vuex';
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
 	name: "ControlPanelSpinningDisk",
@@ -158,6 +178,7 @@ export default {
 		DCMotorPanel,
 		StepCommand,
 		RampCommand,
+		PopupHelp
 	},
     data(){
         return{

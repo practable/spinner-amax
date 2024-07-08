@@ -87,16 +87,14 @@
                       <template v-slot:body>
                         <h5>Student user ID: {{ getLogUUID }}</h5>
                         <p>Your unique user ID is given above. This helps us provide support through learning analytics.</p>
-                        <h5>Customise the UI</h5>
-                        <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
-                            to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
-                            changes.
-                        </p>
 
-                        <h5>Recording more than 5000 data points</h5>
-                        <p>For smooth running of the web app there is a limit of 5000 recorded data points and 2000 data points on the Graph tool. Please download this dataset or perform the necessary analysis
-                            and then reset the data and run again in order to collect more data. For collecting single data points over a long time you may be best to use the Snapshot tool which can continue to collect data beyond this limit.
-                        </p>
+                        <h5>Customise the UI (Large screens only)</h5>
+                        <p>You can drag a component from one slot to another to switch their positions.</p>
+                        <p>Components can also be resized horizontally by clicking and dragging in the bottom right-hand corner of a slot.</p>
+
+                        <h5>Toggling components</h5>
+                        <p>The <b>Add Component</b> menu in the navigation bar can be used to toggle components visibility. Most components are displayed by default.
+                        However, the <b>data snapshot</b> and <b>data table</b> tools can be added using this menu and visble components can be hidden.</p>
 
                         <h5>Report issues</h5>
                         <p>If you have any problems with the remote laboratory then you can contact us at support@practable.io

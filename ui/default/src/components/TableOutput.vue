@@ -19,7 +19,7 @@
             </thead>
             <tr v-for="row in table" :id="row.id" :key="row.id" v-bind:class="[row.id == selected_row_id ? 'selected-row' : '']" @click="changeSelected(row.id)">
                 <td>{{row.set}}</td>
-                <td>{{row.t.toFixed(2)}}</td>
+                <td>{{row.t.toFixed(3)}}</td>
                 <td>{{row.theta}}</td>
                 <td>{{row.omega}}</td>
                 <td>{{row.command}}</td>
@@ -108,8 +108,8 @@ export default {
         },
         changeSelected(id){
             this.selected_row_id = id;
-            var elmnt = document.getElementById(id);
-            elmnt.scrollIntoView(false); 
+            // var elmnt = document.getElementById(id);
+            // elmnt.scrollIntoView(false); 
         },
       },
       

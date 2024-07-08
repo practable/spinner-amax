@@ -11,29 +11,36 @@
                 <h5> Graph Help </h5>
             </template>
             <template v-slot:body>
-                <div class='row mb-2' id='gradient-div'>
-                    <div class='col'>
-                        <h5> Gradient tool </h5>
-                        <p> Click and drag on the graph in order to draw a straight line segment. The gradient of this line is displayed in the Gradient box.</p>
-                    </div>
+                <div class='row mb-2'>
+                    <h5>Recording more than 5000 data points</h5>
+                    <p>For smooth running of the web app there is a limit of 5000 recorded data points and 2000 data points on the Graph tool. Please download this dataset or perform the necessary analysis
+                        and then reset the data and run again in order to collect more data. For collecting single data points over a long time you may be best to use the Snapshot tool which can continue to collect data beyond this limit.
+                    </p>
+                </div>
+                
+                <div class='row mb-2'>
+                    <h5> Gradient tool </h5>
+                    <p> Click and drag on the graph in order to draw a straight line segment. The gradient of this line is displayed in the Gradient box.</p>
                 </div>
 
-                <div class='row mb-2' id='data-point-div'>
-                    <div class='col'>
-                        <h5> Interactive data points </h5>
-                        <p> Hover over a graph point to display the corresponding data.
-                        </p>
-                    </div>
-
+                <div class='row mb-2'>
+                    <h5> Interactive data points </h5>
+                    <p> Hover over a graph point to display the corresponding data. Click on a coloured key item to toggle the display of that dataset on the graph.
+                    </p>
                 </div>
 
-                <div class='row mb-2' id='functions-div'>
-                    <div class='col'>
-                        <h5> Function Plotting </h5>
-                        <p> Select the function type from the dropdown menu. Input the function parameters. Angular parameters are in radians. Click plot to display the function.
-                            The function is plotted up to the maximum time value currently displayed on the x-axis.
-                        </p>
-                    </div>
+                <div class='row mb-2'>
+                    <h5> Function Plotting </h5>
+                    <p> Function plotting is available by clicking the toolbar button above the graph. Select the function type from the dropdown menu. Input the function parameters. Angular parameters are in radians. Click plot to display the function.
+                        The function is plotted up to the maximum time value currently displayed on the x-axis.
+                    </p>
+                </div>
+
+                <div class='row mb-2'>
+                    <h5> Download </h5>
+                    <p> An image of the plotted datasets can be downloaded by clicking the download toolbar button. The datasets themselves can be downloaded as separate CSV files by
+                        clicking 'Download CSV' which is available after datasets have been plotted.
+                    </p>
                 </div>
             </template>
         </popup-help>
