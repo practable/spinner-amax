@@ -99,7 +99,7 @@
 		
 	</div>
 
-	<div class="d-flex flex-row">
+	<div class="d-flex flex-row toolbar-bottom">
 		<popup-help class="me-2" id="popup-help-control-panel">
             <template v-slot:header>
                 <h5> Control Panel Help </h5>

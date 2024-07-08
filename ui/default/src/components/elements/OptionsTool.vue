@@ -10,7 +10,7 @@
     </button>
 
     <!-- <transition name='fade'> -->
-        <div v-show='popup_showing' class="modal" id='modal-options' tabindex="-1">
+        <div v-if='popup_showing' class="modal" id='modal-options' tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
                   <div class="modal-header">
@@ -73,16 +73,28 @@ export default {
   methods: {
     openOptions(){
       this.popup_showing = true;
-      let modal = document.getElementById('modal-options');
-      document.body.appendChild(modal);
+
+      this.$nextTick(() => {
+      // DOM manipulation code after item is added
+        let modal = document.getElementById('modal-options');
+        document.body.appendChild(modal);
+      });
+     
       
     },
     closeOptions(){
-      this.popup_showing = false;
       let modal = document.getElementById('modal-options');
-      document.body.removeChild(modal);
+      //document.body.removeChild(modal);
       let here = document.getElementById(this.id);
       here.appendChild(modal);
+      
+      this.$nextTick(() => {
+      // DOM manipulation code after item is added
+        this.popup_showing = false;  
+      });
+      
+
+      
     }  
   }
 }

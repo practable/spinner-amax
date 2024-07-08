@@ -11,7 +11,7 @@
 
 
     <!-- <transition name='fade'> -->
-        <div v-show='popup_showing' class="modal" id='modal-popup-help' tabindex="-1">
+        <div v-if='popup_showing' class="modal" id='modal-popup-help' tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,16 +74,26 @@ export default {
   
   methods: {
       openHelp(){
-        let modal = document.getElementById('modal-popup-help');
-        document.body.appendChild(modal);
         this.popup_showing = true;
+
+        this.$nextTick(() => {
+          let modal = document.getElementById('modal-popup-help');
+          document.body.appendChild(modal);
+      });
+        
       },
       closeHelp(){
         let modal = document.getElementById('modal-popup-help');
-        document.body.removeChild(modal);
+        //document.body.removeChild(modal);
         let here = document.getElementById(this.id);
         here.appendChild(modal);
-        this.popup_showing = false;
+
+        this.$nextTick(() => {
+          this.popup_showing = false;
+        });
+       
+        
+        
       }
   }
 }

@@ -168,6 +168,11 @@ body.dark-theme {
     bottom: 0; 
 }
 
+.toolbar-top{
+    position: sticky; 
+    top: 0; 
+}
+
 .button-lg{
     border: none;
     border-radius: 8px;
