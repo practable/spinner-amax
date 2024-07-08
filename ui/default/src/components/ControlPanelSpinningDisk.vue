@@ -78,7 +78,7 @@
 		</div>
 
 		<div :class="getCurrentMode == 'speedRaw' ? 'col-lg-9' : 'col-lg-5'">
-			<div class="me-lg-2" v-if='getCurrentMode != "stopped"'>
+			<div class="ms-lg-2" v-if='getCurrentMode != "stopped"'>
 				<div v-if='inputMode == "free"'>
 					<div v-if='getCurrentMode == "speedRaw"'>
 						<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />

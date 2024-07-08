@@ -61,9 +61,8 @@
           </div>
 
           <div class='d-flex' id='third-row'>
-            <div class='drop-area drop-area-one-third' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
-            <div class='drop-area drop-area-one-third' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><table-output v-if='isTableOn' id='table' :selected_point="selected_graph_point"/></div>
-            <div class='drop-area drop-area-one-third' id='drop_2_2' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><motor-snapshot v-if='isSnapshotOn' id='snapshot' :headings="['Time/s', 'Angle/rad', 'Ang. Vel./rad/s', 'Command', 'Drive', 'Error']"/></div>
+            <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><table-output v-if='isTableOn' id='table' :selected_point="selected_graph_point"/></div>
           </div>
 
       </div>
@@ -270,6 +269,7 @@ export default {
           this.toggleDataRecorder();
         }
       }
+      document.getElementById("graph").scrollIntoView();
     },
     clearWorkspace(){
       this.isWorkspaceOn = false;
@@ -283,6 +283,8 @@ export default {
       } else{
         this.$store.dispatch('setDataRecorder', false);
       }
+
+      document.getElementById("data-recorder").scrollIntoView();
       
     },
     toggleStopwatch(){
@@ -295,6 +297,7 @@ export default {
             this.toggleDataRecorder();
         }
       }
+      document.getElementById("table").scrollIntoView();
     },
     toggleInputGraph(){
       this.isInputGraphOn = !this.isInputGraphOn;
@@ -309,6 +312,7 @@ export default {
           this.toggleDataRecorder();
         }
       }
+      document.getElementById("snapshot").scrollIntoView();
     },
     toggleLayout(ratio){
       if(ratio == 0.25){
