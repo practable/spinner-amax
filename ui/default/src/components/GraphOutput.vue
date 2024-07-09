@@ -325,18 +325,36 @@ export default {
         ]),
         updateChart(){
             
-            let max_index = this.getNumData;
-            if(max_index < this.maxDataPoints){
-                if(this.latest_index < max_index){
-                    for(let i=this.latest_index; i < max_index; i++){
-                        this.getDataAtIndex(i);
-                    }
-                    this.latest_index = max_index;
-                    scatterChart.options.scales['y'].title.text = this.getGraphDataParameter;
-                    scatterChart.update();                
+            // let max_index = this.getNumData;
+            // if(max_index < this.maxDataPoints){
+            //     if(this.latest_index < max_index){
+            //         for(let i=this.latest_index; i < max_index; i++){
+            //             console.log('getting data')
+            //             this.getDataAtIndex(i);
+            //         }
+            //         this.latest_index = max_index;
+            //         scatterChart.options.scales['y'].title.text = this.getGraphDataParameter;
+            //         scatterChart.update();                
                     
-                } 
+            //     } 
+            // } 
+
+            let num_data = this.getNumData;
+            let max_index = this.maxDataPoints;
+            if(num_data < this.maxDataPoints){
+                max_index = num_data
+            }
+            
+            if(this.latest_index < max_index){
+                for(let i=this.latest_index; i < max_index; i++){
+                    this.getDataAtIndex(i);
+                }
+                this.latest_index = max_index;
+                scatterChart.options.scales['y'].title.text = this.getGraphDataParameter;
+                scatterChart.update();                
+                
             } 
+         
 
             setTimeout(this.updateChart, 50);
         },
