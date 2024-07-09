@@ -58,22 +58,27 @@ body.dark-theme {
     #first-row{
         overflow: auto;
         height: 50dvh;
-        max-height: 50dvh;
+        max-height: 100dvh;
+        min-height: 20dvh;
         max-width: 100dvw;
+        resize: vertical;
     }
 
     #second-row{
         overflow: auto;
         height: 40dvh;
-        max-height: 40dvh;
+        max-height: 100dvh;
+        min-height: 20dvh;
         max-width: 100dvw;
+        resize: vertical;
     }
 
     #third-row{
         overflow: auto;
-        height: 40dvh;
-        max-height: 40dvh;
+        max-height: 100dvh;
+        min-height: 20dvh;
         max-width: 100dvw;
+        resize: vertical;
     }
 }
 
@@ -103,7 +108,13 @@ body.dark-theme {
     display: block;
     min-width: 10dvw;
     min-height: 10dvh;
+    -ms-overflow-style: none;  /* Hiding scrollbars in IE and Edge */
+    scrollbar-width: none;  /* Hiding scrollbars in Firefox */
 }
+
+.drop-area::-webkit-scrollbar {
+    display: none;  /* Hiding scrollbars in Chrome, Safari and Opera */
+  }
 
 .drop-area-highlighted {
     background-color: var(--background-color-highlight);
