@@ -281,6 +281,19 @@ body.dark-theme {
     color: var(--text-color-hover);
 }
 
+.button-dropdown{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-color-primary);
+}
+
+.button-dropdown:hover{
+    background-color: var(--background-color);
+    color: var(--text-color-hover);
+}
+
 .button-warning{
     background-color: var(--background-color-secondary);
     color: var(--text-color);

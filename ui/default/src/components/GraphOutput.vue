@@ -76,188 +76,153 @@
             </div>
             <div class="modal-body">
                 <div id="chart-functions" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-           
-                    <select class='form-select form-select-sm' name="function" aria-label="select function" id="function" v-model="currentFunction">
-                        <option id='select-linear-option' value="linear">Linear</option>
-                        <option id='select-quadratic-option' value="quadratic">Quadratic</option>
-                        <option id='select-trigonometric-option' value="trigonometric">Trigonometric</option>
-                        <option id='select-exponential-option' value="exponential">Exponential</option>
-                        <option id='select-first-step-option' v-if='getGraphDataParameter != "theta"' value="step">Step (1st Order)</option>
-                        <option id='select-first-ramp-option' v-if='getGraphDataParameter != "theta"' value="ramp">Ramp (1st Order)</option>
-                        <option id='select-second-step-option' v-if='getGraphDataParameter == "theta"' value="step2nd">Step (2nd Order)</option>
-                    </select> 
+					<div class="dropdown">
+						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="function-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ currentFunction }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="function-dropdown-menu">
+							<li><a class="dropdown-item" id='select-linear-option' aria-label="select linear function" @click="currentFunction = 'linear'">Linear</a></li>
+							<li><a class="dropdown-item" id='select-quadratic-option' aria-label="select quadratic function" @click="currentFunction = 'quadratic'">Quadratic</a></li>
+                            <li><a class="dropdown-item" id='select-trigonometric-option' aria-label="select trigonometric function" @click="currentFunction = 'trigonometric'">Trigonometric</a></li>
+                            <li><a class="dropdown-item" id='select-exponential-option' aria-label="select exponential function" @click="currentFunction = 'exponential'">Exponential</a></li>
+                            <li v-if='getGraphDataParameter != "theta"'><a class="dropdown-item" id='select-first-step-option' aria-label="select first order step function" @click="currentFunction = 'step'">Step (1st Order)</a></li>
+                            <li v-if='getGraphDataParameter != "theta"'><a class="dropdown-item" id='select-first-ramp-option' aria-label="select first order ramp function" @click="currentFunction = 'ramp'">Ramp (1st Order)</a></li>
+                            <li v-if='getGraphDataParameter == "theta"'><a class="dropdown-item" id='select-second-step-option' aria-label="select second order step function" @click="currentFunction = 'step2nd'">Step (2nd Order)</a></li>
+                        </ul>
+					</div>
       
    
                     <div v-if="currentFunction === 'linear'">
-                    
                             <img id='linear_function' src='/images/LinearFunction.png' alt="linear function equation">
 
-                            <div class='input-group'>
+                            <div class='input-group mt-2 mb-2'>
                                 <label class='input-group-text' for="func_a">a = </label>
-                                <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                                <input type="number" class='form-control' id="func_a" v-model="func_a">
                             </div>
                         
-                            <div class='input-group'>
+                            <div class='input-group mt-2 mb-2'>
                                 <label class='input-group-text' for="func_b">b = </label>
-                                <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                                <input type="number" class='form-control' id="func_b" v-model="func_b">
                             </div>
-                    
                     </div>
-
-
 
                     <div v-else-if="currentFunction === 'quadratic'">
                             <img id='linear_function' src='/images/QuadraticFunction.png' alt="quadratic function equation">
                         
-                            <div class='input-group'>
+                            <div class='input-group mt-2 mb-2'>
                                 <label class='input-group-text' for="func_a">a = </label>
-                                <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                                <input type="number" class='form-control' id="func_a" v-model="func_a">
                             </div>
                      
-                            <div class='input-group'>
+                            <div class='input-group mt-2 mb-2'>
                                 <label class='input-group-text' for="func_b">b = </label>
-                                <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                                <input type="number" class='form-control' id="func_b" v-model="func_b">
                             </div>
-                        
                     </div>
-
 
                     <div v-else-if="currentFunction === 'trigonometric'">
                         <img id='trig_function' src='/images/TrigFunction.png' alt="trigonometric function equation">
                        
-                        <div class='input-group'>
+                        <div class='input-group mt-2 mb-2'>
                             <label class='input-group-text' for="func_a">A = </label>
-                            <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                            <input type="number" class='form-control' id="func_a" v-model="func_a">
                         </div>
 
-                        <div class='input-group'>
+                        <div class='input-group mt-2 mb-2'>
                             <label class='input-group-text' for="func_b">&omega; = </label>
-                            <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                            <input type="number" class='form-control' id="func_b" v-model="func_b">
                         </div>
                           
-                        <div class='input-group'>
+                        <div class='input-group mt-2 mb-2'>
                             <label class='input-group-text' for="func_c">&phi; = </label>
-                            <input class='form-control' id="func_c" v-model="func_c" size='3'>
+                            <input type="number" class='form-control' id="func_c" v-model="func_c">
                         </div>
-                     
                     </div>
 
-       
        <div v-else-if="currentFunction === 'exponential'">
-
             <img id='linear_function' src='/images/ExpFunction.png' alt="exponential function equation">
 
-            <div class='input-group'>
+            <div class='input-group mt-2 mb-2'>
                 <label class='input-group-text' for="func_a">A = </label>
-                <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                <input type="number" class='form-control' id="func_a" v-model="func_a">
             </div>
     
-            <div class='input-group'>
+            <div class='input-group mt-2 mb-2'>
                 <label class='input-group-text' for="func_b">b = </label>
-                <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                <input type="number" class='form-control' id="func_b" v-model="func_b">
             </div>
-          
        </div>
-
 
        <div v-else-if="currentFunction === 'step'">
-           
-        
                <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png' alt="step function equation">
          
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_b">Step size, A<sub>v</sub> </label>
-                    <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                    <input type="number" class='form-control' id="func_b" v-model="func_b">
                 </div>
             
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_a">K = </label>
-                    <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                    <input type="number" class='form-control' id="func_a" v-model="func_a">
                 </div>
             
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_c">&tau; = </label>
-                    <input class='form-control' id="func_c" v-model="func_c" size='3'>
+                    <input type="number" class='form-control' id="func_c" v-model="func_c">
                 </div>
             
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_d">t<sub>0</sub> = </label>
-                    <input class='form-control' id="func_d" v-model="func_d" size='3'>
+                    <input type="number" class='form-control' id="func_d" v-model="func_d">
                 </div>
        </div>
-
 
        <div v-else-if="currentFunction === 'step2nd'">
-
             <img id='second_order_transfer_function' src='/images/TransferFunction2ndOrder.png' alt="step (2nd order) function equation">
      
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_a">Step size, A</label>
-                    <input class='form-control' id="func_a" v-model="func_a" size='3'>
+                    <input type="number" class='form-control' id="func_a" v-model="func_a">
                 </div>
         
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_b">&zeta; =</label>
-                    <input class='form-control' id="func_b" v-model="func_b" size='3'>
+                    <input type="number" class='form-control' id="func_b" v-model="func_b">
                 </div>
             
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_c">&omega;<sub>n</sub> =</label>
-                    <input class='form-control' id="func_c" v-model="func_c" size='3'>
+                    <input type="number" class='form-control' id="func_c" v-model="func_c">
                 </div>
             
-
-        
-                <div class='input-group'>
+                <div class='input-group mt-2 mb-2'>
                     <label class='input-group-text' for="func_d">t<sub>0</sub> =</label>
-                    <input class='form-control' id="func_d" v-model="func_d" size='3'>
+                    <input type="number" class='form-control' id="func_d" v-model="func_d">
                 </div>
-           
        </div>
 
-
        <div v-else-if="currentFunction === 'ramp'">
-
-      
                <img id='transfer_function' src='/images/VoltSpeedTransferFunction.png' alt="ramp function equation">
         
-
-          
-                   <div class='input-group'>
-                       <label class='input-group-text' for="func_b">Ramp gradient, A<sub>v</sub></label>
-                       <input class='form-control' id="func_b" v-model="func_b" size='3'>
-                   </div>
-             
-
-         
-                   <div class='input-group'>
-                       <label class='input-group-text' for="func_a">K =</label>
-                       <input class='form-control' id="func_a" v-model="func_a" size='3'>
-                   </div>
-               
-
-          
-                   <div class='input-group'>
-                       <label class='input-group-text' for="func_c">&tau; =</label>
-                       <input class='form-control' id="func_c" v-model="func_c" size='3'>
-                   </div>
-              
-
-           
-                   <div class='input-group'>
-                       <label class='input-group-text' for="func_d">&omega;<sub>0</sub> =</label>
-                       <input class='form-control' id="func_d" v-model="func_d" size='3'>
-                   </div>
+                <div class='input-group mt-2 mb-2'>
+                    <label class='input-group-text' for="func_b">Ramp gradient, A<sub>v</sub></label>
+                    <input type="number" class='form-control' id="func_b" v-model="func_b">
+                </div>
+            
+                <div class='input-group mt-2 mb-2'>
+                    <label class='input-group-text' for="func_a">K =</label>
+                    <input type="number" class='form-control' id="func_a" v-model="func_a">
+                </div>
+            
+                <div class='input-group mt-2 mb-2'>
+                    <label class='input-group-text' for="func_c">&tau; =</label>
+                    <input type="number" class='form-control' id="func_c" v-model="func_c">
+                </div>
+            
+                <div class='input-group mt-2 mb-2'>
+                    <label class='input-group-text' for="func_d">&omega;<sub>0</sub> =</label>
+                    <input type="number" class='form-control' id="func_d" v-model="func_d">
+                </div>
        </div>
 
 
@@ -265,39 +230,17 @@
    </div>
             </div>
 
-            <div class="modal-footer">
-                <div v-if="currentFunction === 'linear'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(linear)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'quadratic'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(quadratic)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'trigonometric'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(trigonometric)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'exponential'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(exponential)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'step'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'step2nd'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step2nd)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-                <div v-else-if="currentFunction === 'ramp'" class="input-group">
-                    <button class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(ramp)">Plot</button>
-                    <button class="button-sm button-danger m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
-                </div>
-
-                
-                
-
+            <div class="modal-footer d-flex flex-row">
+                <button v-if="currentFunction === 'linear'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(linear)">Plot</button>
+                <button v-else-if="currentFunction === 'quadratic'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(quadratic)">Plot</button>
+                <button v-else-if="currentFunction === 'trigonometric'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(trigonometric)">Plot</button>
+                <button v-else-if="currentFunction === 'exponential'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(exponential)">Plot</button>
+                <button v-else-if="currentFunction === 'step'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step)">Plot</button>
+                <button v-else-if="currentFunction === 'step2nd'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(step2nd)">Plot</button>
+                <button v-else-if="currentFunction === 'ramp'" class="button-sm button-primary m-1" id="plotFunctionButton" @click="plotFunc(ramp)">Plot</button>
+                    
+                <button class="button-sm button-warning m-1" id="clearFunctionButton" @click="deleteFunctionDataset">Clear</button>
+                <button type="button" class="button-sm button-danger" id="close-plotting-modal" aria-label="close plotting modal" @click='showPlotting = false'>Close</button>
             
             </div>
           </div>
@@ -796,6 +739,10 @@ export default {
 #trig_function{
     width: 150px;
     height: 30px;
+}
+
+#chart-functions{
+    min-height: 40dvh;
 }
 
 </style>

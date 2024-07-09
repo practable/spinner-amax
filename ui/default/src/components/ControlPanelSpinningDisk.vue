@@ -13,7 +13,7 @@
 				<div class="mb-lg-2">
 					<label for="hardware-select-dropdown">Select Hardware Mode</label>
 					<div class="dropdown">
-						<button class="button-sm button-primary dropdown-toggle" type="button" id="hardware-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="hardware-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 							{{ getModeName }}
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="hardware-dropdown-menu">
@@ -32,7 +32,7 @@
 				<div class="mb-lg-2">
 					<label for="input-select-dropdown">Select Input Mode</label>
 					<div class="dropdown">
-						<button class="button-sm button-primary dropdown-toggle" type="button" id="input-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="input-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 							{{ inputMode }}
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="input-dropdown-menu">
