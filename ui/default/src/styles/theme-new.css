@@ -31,6 +31,7 @@ body {
     --button-color-primary: #319b00;
     --button-color-secondary: #afafaf;
     --button-color-tertiary: #848482;
+    overflow-x: hidden;
 }
 
 body.dark-theme {
@@ -50,7 +51,7 @@ body.dark-theme {
     --button-color-primary: #319b00;
     --button-color-secondary: #F8F8FF;
     --button-color-tertiary: #848482;
-    
+    overflow-x: hidden;
 }
 
 /* Only have scrollable left and right screen divs if on a large screen size or bigger. */
