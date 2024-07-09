@@ -317,6 +317,11 @@ export default {
         },
         getDarkTheme(){
             this.clearData();
+        },
+        getGraphDataParameter(new_value){
+            console.log(new_value);
+            scatterChart.options.scales['y'].title.text = new_value;
+            scatterChart.update();
         }
     },
     methods: {
@@ -350,7 +355,7 @@ export default {
                     this.getDataAtIndex(i);
                 }
                 this.latest_index = max_index;
-                scatterChart.options.scales['y'].title.text = this.getGraphDataParameter;
+                //scatterChart.options.scales['y'].title.text = this.getGraphDataParameter;
                 scatterChart.update();                
                 
             } 
