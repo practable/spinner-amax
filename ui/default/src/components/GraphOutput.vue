@@ -59,7 +59,7 @@
     </div>
 
     
-    <canvas id='graph-canvas' @mousedown="startLine" @mouseup="endDrag" @mousemove="endLine"></canvas>
+    <canvas id='graph-canvas' ref="graphCanvas" @mousedown="startLine" @mouseup="endDrag" @mousemove="endLine"></canvas>
     
     
     
@@ -365,7 +365,8 @@ export default {
         },
         createChart() {
             var _this = this;
-            const canvas = document.getElementById('graph-canvas');
+            //const canvas = document.getElementById('graph-canvas');
+            const canvas = this.$refs.graphCanvas;
             const ctx = canvas.getContext('2d');
             scatterChart = new Chart(ctx, {
             type: 'scatter',
