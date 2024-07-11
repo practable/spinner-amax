@@ -62,10 +62,7 @@ describe('Consent tests', () => {
         });
 
         const consent_button = wrapper.find('#consent-yes-button');
-        const logging_consent_radio = wrapper.find('#loggingConsentRadio');
         await store.dispatch('setUsesLocalStorage', true);
-
-        await logging_consent_radio.trigger('click');
         await consent_button.trigger('click');
 
         
@@ -74,7 +71,7 @@ describe('Consent tests', () => {
     })
 
 
-    test('Correct consent in localStore: select logging and then deselect', async () => {
+    test('Correct consent in localStore: do not give consent', async () => {
         const store = createVuexStore();
         const wrapper = mount(Consent, {
         global:{
@@ -82,15 +79,9 @@ describe('Consent tests', () => {
             },
         });
 
-        const consent_button = wrapper.find('#consent-yes-button');
-        const logging_consent_radio = wrapper.find('#loggingConsentRadio');
+        const consent_button = wrapper.find('#consent-no-button');
         await store.dispatch('setUsesLocalStorage', true);
-
-        await logging_consent_radio.trigger('click');
-        await logging_consent_radio.trigger('click');
         await consent_button.trigger('click');
-
-        
         expect(localStorage.setItem).toHaveBeenCalled();
         // expect(localStorage.getItem('remote-lab-logging-consent') == 'false').toBe(true);
         // expect(store.getters.getLogConsent == false).toBe(true);

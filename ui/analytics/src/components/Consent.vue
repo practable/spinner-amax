@@ -25,7 +25,7 @@
                   </div>
                   <div class="d-flex flex-column col-4">
                     <button type="button" class="button-sm button-primary mb-2" id='consent-yes-button' aria-label="consent" @click="consent(true)">Yes</button>
-                    <button type="button" class="button-sm button-danger" id='consent-yes-button' aria-label="do not consent" @click="consent(false)">No</button>
+                    <button type="button" class="button-sm button-danger" id='consent-no-button' aria-label="do not consent" @click="consent(false)">No</button>
                   </div>
                 </div>
 

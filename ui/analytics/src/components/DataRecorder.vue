@@ -4,10 +4,10 @@
 <template>
 <div class='m-2 p-2 practable-component'>
     <div class="d-grid gap-2 d-sm-block">
-        <button type='button' class="button-xsm button-primary" aria-label="record" v-if="!getIsRecording && getInputMode == 'free'" id="recordButton" @click='$store.dispatch("setIsRecording", true)'>Record</button>
-        <button type='button' class="button-xsm button-danger" aria-label="stop" v-if="getIsRecording" id="stopButton" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
-        <button type='button' class="button-xsm button-warning" aria-label="reset" id="clearButton" @click="toggleResetModal">Reset</button>
-        <button type='button' class="button-xsm button-primary" aria-label="download csv" v-if="hasData" id="outputButton" @click="outputToCSV">Download CSV</button>
+        <button type='button' class="button-xsm button-primary" aria-label="record" v-if="!getIsRecording && getInputMode == 'free'" id="record-data-button" @click='$store.dispatch("setIsRecording", true)'>Record</button>
+        <button type='button' class="button-xsm button-danger" aria-label="stop" v-if="getIsRecording" id="stop-data-button" @click='$store.dispatch("setIsRecording", false)'>Stop</button>
+        <button type='button' class="button-xsm button-warning" aria-label="reset" id="reset-data-button" @click="toggleResetModal">Reset</button>
+        <button type='button' class="button-xsm button-primary" aria-label="download csv" v-if="hasData" id="download-data-button" @click="outputToCSV">Download CSV</button>
     </div>
     <div class='row m-2 justify-content-center'>
       <div v-if='getIsRecording' class='col-2'>
@@ -20,7 +20,7 @@
 
   <transition name='fade'>
     <div v-if='showResetConfirmModal' class="modal modal-show" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Reset Data</h5>
@@ -39,11 +39,30 @@
         </div>
       </div>
     </transition>
+
+    <div class="d-flex flex-row">
+		<popup-help class="me-2" id="popup-help-data-recorder">
+            <template v-slot:header>
+                <h5> Data Recorder Help </h5>
+            </template>
+            <template v-slot:body>
+                <p>For this remote lab, data is automatically recorded when <b>Run</b> is clicked in the control panel. </p>    
+                <p>Clicking <b>Reset</b> will delete all recorded data, including clearing the graph component.</p>
+                <p>If you want to save data prior to resetting then click <b>Download CSV</b>
+                to save the data to your local computer.</p>  
+                <p>A maximum of 5000 data points can be recorded for download and 2000 for display in the graph component. It is recommended to perform
+                  runs in batches and download data in between.
+                </p>         
+
+            </template>
+        </popup-help>
+	</div>
 </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
 
@@ -59,7 +78,7 @@ export default {
     }
   },
   components: {
-    
+    PopupHelp
   },
   created(){
     

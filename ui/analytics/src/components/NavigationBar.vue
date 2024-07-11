@@ -2,7 +2,7 @@
 
 <template>
 
-<nav :class="getDarkTheme ? 'navbar navbar-light fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-dark fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
+<nav :class="getDarkTheme ? 'navbar navbar-dark fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-light fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
     <div class="container-fluid">
       <div class="navbar-brand">
         <img src="/images/practable-icon.png" width="30" height="30" alt="">
@@ -17,15 +17,15 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="menudropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   Menu
+                   Add Component
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" id='datarecordermenu' href="#" @click='toggleComponent("datarecorder")'>Data Recorder</a></li>
                     <li><a class="dropdown-item" id='graphmenu' href="#" @click='toggleComponent("graph")'>Graph</a></li>
                     <li><a class="dropdown-item" id='snapshotmenu' href="#" @click='toggleComponent("snapshot")'>Data Snapshot</a></li>
                     <li><a class="dropdown-item" id='tablemenu' href="#" @click='toggleComponent("table")'>Table</a></li>
-                    <li><a class="dropdown-item" id='stopwatchmenu' href="#" @click='toggleComponent("stopwatch")'>Stopwatch</a></li>
-                    <li><a class="dropdown-item" id='systemdiagramsmenu' href="#" @click='toggleComponent("systemdiagrams")'>System Diagrams</a></li>
+                    <!-- <li><a class="dropdown-item" id='stopwatchmenu' href="#" @click='toggleComponent("stopwatch")'>Stopwatch</a></li>
+                    <li><a class="dropdown-item" id='systemdiagramsmenu' href="#" @click='toggleComponent("systemdiagrams")'>System Diagrams</a></li> -->
                     
                   </ul>
               </li>
@@ -44,7 +44,7 @@
                   <a class="nav-link" id='clearworkspacemenu' href="#" tabindex="-1" @click='clearWorkspace'>Clear Workspace</a>
               </li> -->
 
-               <li class="nav-item dropdown">
+               <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="layoutdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Layout
                   </a>
@@ -54,7 +54,7 @@
                     <li><a class="dropdown-item" id='layout50:50' href="#" @click='toggleLayout(0.5)'>50%:50%</a></li>
                     <li><a class="dropdown-item" id= 'layout75:25' href="#" @click='toggleLayout(0.75)'>75%:25%</a></li>
                   </ul>
-              </li>
+              </li> -->
 
               <li v-if='getIsLoggingOn' class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="settingsdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,44 +65,46 @@
                   </ul>
               </li>
 
-              <li class="nav-item">
-                  <a class="nav-link" >
-                    UUID: {{ getLogUUID }}
-                  </a>
-                </li>
-
-                <li class="nav-item">
-                  <clock class='nav-link' />
-                </li>
-
           </ul>
 
          
           <ul class="navbar-nav dropstart">
+
+            <li class="nav-item">
+                  <clock class='nav-link' />
+                </li>
+
+            <li class="nav-item me-1">
+              <show-hardware-config-button />
+            </li>
               
               <li class="nav-item me-1">
-                  <toolbar parentCanvasID="" parentDivID="navbar" parentComponentName="navbar" :showDownload="false" :showOptions="false" :showPopupHelp="true">
-                      <template v-slot:popup>
-                        <h4>Customise the UI</h4>
-                        <p>Dashed borders represent the slots for components. You can drag a component from one slot to another to switch their positions. You are best 
-                            to click and drag just inside the border of the component you want to move and drop just inside the border of the slot you want to move to when the colour of the slot
-                            changes.
-                        </p>
+                  <popup-help id="popup-help-navbar">
+                      <template v-slot:header>
+                        <h5>Information</h5>
+                      </template>
 
-                        <h4>Recording more than 5000 data points</h4>
-                        <p>For smooth running of the web app there is a limit of 5000 recorded data points and 2000 data points on the Graph tool. Please download this dataset or perform the necessary analysis
-                            and then reset the data and run again in order to collect more data. For collecting single data points over a long time you may be best to use the Snapshot tool which can continue to collect data beyond this limit.
-                        </p>
+                      <template v-slot:body>
+                        <h5>Student user ID: {{ getLogUUID }}</h5>
+                        <p>Your unique user ID is given above. This helps us provide support through learning analytics.</p>
 
-                        <h4>Report issues</h4>
+                        <h5>Customise the UI (Large screens only)</h5>
+                        <p>You can drag a component from one slot to another to switch their positions.</p>
+                        <p>Components can also be resized horizontally by clicking and dragging in the bottom right-hand corner of a slot.</p>
+
+                        <h5>Toggling components</h5>
+                        <p>The <b>Add Component</b> menu in the navigation bar can be used to toggle components visibility. Most components are displayed by default.
+                        However, the <b>data snapshot</b> and <b>data table</b> tools can be added using this menu and visble components can be hidden.</p>
+
+                        <h5>Report issues</h5>
                         <p>If you have any problems with the remote laboratory then you can contact us at support@practable.io
                         </p>
                       </template>
-                  </toolbar>
+                  </popup-help>
                 </li>
 
               <li class="nav-item me-1">
-                  <button type='button' class='button-toolbar button-secondary' id='toggle-dark-light-theme' @click='toggleTheme' :disabled="disableThemeButton" aria-label="dark theme toggle">
+                  <button type='button' class='button-toolbar button-secondary' id='toggle-dark-light-theme' @click='toggleTheme' :disabled="disableThemeButton" aria-label="dark theme toggle" data-bs-toggle="tooltip" title="Toggle Theme">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
                     </svg>
@@ -122,7 +124,8 @@
 <script>
 
 import Clock from "./Clock.vue";
-import Toolbar from './elements/Toolbar.vue';
+import PopupHelp from "./elements/PopupHelp.vue";
+import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
 import { mapGetters } from 'vuex';
 
 
@@ -131,7 +134,8 @@ export default {
   name: 'NavigationBar',
   components: {
     Clock,
-    Toolbar
+    PopupHelp,
+    ShowHardwareConfigButton
   },
   props:{
       

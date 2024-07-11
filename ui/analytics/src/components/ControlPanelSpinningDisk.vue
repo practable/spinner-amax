@@ -1,59 +1,128 @@
-//commandStore update
-
 <template>
 
-<div class='container-fluid m-2 practable-component'>
-	<div class='row align-content-center m-1'>
-		<div class='col-12'>
-			<canvas v-show='getCurrentMode == "positionPid"' id="smoothie-chart_theta"></canvas>
-			<canvas v-show='getCurrentMode != "positionPid"' id="smoothie-chart_omega"></canvas>
-		</div>
-	</div>
-
-	<div class="d-flex flex-row">
-		<toolbar :showDownload="false" :showPopupHelp="false" :showOptions="true" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-			<template v-slot:options>
-				<h2>Live graph options</h2>
-				<div class='row'>
-					<div class='col-12'>
-						<label class='m-2' for="smoothie_y_max">Y Axis Max</label>
-						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_max" v-model="smoothie_y_max_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-						<input v-else id="smoothie_y_max" v-model="smoothie_y_max_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-					<div class="col-12">		
-						<label class='m-2' for="smoothie_y_min">Y Axis Min</label>
-						<input v-if='getCurrentMode == "positionPid"' id="smoothie_y_min" v-model="smoothie_y_min_pos" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-						<input v-else id="smoothie_y_min" v-model="smoothie_y_min_vel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-					<div class='col-12'>
-						<label class='m-2' for="smoothie_millis_per_pixel">Milliseconds per pixel</label>
-						<input id="smoothie_millis_per_pixel" v-model="smoothie_millis_per_pixel" @keyup.enter='updateSmoothieChart' @blur='updateSmoothieChart'>
-					</div>
-				</div>
-			</template>
-		</toolbar>
-	</div>
-
-	
-	
-
-	<div class="panel panel-default m-2">
-		<div v-if='getCurrentMode != ""' class='panel-heading'><h3>Current mode: {{getModeName}}</h3></div>
+<div class='container-fluid practable-component'>
+	<div class="m-2">
+		<!-- <div v-if='getCurrentMode != ""' class='panel-heading'><h3>Current mode: {{getModeName}}</h3></div> -->
 		<div class='panel-body'>{{message}}</div>
 		<div :class='getErrorClass'><h3>{{ error }}</h3></div>
 	</div>
 
-	<div id="buttons">
-		<div class='row'>
-			<div class='d-grid gap-1 d-md-block mb-1'>
-				<button v-if='getCurrentMode == "stopped"' id="dcmotor" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidposition" class="button-lg button-secondary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
-				<button v-if='getCurrentMode == "stopped"' id="pidspeed" class="button-lg button-tertiary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
-				<button id="stop" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+	<div class="d-flex flex-column-reverse flex-lg-row">
+		<div class="col-lg-3">
+			<div class="d-flex flex-column">
+				<div class="mb-lg-2">
+					<label for="hardware-select-dropdown">Select Hardware Mode</label>
+					<div class="dropdown">
+						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="hardware-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ getModeName }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="hardware-dropdown-menu">
+							<li v-if="getCurrentMode != 'stopped'"><a class="dropdown-item" id="enter-stopped-mode-select" aria-label="stopped mode" @click="stop">stopped</a></li>
+							<li v-if="getCurrentMode == 'stopped'"><a class="dropdown-item" id="enter-open-loop-mode-select" aria-label="voltage mode" @click="speedRaw">voltage (open loop)</a></li>
+							<li v-if="getCurrentMode == 'stopped' && inputMode != 'free'"><a class="dropdown-item" id="enter-pid-position-mode-select" aria-label="position mode" @click="positionPid">position (PID)</a></li>
+							<li v-if="getCurrentMode == 'stopped' && inputMode != 'free'"><a class="dropdown-item" id="enter-pid-speed-mode-select" aria-label="speed mode" @click="speedPid">velocity (PID)</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="mb-lg-2">
+					<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-sm button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+				</div>
+				
+				<div class="mb-lg-2">
+					<label for="input-select-dropdown">Select Input Mode</label>
+					<div class="dropdown">
+						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="input-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ inputMode }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="input-dropdown-menu">
+							<li v-if='getCurrentMode == "speedRaw"'><a class="dropdown-item" id="free-input-select" aria-label="free input" @click="inputMode = 'free'">free</a></li>
+							<li><a class="dropdown-item" id="step-input-select" aria-label="step input"  @click="inputMode = 'step'">step</a></li>
+							<li><a class="dropdown-item" id="ramp-input-select" aria-label="ramp input"  @click="inputMode = 'ramp'">ramp</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div class='row d-flex justify-content-center'>
+		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw" && getCurrentMode != "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+			<div class='d-flex flex-column'>
+					<div class="d-flex flex-row mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="kp-input" class="me-2" id="kp-param-label">K<sub>p</sub></label>
+						<label v-else class="me-2" for="kp-input" id="kp-param-label">K<sub>p</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp-input" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="kp-input" id="kp-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+						
+					<div class="d-flex flex-row flex-fill mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" class="me-2" id="ki-param-label">K<sub>i</sub></label>
+						<label v-else for="ki-input" class="me-2" id="ki-param-label">K<sub>i</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki-input" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" id="ki-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+
+					<div class="d-flex flex-row flex-fill mb-2 align-items-center">
+						<label v-if='getCurrentMode == "speedPid"' for="ki-input" class="me-2" id="kd-param-label">K<sub>d</sub></label>
+						<label v-else class="me-2" for="ki-input" id="kd-param-label">K<sub>d</sub></label>
+						<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd-input" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
+						<label v-if='getCurrentMode == "speedPid"' for="kd-input" id="kd-param-label-2">[x10<sup>-2</sup>]</label>
+					</div>
+			</div>
+
+			<div class='d-flex row justify-content-center m-2'>
+				<div class='col-auto'>
+					<button v-if='getCurrentMode != "stopped"' id="reset-pid-parameters-button" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
+				</div>
+			</div>
+			
+		</div>
+
+		<div :class="getCurrentMode == 'speedRaw' ? 'col-lg-9' : 'col-lg-5'">
+			<div class="ms-lg-2" v-if='getCurrentMode != "stopped"'>
+				<div v-if='inputMode == "free"'>
+					<div v-if='getCurrentMode == "speedRaw"'>
+						<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
+					</div>
+				</div>
+
+				<div v-else-if="inputMode == 'step'">
+					<StepCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
+				</div>
+
+				<div  v-else-if="inputMode == 'ramp'">
+					<RampCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
+				</div>
+
+			</div>
+		</div>
+
+		
+	</div>
+
+	<div class="d-flex flex-row">
+		<popup-help class="me-2" id="popup-help-control-panel">
+            <template v-slot:header>
+                <h5> Control Panel Help </h5>
+            </template>
+            <template v-slot:body>
+                <p>To interact with the spinning disk hardware:</p>
+				
+				<p>1) Select <b>hardware</b> mode</p>
+				<p>2) Select <b>input</b> mode (default is step input)</p>
+				<p>3) If in a PID mode then update PID parameters as required</p>
+				<p>4) Input the desired <b>step size</b> or <b>ramp gradient</b></p>
+				<p>5) Click <b>Run</b></p>
+				<p>6) Click <b>Stop</b> when sufficient data collected</p>
+
+                
+
+            </template>
+        </popup-help>
+	</div>
+	
+	
+
+	<!-- <div class='row d-flex justify-content-center'>
 			<div class='col-auto'>
 				<div class='input-group' v-if='getCurrentMode != "stopped"'>
 					<span class="input-group-text" for="inputSelect">Input type</span>
@@ -64,76 +133,26 @@
 					</select> 
 				</div>
 			</div>
+		</div> -->
+
+	<!-- <div id="buttons">
+		<div class='row'>
+			<div class='d-grid gap-1 d-md-block mb-1'>
+				<button v-if='getCurrentMode == "stopped"' id="enter-open-loop-mode-button" class="button-lg button-primary me-1" aria-label="voltage mode" @click="speedRaw">Voltage (open loop)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-position-mode-button" class="button-lg button-primary me-1" aria-label="position mode" @click="positionPid">Position (PID)</button>
+				<button v-if='getCurrentMode == "stopped"' id="enter-pid-speed-mode-button" class="button-lg button-primary me-1" aria-label="speed mode" @click="speedPid">Velocity (PID)</button>
+				<button id="stop-motor-button" v-if='getCurrentMode != "stopped"' class="button-lg button-danger" aria-label="exit mode" @click="stop">Exit mode</button>
+			</div>
 		</div>
 
-	</div>
+		
 
-<div v-if='getCurrentMode == "positionPid" || getCurrentMode == "speedPid" || getCurrentMode == "speedRaw"'>
+	</div> -->
 
-	<div v-if='inputMode == "free"'>
-		<div v-if='getCurrentMode == "speedRaw"'>
-			<DCMotorPanel v-bind:dataSocket="getDataSocket" :maxV="6" />
-		</div>
-	</div>
 
-	<div v-else-if="inputMode == 'step'">
-		<StepCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
-	</div>
-
-	<div v-else-if="inputMode == 'ramp'">
-		<RampCommand v-bind:mode='getCurrentMode' @showinputtype="toggleInputType"/>
-	</div>
-
-</div>
 	
 
-	<div v-if='getCurrentMode == "speedPid" || getCurrentMode == "positionPid" || getCurrentMode == "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-		<div class='d-flex row justify-content-center m-2'>
-		
-			<!-- <div class='col-md-4'>
-				<div class="input-group">
-					<span class="input-group-text" id="basic-addon1">K<sub>p</sub></span>
-					<input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped"'>
-					<span v-if='getCurrentMode == "speedPid"' class="input-group-text" id="scale_text">x10<sup>-2</sup></span>
-				</div>	
-			</div> -->
-
-            <div class='col-md-4'>
-                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-                    <span v-if='getCurrentMode == "speedPid"' class="text-center" id="kp-param-label">K<sub>p</sub> &nbsp; [x10<sup>-2</sup>]</span>
-                    <span v-else class="text-center" id="kp-param-label">K<sub>p</sub></span>
-                </div>
-                    
-                    <input type="number" step='0.1' :class="(parseFloat(kpParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kp" aria-label="Kp" aria-describedby="basic-addon1" id="kp" v-model="kpParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-			</div>
-
-			<div class='col-md-4'>
-				<div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="ki-param-label">K<sub>i</sub> &nbsp; [x10<sup>-2</sup>]</span>
-					<span v-else class="text-center" id="ki-param-label">K<sub>i</sub></span>
-				</div>
-
-                <input type="number" step='0.1' :class="(parseFloat(kiParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Ki" aria-label="Ki" aria-describedby="basic-addon1" id="ki" v-model="kiParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-					
-			</div>
-
-			<div class='col-md-4'>
-                <div class="col-12 bg-secondary rounded bg-opacity-25 p-1">
-					<span v-if='getCurrentMode == "speedPid"' class="text-center" id="kd-param-label">K<sub>d</sub> &nbsp; [x10<sup>-2</sup>]</span>
-					<span v-else class="text-center" id="kd-param-label">K<sub>d</sub></span>
-				</div>
-				<input type="number" step='0.1' :class="(parseFloat(kdParam) >= 0) ? 'form-control' : 'form-control is-invalid'" placeholder="Kd" aria-label="Kd" aria-describedby="basic-addon1" id="kd" v-model="kdParam" @change='setParameters' :disabled='getCurrentMode == "stopped" || getIsStepRunning == true || getIsRampRunning == true'>
-					
-			</div>
-			
-		
-		</div>
-        <div class='d-flex row justify-content-center m-2'>
-            <div class='col-auto'>
-				<button v-if='getCurrentMode != "stopped"' id="reset" type='button' class="button-xsm button-danger" aria-label="reset pid parameters" @click="resetParameters">Reset PID params</button>
-			</div>
-        </div>
-	</div>
+	
 
 </div>
 
@@ -147,7 +166,7 @@ import DCMotorPanel from './DCMotorPanel.vue';
 import StepCommand from './StepCommand.vue';
 import RampCommand from './RampCommand.vue';
 import { mapActions, mapGetters } from 'vuex';
-import Toolbar from './elements/Toolbar.vue';
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
 	name: "ControlPanelSpinningDisk",
@@ -159,7 +178,7 @@ export default {
 		DCMotorPanel,
 		StepCommand,
 		RampCommand,
-		Toolbar,
+		PopupHelp
 	},
     data(){
         return{
@@ -172,17 +191,6 @@ export default {
 			kspeed_scale: 0.01,
 			message: '',				//for sending user messages to screen
 			error:'',					//for sending errors to screen
-			chart_omega: null,
-			canvas_omega: null,
-			chart_theta: null,
-			canvas_theta: null,
-			smoothie_y_min_vel: -400,
-			smoothie_y_max_vel: 400,
-			smoothie_y_min_pos: -1,
-			smoothie_y_max_pos: 10.0,
-			smoothie_y_speedmode_abs: 100,
-			smoothie_y_voltmode_abs: 400,
-			smoothie_millis_per_pixel: 10,
 			showInputType: false,				//don't show input types until a mode has been selected
         }
     },
@@ -191,7 +199,7 @@ export default {
 		this.$store.dispatch('setInputMode',  'step');
 	},
 	mounted(){
-		//this.connectWithArrays();		//testing============================================================
+		
 	},
 	computed: {
 		...mapGetters([
@@ -201,7 +209,13 @@ export default {
 			'getSessionExpired',
 			'getMaxReached',
             'getIsStepRunning',
-            'getIsRampRunning'
+            'getIsRampRunning',
+			'getChartTheta',
+			'getChartOmega',
+			'getCanvasTheta',
+			'getCanvasOmega',
+			'getSpeedModeAbs',
+			'getVoltModeAbs'
 		]),
 		inputMode: {
 			get(){
@@ -221,6 +235,46 @@ export default {
 				return "error-message panel-body border border-danger";
 			}
 		},
+		smoothie_y_max_vel: {
+			get(){
+				return this.$store.getters.getYMaxVel;
+			},
+			set(val){
+				this.$store.dispatch('setYMaxVel', val);
+			}
+		},
+		smoothie_y_max_pos: {
+			get(){
+				return this.$store.getters.getYMaxPos;
+			},
+			set(val){
+				this.$store.dispatch('setYMaxPos', val);
+			}
+		},
+		smoothie_y_min_vel: {
+			get(){
+				return this.$store.getters.getYMinVel;
+			},
+			set(val){
+				this.$store.dispatch('setYMinVel', val);
+			}
+		},
+		smoothie_y_min_pos: {
+			get(){
+				return this.$store.getters.getYMinPos;
+			},
+			set(val){
+				this.$store.dispatch('setYMinPos', val);
+			}
+		},
+		smoothie_millis_per_pixel: {
+			get(){
+				return this.$store.getters.getMillisPerPixel;
+			},
+			set(val){
+				this.$store.dispatch('setMillisPerPixel', val);
+			}
+		}
 		
 	},
 	watch:{
@@ -259,7 +313,11 @@ export default {
 			'setDraggable',
             'setIsRecording',
             'setIsStepRunning',
-            'setIsRampRunning'
+            'setIsRampRunning',
+			'setChartTheta',
+			'setChartOmega',
+			'setCanvasTheta',
+			'setCanvasOmega'
 		]),
 		stop(){
 			//this.clearMessages();
@@ -277,9 +335,9 @@ export default {
 		speedPid(){
 			this.clearMessages();
 			this.setGraphDataParameter('omega');
-			this.smoothie_y_min_vel = -this.smoothie_y_speedmode_abs;
-			this.smoothie_y_max_vel = this.smoothie_y_speedmode_abs;
-			this.updateSmoothieChart();
+			this.smoothie_y_min_vel = -this.getSpeedModeAbs;
+			this.smoothie_y_max_vel = this.getSpeedModeAbs;
+			// this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedPid');
 			setTimeout(this.setParameters, 100);					//when entering pid mode ensure parameters are set
@@ -294,9 +352,9 @@ export default {
 		speedRaw(){
 			this.clearMessages();
 			this.setGraphDataParameter('omega');
-			this.smoothie_y_min_vel = -this.smoothie_y_voltmode_abs;
-			this.smoothie_y_max_vel = this.smoothie_y_voltmode_abs;
-			this.updateSmoothieChart();
+			this.smoothie_y_min_vel = -this.getVoltModeAbs;
+			this.smoothie_y_max_vel = this.getVoltModeAbs;
+			// this.updateSmoothieChart();
 			this.showInputType = true;
 			this.$store.dispatch('speedRaw');
 		},
@@ -352,19 +410,18 @@ export default {
 		toggleInputType(on){
 			this.showInputType = on;
 		},
-		updateSmoothieChart(){
-			if(this.getCurrentMode == 'positionPid'){
-				this.chart_theta.options.maxValue = this.smoothie_y_max_pos;
-				this.chart_theta.options.minValue = this.smoothie_y_min_pos;
-			} 
-			else{
-				this.chart_omega.options.maxValue = this.smoothie_y_max_vel;
-				this.chart_omega.options.minValue = this.smoothie_y_min_vel;
-			}
-
-			this.chart_omega.options.millisPerPixel = this.smoothie_millis_per_pixel;			
-			
-		},
+		// updateSmoothieChart(){
+		// 	if(this.getCurrentMode == 'positionPid'){
+		// 		this.getChartTheta.options.maxValue = this.smoothie_y_max_pos;
+		// 		this.getChartTheta.options.minValue = this.smoothie_y_min_pos;
+		// 		this.getChartTheta.options.millisPerPixel = this.smoothie_millis_per_pixel;
+		// 	} 
+		// 	else{
+		// 		this.getChartOmega.options.maxValue = this.smoothie_y_max_vel;
+		// 		this.getChartOmega.options.minValue = this.smoothie_y_min_vel;
+		// 		this.getChartOmega.options.millisPerPixel = this.smoothie_millis_per_pixel;	
+		// 	}
+		// },
 		// connect(){
 
 		// 	let _store = this.$store;
@@ -508,21 +565,25 @@ export default {
 			//let thisTime;
 			
 			var chart_omega = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#eeeeee'},maxValue:_this.smoothie_y_max_vel,minValue:_this.smoothie_y_min_vel, interpolation:"linear",labels:{fillStyle:'#000000',precision:2}});
-			this.canvas_omega = document.getElementById("smoothie-chart_omega");
+			let canvas_omega = document.getElementById("smoothie-chart_omega");
 			let series_omega = new TimeSeries();
 			chart_omega.addTimeSeries(series_omega, {lineWidth:2,strokeStyle:'#000000'});
-			chart_omega.streamTo(this.canvas_omega, 0);
+			chart_omega.streamTo(canvas_omega, 0);
+			_this.setChartOmega(chart_omega);
+			_this.setCanvasOmega(canvas_omega);
 
 			//smoothie chart for displaying angle data
 			var chart_theta = new SmoothieChart({responsive: responsiveSmoothie, millisPerPixel:_this.smoothie_millis_per_pixel,grid:{fillStyle:'#eeeeee'}, maxValue:_this.smoothie_y_max_pos,minValue:_this.smoothie_y_min_pos, interpolation:"linear",labels:{fillStyle:'#000000',precision:2}});
-			this.canvas_theta = document.getElementById("smoothie-chart_theta");
+			let canvas_theta = document.getElementById("smoothie-chart_theta");
 			let series_theta = new TimeSeries();
 			chart_theta.addTimeSeries(series_theta, {lineWidth:2,strokeStyle:'#000000'});
-			chart_theta.streamTo(this.canvas_theta, 0);
+			chart_theta.streamTo(canvas_theta, 0);
+			_this.setChartTheta(chart_theta);
+			_this.setCanvasTheta(canvas_theta);
 
 			//in order to update the charts
-			_this.chart_omega = chart_omega;
-			_this.chart_theta = chart_theta;
+			// _this.chart_omega = chart_omega;
+			// _this.chart_theta = chart_theta;
 
 			this.dataSocket.onopen = () => {
 				console.log('data connection opened');
@@ -653,7 +714,7 @@ export default {
 	border: auto;
 }
 
-#smoothie-chart_omega{
+/* #smoothie-chart_omega{
 	width:100%;
 	height: 120px;
 }
@@ -661,7 +722,7 @@ export default {
 #smoothie-chart_theta{
 	width:100%;
 	height: 120px;
-}
+} */
 
 .sliderlabel{ text-align: left;}
 

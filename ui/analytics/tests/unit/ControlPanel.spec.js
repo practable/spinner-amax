@@ -9,7 +9,6 @@ import loggingStore from '../../src/modules/logging.js';
 import dataStore from '../../src/modules/dataStore.js';
 import uiStore from '../../src/modules/uiStore.js';
 import streamStore from '../../src/modules/streamStore.js';
-import achievementStore from '../../src/modules/achievementStore.js';
 
 //mock logging store since do not want to actually send websocket commands whilst testing
 // const loggingStore = {
@@ -41,7 +40,6 @@ const createVuexStore = () =>
             data: dataStore,
             ui: uiStore,
             stream: streamStore,
-            achievement: achievementStore
         }
     });
 

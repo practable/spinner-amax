@@ -1,31 +1,42 @@
 //v2 update - added commandStore commands
 
 <template>
-<div class='m-0 p-0 bg-white'>
-   <div class="form-group row justify-content-center align-items-center">
-        <label class="col-lg-2 col-sm-6 col-form-label" for="voltage">Input voltage ({{getVoltageAsString}}V)</label>
-        <div class="col-lg-4" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-            <input type="range" class="slider" :min="-maxV" :max="maxV" step="0.01" v-model="voltage" list='tickmarks' id="voltage-slider" @change='setVoltage'>
-            <div class='row'>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-negative-0.1-increment" aria-label="increment voltage negative tenth" @click='incrementVoltage(-0.1)'>-</button></div>
-                <div class='col-4'><label type='label' class='col-form-label'>0.1V</label></div>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-positive-0.1-increment" aria-label="increment voltage positive tenth" @click='incrementVoltage(+0.1)'>+</button></div>
-            </div>
-            <div class='row'>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-negative-0.01-increment" aria-label="increment voltage negative hundredth" @click='incrementVoltage(-0.01)'>-</button></div>
-                <div class='col-4'><label class='col-form-label'>0.01V</label></div>
-                <div class='col-4'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-positive-0.01-increment" aria-label="increment voltage positive hundredth" @click='incrementVoltage(+0.01)'>+</button></div>
-            </div>
-        </div>
+<div class='m-2'>
+   <div class="row">
+            <div class="col-lg-6" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <label for="voltage">Input voltage ({{getVoltageAsString}}V)</label>
+                </div>
 
-        <label class="col-lg-2 col-sm-6 col-form-label" for="ang_vel">Motor angular velocity (rad/s)</label>
-        <div class='col-lg-4 col-sm-12' v-if='isAnalogueOutput'>
-            <analogue-output :outputValue="getCurrentAngularVelocity" :minValue="0" :maxValue="400" :intervalValue="50" :minorIntervalValue="10"></analogue-output>
-        </div>
-        <div v-else class='col-lg-4 col-sm-12'>
-            <input type='text' class='form-control' id="ang_velocity" :value='avgAngVel' readonly>
-        </div>
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <input type="range" :min="-maxV" :max="maxV" step="0.01" v-model="voltage" list='tickmarks' id="voltage-slider" @change='setVoltage'>
+                </div>
+                
+                <div class='d-flex flex-row'>
+                    <div class='flex-fill'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-negative-0.1-increment" aria-label="increment voltage negative tenth" @click='incrementVoltage(-0.1)'>-</button></div>
+                    <div class='flex-fill'><label type='label' class='col-form-label'>0.1V</label></div>
+                    <div class='flex-fill'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-positive-0.1-increment" aria-label="increment voltage positive tenth" @click='incrementVoltage(+0.1)'>+</button></div>
+                </div>
+                <div class='d-flex flex-row'>
+                    <div class='flex-fill'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-negative-0.01-increment" aria-label="increment voltage negative hundredth" @click='incrementVoltage(-0.01)'>-</button></div>
+                    <div class='flex-fill'><label class='col-form-label'>0.01V</label></div>
+                    <div class='flex-fill'><button type='button' class='btn btn-outline-primary btn-sm' id="voltage-positive-0.01-increment" aria-label="increment voltage positive hundredth" @click='incrementVoltage(+0.01)'>+</button></div>
+                </div>
+                
+            </div>
 
+            <div class="col-lg-6">
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <label class="mb-2" for="ang_vel">Motor angular velocity (rad/s)</label>
+                </div>
+                
+                <div v-if='isAnalogueOutput'>
+                    <analogue-output :outputValue="getCurrentAngularVelocity" :minValue="0" :maxValue="400" :intervalValue="50" :minorIntervalValue="10"></analogue-output>
+                </div>
+                <div v-else>
+                    <input type='text' class='form-control' id="ang_velocity" :value='avgAngVel' readonly>
+                </div>
+            </div>
     </div>
 </div>
 

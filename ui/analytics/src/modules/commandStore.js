@@ -31,8 +31,8 @@ const commandStore = {
             }
         },
         SPEED_RAW(state){
+            state.currentMode = 'speedRaw';
             if(state.dataSocket != null){
-                state.currentMode = 'speedRaw';
                 state.dataSocket.send(JSON.stringify({
                     set: "mode",
                     to: "motor"
@@ -41,8 +41,8 @@ const commandStore = {
             
         },
         SPEED_PID(state){
+            state.currentMode = 'speedPid';
             if(state.dataSocket != null){
-                state.currentMode = 'speedPid';
                 state.dataSocket.send(JSON.stringify({
                     set: "mode",
                     to: "velocity"
@@ -50,8 +50,8 @@ const commandStore = {
             }
         },
         POSITION_PID(state){
+            state.currentMode = 'positionPid';
             if(state.dataSocket != null){
-                state.currentMode = 'positionPid';
                 state.dataSocket.send(JSON.stringify({
                     set: "mode",
                     to: "position"

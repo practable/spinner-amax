@@ -29,17 +29,19 @@
 
 
     <div class='d-grid gap-2 d-sm-block'>
-        <button id="snapshot_button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
-        <button id="reset_snaps" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
-        <button id="download_snaps" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
+        <button id="record-snapshot-button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
+        <button id="reset-snapshot-button" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
+        <button id="download-snapshot-button" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
     </div>
     
     <div class="d-flex flex-row">
-        <toolbar parentCanvasID="" parentComponentName="snapshot" parentDivID="motor-snapshot-div" :showDownload='false' :showPopupHelp="true" :showOptions="false">  
-            <template v-slot:popup id='snapshot-popup'>
+        <popup-help id="popup-help-snapshot">
+            <template v-slot:header>
+                <h5> Snapshot tool </h5>
+            </template>
+            <template v-slot:body>
                 <div class='row mb-2'>
                     <div class='col'>
-                        <h3> Snapshot tool </h3>
                         <p> Click 'Record Snapshot' to save the current state to the snapshot table. Every time you click a new data set will be added. Click 'Download Snapshots'
                             to download all the snapshots as a .csv file.
                         </p>
@@ -47,12 +49,12 @@
                 </div>
 
             </template>
-        </toolbar>
+        </popup-help>
     </div>
     
 
     <div v-if='showResetConfirmModal' class="modal modal-show" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Reset Data</h5>
@@ -76,7 +78,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Toolbar from "./elements/Toolbar.vue"
+import PopupHelp from './elements/PopupHelp.vue';
 
 export default {
     name: 'MotorSnapshot',
@@ -84,7 +86,7 @@ export default {
       'headings'
     ],
     components:{
-        Toolbar,
+        PopupHelp,
     },
     data(){
         return{
