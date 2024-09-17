@@ -1,7 +1,7 @@
 const config = {
     //Most likely leave the below as is:
-    logging_path: 'analytics/logging/api/v1/addLog',
-    definitions_path: 'analytics/logging/api/v1/verbs',
+    logging_path: '/addLog',
+    definitions_path: '/verbs',
 
     //UPDATE this with your remote lab version
     remote_lab_ui: 'spinner-3.0',

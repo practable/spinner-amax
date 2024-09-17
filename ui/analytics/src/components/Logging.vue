@@ -20,8 +20,8 @@ export default {
       hardware: 'spinner',             //from query param - not yet implemented
 
       //required - get from URL params
-      //FOR DEVELOPMENT - hardcoded
-      instance_path: 'https://app.practable.io/ed-log-dev/',
+      instance_path: '',
+      la_auth: '',
       //for storing the elements that already have listeners attached
       input_listener_ids: [],
       
@@ -66,14 +66,9 @@ export default {
       try {
         
         let query = new URLSearchParams(window.location.search);
-
-        //ADD THIS BACK IN WHEN THESE ARE ADDED TO THE URL PARAMS
-        // let la_auth = query.get('la');
-        // let decoded_la_auth = decodeURIComponent(la_auth);
-        // console.log(decoded_la_auth)
-
-        // let la_host = query.get('lh');
-        // this.instance_path = decodeURIComponent(la_host);
+        this.la_auth = query.get('la');
+        let la_host = query.get('lh');
+        this.instance_path = decodeURIComponent(la_host);
 
         //get course query parameter
         let course = query.get('course');
@@ -592,14 +587,14 @@ export default {
       return log;
     },
     sendLog(log){
-      console.log(log)
         var accessURL = `${this.instance_path}${config.logging_path}?username=${this.getLogUUID}&course=${this.course}&hardware=${this.hardware}`; 
         axios
         .post(accessURL, 
               log, 
               { headers: 
                 { 
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Basic ' + this.la_auth
                 } 
         }).then((response) => {
             //console.log(response)
