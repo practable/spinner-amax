@@ -10,7 +10,7 @@
                     />
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
-      <logging id='logging' />
+      <logging v-if="getIsLoggingOn && getLogConsent" id='logging' />
 
       <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
@@ -170,6 +170,7 @@ export default {
 			'getDraggable',
       'getUsesLocalStorage',
       'getIsLoggingOn',
+      'getLogConsent',
       'getLatestDatasetIndex'
 		]),
     isMobile(){
