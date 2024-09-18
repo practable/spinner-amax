@@ -2,12 +2,12 @@
 
 const loggingStore = {
     state: () => ({
-        uuid: '',
-        isLoggingOn: false,                  //set for difference UI versions
-        logging_consent_given: false,
-        hardware: '',           //will be set from the LoggingStream.vue component 
-        exp: 'spinner',         //hardcoded for this UI
-        course: '',      //set from Streams.vue from a url query param
+        uuid: '',                           //will be set from App.vue from localStorage
+        isLoggingOn: true,                  //hard coded here
+        logging_consent_given: false,       //User set in Consent.vue component
+        hardware: '',           //will be set from the Logging.vue component - the general experiment name e.g. spinner or pendulum
+        experiment: '',         //will be set from the Logging.vue component - the specific code for a single kit e.g. spin30
+        course: '',      //will be set from the Logging.vue component - a course code, e.g. ed1 or cie3
        }),
        mutations:{
             SET_LOGGING_CONSENT(state, consent){
@@ -16,8 +16,8 @@ const loggingStore = {
             SET_UUID(state, uuid){
                 state.uuid = uuid;
             },
-            SET_EXPERIMENT(state, exp){
-                state.exp = exp;
+            SET_EXPERIMENT(state, experiment){
+                state.experiment = experiment;
             },
             SET_HARDWARE(state, hardware){
                 state.hardware = hardware;
@@ -33,8 +33,8 @@ const loggingStore = {
             setUUID(context, uuid){
                 context.commit('SET_UUID', uuid);
             },
-            setExperiment(context, exp){
-                context.commit('SET_EXPERIMENT', exp)
+            setExperiment(context, experiment){
+                context.commit('SET_EXPERIMENT', experiment)
             },
             setHardware(context, hardware){
                 context.commit('SET_HARDWARE', hardware)
@@ -51,7 +51,7 @@ const loggingStore = {
                 return state.uuid;
             },
             getExperiment(state){
-                return state.exp;
+                return state.experiment;
             },
             getHardware(state){
                 return state.hardware;

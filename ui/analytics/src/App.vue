@@ -10,7 +10,7 @@
                     />
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
-      <logging v-if="getIsLoggingOn && getLogConsent" id='logging' />
+      <logging v-if="getIsLoggingOn" id='logging' />
 
       <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">

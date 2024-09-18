@@ -16,14 +16,9 @@ export default {
   name: 'Logging',
   data () {
     return {
-      course: '',                  //come from query param
-      hardware: 'spinner',             //from query param - not yet implemented
-
-      //required - get from URL params
-      instance_path: '',
-      la_auth: '',
-      //for storing the elements that already have listeners attached
-      input_listener_ids: [],
+      instance_path: '',        //required for logging to instance - get from URL params
+      la_auth: '',              //required for logging to instance - get from URL params
+      input_listener_ids: [],   //for storing the elements that already have listeners attached
       
     }
   },
@@ -31,9 +26,14 @@ export default {
     ...mapGetters([
       'getLogUUID',
       'getSessionExpired',
-      'getIsChatOn',
-      'getMessages',
-      'getNumMessages'
+      //'getIsChatOn',    //add back in with chat component
+      //'getMessages',
+      //'getNumMessages',
+      'getDataURL',
+      'getLogConsent',
+      'getCourse',
+      'getHardware',
+      'getExperiment'
     ]),
     
   },
@@ -46,6 +46,9 @@ export default {
             this.sendLog(log);
           }
       },
+      getDataURL(url){
+          this.setExperiment(url);
+      }
       //INCLUDE THIS ONCE THE CHAT COMPONENT IS BACK IN
       // getNumMessages(){
       //   let messages = this.getMessages;
@@ -73,21 +76,21 @@ export default {
         //get course query parameter
         let course = query.get('course');
         if(course != null){
-          this.course = course;
+          this.$store.dispatch('setCourse', course);
         } else{
-          this.course = 'none';
+          this.$store.dispatch('setCourse', 'none');
         }
 
         //get hardware query parameter
         let hardware = query.get('hardware');
         if(hardware != null){
-          this.hardware = hardware;
+          this.$store.dispatch('setHardware', hardware);
         } else{
-          this.hardware = 'none';
+          this.$store.dispatch('setHardware', 'none');
         }
 
       } catch (e) {
-          console.log("query params not found");
+          console.log("error accessing query params");
       }
 
       this.createAndSendSessionStartLog();   //will run everytime the component mounts
@@ -157,6 +160,12 @@ export default {
     
   },
   methods: {
+    setExperiment(url){
+      let index = url.indexOf(config.hardware_code_prefix);
+      let length = config.hardware_code_prefix.length
+      let experiment = url.substr(index, length + 2);
+      this.$store.dispatch('setExperiment', experiment);
+    },
     AddNewInputListeners(){
       //should check if new inputs exists that are not in the input_listener_ids array and add if not
       document.querySelectorAll('input').forEach(el => {
@@ -257,7 +266,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -266,7 +275,8 @@ export default {
           }, 
         "object": 
           {
-            "ui": config.remote_lab_ui
+            "ui": config.remote_lab_ui,
+            "exp_id": this.getExperiment
           },
         "context": 
           {
@@ -284,7 +294,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -302,7 +312,8 @@ export default {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
             "x": event.clientX, 
-            "y": event.clientY
+            "y": event.clientY,
+            "exp_id": this.getExperiment
           }
       }
       
@@ -321,7 +332,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -338,7 +349,8 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
-            "mouse-left": event.relatedTarget != null ? event.relatedTarget.id : ''
+            "mouse-left": event.relatedTarget != null ? event.relatedTarget.id : '',
+            "exp_id": this.getExperiment
           }
       }
 
@@ -352,7 +364,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -369,7 +381,8 @@ export default {
         "context": 
           {
             "event_type": event.type,
-            "event_timestamp": event.timeStamp
+            "event_timestamp": event.timeStamp,
+            "exp_id": this.getExperiment
           }
       }
 
@@ -388,7 +401,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -404,7 +417,8 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
-            "previous_click": event.originalTarget.id
+            "previous_click": event.originalTarget.id,
+            "exp_id": this.getExperiment
           }
       }
 
@@ -423,7 +437,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -439,6 +453,7 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
+            "exp_id": this.getExperiment
           }
       }
 
@@ -452,7 +467,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -468,6 +483,7 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
+            "exp_id": this.getExperiment
           }
       }
 
@@ -482,7 +498,7 @@ export default {
         "actor":
           {
             "id": "system",
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -491,7 +507,7 @@ export default {
           }, 
         "object": 
           {
-            "id": '',
+            "exp_id": this.getExperiment,
             "ui": config.remote_lab_ui
           },
         "context": 
@@ -509,8 +525,9 @@ export default {
         "type": "experiment", 
         "actor":
           {
-            "id": this.hardware,    //need to ensure that Logging knows about hardware, probably from config file
-            "course": this.course
+            "id": this.getExperiment,
+            "hardware": this.getHardware,
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -538,7 +555,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -552,7 +569,7 @@ export default {
           },
         "context": 
           {
-            
+            "exp_id": this.getExperiment
           }
       }
 
@@ -566,7 +583,7 @@ export default {
         "actor":
           {
             "id": this.getLogUUID,
-            "course": this.course
+            "course": this.getCourse
           },
         "verb": 
           {
@@ -580,14 +597,15 @@ export default {
           },
         "context": 
           {
-            
+            "exp_id": this.getExperiment
           }
       }
 
       return log;
     },
     sendLog(log){
-        var accessURL = `${this.instance_path}${config.logging_path}?username=${this.getLogUUID}&course=${this.course}&hardware=${this.hardware}`; 
+      if(this.getLogConsent){
+        var accessURL = `${this.instance_path}${config.logging_path}?username=${this.getLogUUID}&course=${this.getCourse}&hardware=${this.getHardware}`; 
         axios
         .post(accessURL, 
               log, 
@@ -600,6 +618,8 @@ export default {
             //console.log(response)
         })
         .catch((err) => console.log(err));
+      } 
+        
     },
     printLog(log){
       console.log(log)

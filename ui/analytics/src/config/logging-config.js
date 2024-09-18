@@ -5,6 +5,7 @@ const config = {
 
     //UPDATE this with your remote lab version
     remote_lab_ui: 'spinner-3.0',
+    hardware_code_prefix: 'spin',   //the short code for hardware that is used for each experiment code, e.g. spin in spin30
 
     click_logs_on: true,
     mouse_enter_logs_on: false,
