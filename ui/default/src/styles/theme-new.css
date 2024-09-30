@@ -466,6 +466,12 @@ th{
     color: var(--text-color-inverted);
 }
 
+td{
+    border-top: 1px solid var(--background-color-inverted);
+    background-color: var(--background-color-highlight);
+    color: var(--text-color);
+}
+
 .modal-header{
     background-color: var(--background-color);
     color: var(--text-color);
