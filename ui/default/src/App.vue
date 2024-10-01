@@ -219,7 +219,7 @@ export default {
             if(event.target.childNodes.length > 0){
               draggedZone.appendChild(event.target.childNodes[0]);
             }
-            console.log(draggedID);
+            //console.log(draggedID);
             droppedElement.appendChild(document.getElementById(draggedID));
             droppedElement.classList.remove('drop-area-highlighted');
         } 
@@ -228,7 +228,7 @@ export default {
           while(element.parentNode){
             element = element.parentNode;
             if(element.classList.contains('drop-area')){
-              console.log(element.childNodes[0]);
+              //console.log(element.childNodes[0]);
               draggedZone.appendChild(element.childNodes[0]);
               element.appendChild(document.getElementById(draggedID));
               element.classList.remove('drop-area-highlighted');
@@ -236,20 +236,31 @@ export default {
             }
           }
         }
+      } else{
+          if(droppedElement != null){
+            droppedElement.classList.remove('drop-area-highlighted');
+          }
+        
       }
       
       return false;
     },
+    // dragEnter(event){
+    //   let dropData = event.dataTransfer.getData('text/html');
+    //   let dropItems = dropData.split("|");
+    //   let draggedID = dropItems[1];
+    //   if(draggedID != 'empty' && document.getElementById(draggedID) != null){
+    //     let element = document.getElementById(event.target.id);
+    //     if(element != null && element.classList.contains('drop-area')){
+    //       element.classList.add('drop-area-highlighted');
+    //     }
+    //   }
+    // },
     dragEnter(event){
-      let dropData = event.dataTransfer.getData('text/html');
-      let dropItems = dropData.split("|");
-      let draggedID = dropItems[1];
-      if(draggedID != 'empty' && document.getElementById(draggedID) != null){
-        let element = document.getElementById(event.target.id);
-        if(element != null && element.classList.contains('drop-area')){
-          element.classList.add('drop-area-highlighted');
+    //console.log(event)
+    if(event.target.classList.contains('drop-area')){
+          event.target.classList.add('drop-area-highlighted');
         }
-      }
     },
     dragLeave(event){
       let element = document.getElementById(event.target.id);
@@ -373,7 +384,7 @@ export default {
           
           //ensure that the dataset index is updated since data has been loaded
           let latest_index = this.getLatestDatasetIndex;
-          console.log(latest_index);
+          //console.log(latest_index);
           this.$store.dispatch('setDatasetIndex', latest_index + 1);
 
         }
