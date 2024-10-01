@@ -3,7 +3,7 @@
 //This component now just needs to send a slightly different command to the firmware.
 
 <template>
-    <div @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
+    <div @mousedown="setDraggable(false)" @mouseup="setDraggable(true)" @mouseleave="setDraggable(true)">  
 
         <div class='d-flex flex-column' v-if='mode == "speedRaw"'>
             <label class='mb-2' for="ramp_gradient">Ramp gradient [Vs<sup>-1</sup>]</label>

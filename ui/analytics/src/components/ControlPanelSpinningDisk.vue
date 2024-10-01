@@ -45,7 +45,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw" && getCurrentMode != "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+		<div class="col-lg-4" v-if='getCurrentMode != "speedRaw" && getCurrentMode != "stopped"' @mousedown="setDraggable(false)" @mouseup="setDraggable(true)" @mouseleave="setDraggable(true)">
 			<div class='d-flex flex-column'>
 					<div class="d-flex flex-row mb-2 align-items-center">
 						<label v-if='getCurrentMode == "speedPid"' for="kp-input" class="me-2" id="kp-param-label">K<sub>p</sub></label>

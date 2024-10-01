@@ -3,7 +3,7 @@
 <template>
 <div class='m-2'>
    <div class="row">
-            <div class="col-lg-6" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+            <div class="col-lg-6" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)" @mouseleave="setDraggable(true)">
                 <div class="d-flex flex-row align-items-center justify-content-center">
                     <label for="voltage">Input voltage ({{getVoltageAsString}}V)</label>
                 </div>
