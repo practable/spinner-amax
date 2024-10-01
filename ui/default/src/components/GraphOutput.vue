@@ -75,7 +75,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="chart-functions" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+                <div id="chart-functions" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)" @mouseleave="setDraggable(true)">
 					<div class="dropdown">
 						<button class="button-sm button-dropdown dropdown-toggle" type="button" id="function-select-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 							{{ currentFunction }}

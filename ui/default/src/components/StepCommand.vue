@@ -1,7 +1,7 @@
 //vue3 update
 
 <template>
-    <div @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">  
+    <div @mousedown="setDraggable(false)" @mouseup="setDraggable(true)" @mouseleave="setDraggable(true)">  
         <div class="d-flex flex-column" v-if='mode == "speedRaw"'>
             <label class='mb-2' for="step_raw">Step size ({{-max_voltage_step}} to {{max_voltage_step}}V)</label>
             <input type="number" :max='max_voltage_step' :min='-max_voltage_step' :class="(parseFloat(step_size) >= -max_voltage_step && parseFloat(step_size) <= max_voltage_step) ? 'form-control' : 'form-control is-invalid'" id="step-size-voltage-input" v-model="step_size">
