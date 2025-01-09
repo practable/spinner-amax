@@ -421,7 +421,7 @@ export default {
         if(stored_uuid){
             this.$store.dispatch('setUUID', stored_uuid);
         } else{
-          this.$store.dispatch('setUUID', 'null');
+          this.$store.dispatch('setUUID', 'test00');
         }
       },
       checkConsent(){

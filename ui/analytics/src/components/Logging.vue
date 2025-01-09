@@ -106,6 +106,11 @@ export default {
       if(config.mouse_enter_logs_on){
         this.AddMouseEnterListeners();
       }
+
+      //listen for chartdatahover events coming form the chartjs canvas
+      window.addEventListener('chartdatahover', (event) => {
+        this.createAndSendChartHoverLog(event);
+      })
         
       
       this.AddNewInputListeners();
@@ -250,6 +255,10 @@ export default {
     let log = this.createSessionStartLog();
     this.sendLog(log);
   },
+  createAndSendChartHoverLog(event){
+    let log = this.createChartHoverLog(event);
+    this.sendLog(log);
+  },
   createAndSendComponentOpenedLog(element){
     let log = this.createComponentOpenLog(element);
     this.sendLog(log);
@@ -321,6 +330,43 @@ export default {
       if(event.target.id in config.graph_nodes){
         log.context['graph_node'] = config.graph_nodes[event.target.id]
       }
+
+      return log;
+    },
+    createChartHoverLog(event){
+      let log = {
+        "timestamp": new Date().getTime(), 
+        "level": "INFO",
+        "type": "analytics", 
+        "actor":
+          {
+            "id": this.getLogUUID,
+            "course": this.getCourse
+          },
+        "verb": 
+          {
+            "name": "data-hovered", 
+            //"definition": `${this.instance_path}${config.definitions_path}/clicked`
+          }, 
+        "object": 
+          {
+            "id": 'chart-canvas',
+            "ui": config.remote_lab_ui
+          },
+        "context": 
+          {
+            "event_type": event.type,
+            "event_timestamp": event.timeStamp,
+            "dataset": event.detail.dataset,
+            "data": {x: event.detail.x, y: event.detail.y}, 
+            "exp_id": this.getExperiment
+          }
+      }
+      
+      //IF the clicked target is associated with a graph node for TaskCompare, then add that information to context
+      // if(event.target.id in config.graph_nodes){
+      //   log.context['graph_node'] = config.graph_nodes[event.target.id]
+      // }
 
       return log;
     },

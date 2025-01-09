@@ -427,6 +427,24 @@ export default {
                         },
                         sampleSize: 2,
                     },
+                },
+                plugins: {
+                    tooltip:{
+                        callbacks:{
+                            label: function(context){
+                                canvas.dispatchEvent(
+                                    new CustomEvent('chartdatahover', {
+                                        bubbles: true,
+                                        detail: {
+                                            dataset: context.dataset.label,
+                                            x: context.parsed.x,
+                                            y: context.parsed.y
+                                        }
+                                    })
+                                )
+                            }
+                        }
+                    }
                 }
                 
             }
