@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: "Streams",
   components: {
-  
+    
   },
   data(){
     return{
@@ -42,13 +42,6 @@ export default {
       //setting camera type
       let cam = query.get('v');
       this.$store.dispatch('setCamera', cam);
-
-      //Search for the course query parameter
-      // If it doesn't exist then don't set null or '', just leave the default course set in the logging.js store - probably engdes1 for now
-      let course = query.get('course');
-      if(course != null){
-        this.$store.dispatch('setCourse', course);
-      }
 
       //get configuration parameters
       let conf_url = query.get('config');

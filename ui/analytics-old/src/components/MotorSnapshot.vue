@@ -14,13 +14,13 @@
                 <td v-for='key in Object.keys(row)' :key="key">{{row[key]}}</td>
             </tr>
 
-            <tr>
-                <td class='current'>{{getTime.toFixed(2)}}</td>
-                <td class='current'>{{getCurrentAngle.toFixed(2)}}</td>
-                <td class='current'>{{getCurrentAngularVelocity.toFixed(2)}}</td>
-                <td class='current'>{{getCommand.toFixed(2)}}</td>
-                <td class='current'>{{getDrive.toFixed(2)}}</td>
-                <td class='current'>{{getError.toFixed(2)}}</td>
+            <tr :class="getDarkTheme ? 'current-dark' : 'current'">
+                <td>{{getTime.toFixed(2)}}</td>
+                <td>{{getCurrentAngle.toFixed(2)}}</td>
+                <td>{{getCurrentAngularVelocity.toFixed(2)}}</td>
+                <td>{{getCommand.toFixed(2)}}</td>
+                <td>{{getDrive.toFixed(2)}}</td>
+                <td>{{getError.toFixed(2)}}</td>
             </tr>
                             
         </table> 
@@ -210,9 +210,15 @@ export default {
 <style scoped>
 
 .current{
-    border-top: 1px solid var(--background-color-inverted);
-    border-bottom: 1px solid var(--background-color-inverted);
-    color: green
+    border: thin;
+	box-shadow: 0px 0px;
+    color: rgb(0, 75, 0)
+}
+
+.current-dark{
+    border: thin;
+	box-shadow: 0px 0px;
+    color: rgb(190, 250, 190)
 }
 
 .h-divider{

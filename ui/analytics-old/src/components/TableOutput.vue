@@ -17,14 +17,14 @@
                     <th scope="col">Error</th>
                 </tr>
             </thead>
-            <tr v-for="row in table" :id="row.id" :key="row.id" @click="changeSelected(row.id)">
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.set}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.t.toFixed(3)}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.theta}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.omega}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.command}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.drive}}</td>
-                <td :class="[row.id == selected_row_id ? 'selected-row' : '']">{{row.error}}</td>
+            <tr v-for="row in table" :id="row.id" :key="row.id" v-bind:class="[row.id == selected_row_id ? 'selected-row' : '']" @click="changeSelected(row.id)">
+                <td>{{row.set}}</td>
+                <td>{{row.t.toFixed(3)}}</td>
+                <td>{{row.theta}}</td>
+                <td>{{row.omega}}</td>
+                <td>{{row.command}}</td>
+                <td>{{row.drive}}</td>
+                <td>{{row.error}}</td>
             </tr>
 
             <tfoot class="table-head">
@@ -117,8 +117,9 @@ export default {
 </script>
 
 <style scoped>
+
 .selected-row{
-    background-color: green;
+    background-color: red;
     color: white;
 }
 </style>

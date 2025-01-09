@@ -4,15 +4,14 @@
   <div id="app" class='container-fluid-sm m-0'>
 
     <!-- Components that do not conform to draggable grid -->
-    <navigation-bar :isGraphOn='isGraphOn' :isTableOn='isTableOn' :isDataRecorderOn='isDataRecorderOn' :isSnapshotOn='isSnapshotOn'
-            @toggleconsent="showConsentModal = true" @togglelayout="toggleLayout" @togglegraph="toggleGraph" @toggledatarecorder="toggleDataRecorder" 
+    <navigation-bar @toggleconsent="showConsentModal = true" @togglelayout="toggleLayout" @togglegraph="toggleGraph" @toggledatarecorder="toggleDataRecorder" 
             @togglesnapshot="toggleSnapshot" @togglestopwatch="toggleStopwatch" @toggleworkspace="addWorkspace" @toggletable="toggleTable" 
-            @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
+                    @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
                     />
 
       <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
       <logging v-if="getIsLoggingOn" id='logging' />
-      
+
       <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
         <div class="modal-dialog">
@@ -222,7 +221,7 @@ export default {
             if(event.target.childNodes.length > 0){
               draggedZone.appendChild(event.target.childNodes[0]);
             }
-            //console.log(draggedID);
+            console.log(draggedID);
             droppedElement.appendChild(document.getElementById(draggedID));
             droppedElement.classList.remove('drop-area-highlighted');
         } 
@@ -231,7 +230,7 @@ export default {
           while(element.parentNode){
             element = element.parentNode;
             if(element.classList.contains('drop-area')){
-              //console.log(element.childNodes[0]);
+              console.log(element.childNodes[0]);
               draggedZone.appendChild(element.childNodes[0]);
               element.appendChild(document.getElementById(draggedID));
               element.classList.remove('drop-area-highlighted');
@@ -239,31 +238,20 @@ export default {
             }
           }
         }
-      } else{
-          if(droppedElement != null){
-            droppedElement.classList.remove('drop-area-highlighted');
-          }
-        
       }
       
       return false;
     },
-    // dragEnter(event){
-    //   let dropData = event.dataTransfer.getData('text/html');
-    //   let dropItems = dropData.split("|");
-    //   let draggedID = dropItems[1];
-    //   if(draggedID != 'empty' && document.getElementById(draggedID) != null){
-    //     let element = document.getElementById(event.target.id);
-    //     if(element != null && element.classList.contains('drop-area')){
-    //       element.classList.add('drop-area-highlighted');
-    //     }
-    //   }
-    // },
     dragEnter(event){
-    //console.log(event)
-    if(event.target.classList.contains('drop-area')){
-          event.target.classList.add('drop-area-highlighted');
+      let dropData = event.dataTransfer.getData('text/html');
+      let dropItems = dropData.split("|");
+      let draggedID = dropItems[1];
+      if(draggedID != 'empty' && document.getElementById(draggedID) != null){
+        let element = document.getElementById(event.target.id);
+        if(element != null && element.classList.contains('drop-area')){
+          element.classList.add('drop-area-highlighted');
         }
+      }
     },
     dragLeave(event){
       let element = document.getElementById(event.target.id);
@@ -387,7 +375,7 @@ export default {
           
           //ensure that the dataset index is updated since data has been loaded
           let latest_index = this.getLatestDatasetIndex;
-          //console.log(latest_index);
+          console.log(latest_index);
           this.$store.dispatch('setDatasetIndex', latest_index + 1);
 
         }

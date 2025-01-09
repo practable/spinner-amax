@@ -20,10 +20,10 @@
                    Add Component
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a :class="isDataRecorderOn ? 'dropdown-item dropdown-checked' : 'dropdown-item'" id='datarecordermenu' href="#" @click='toggleComponent("datarecorder")'>Data Recorder</a></li>
-                    <li><a :class="isGraphOn ? 'dropdown-item dropdown-checked' : 'dropdown-item'" id='graphmenu' href="#" @click='toggleComponent("graph")'>Graph</a></li>
-                    <li><a :class="isSnapshotOn ? 'dropdown-item dropdown-checked' : 'dropdown-item'" id='snapshotmenu' href="#" @click='toggleComponent("snapshot")'>Data Snapshot</a></li>
-                    <li><a :class="isTableOn ? 'dropdown-item dropdown-checked' : 'dropdown-item'" id='tablemenu' href="#" @click='toggleComponent("table")'>Table</a></li>
+                    <li><a class="dropdown-item" id='datarecordermenu' href="#" @click='toggleComponent("datarecorder")'>Data Recorder</a></li>
+                    <li><a class="dropdown-item" id='graphmenu' href="#" @click='toggleComponent("graph")'>Graph</a></li>
+                    <li><a class="dropdown-item" id='snapshotmenu' href="#" @click='toggleComponent("snapshot")'>Data Snapshot</a></li>
+                    <li><a class="dropdown-item" id='tablemenu' href="#" @click='toggleComponent("table")'>Table</a></li>
                     <!-- <li><a class="dropdown-item" id='stopwatchmenu' href="#" @click='toggleComponent("stopwatch")'>Stopwatch</a></li>
                     <li><a class="dropdown-item" id='systemdiagramsmenu' href="#" @click='toggleComponent("systemdiagrams")'>System Diagrams</a></li> -->
                     
@@ -89,12 +89,8 @@
                         <p>Your unique user ID is given above. This helps us provide support through learning analytics.</p>
 
                         <h5>Customise the UI (Large screens only)</h5>
-                        <p>You can drag a component from one slot to another to switch their positions. Drag the component you want to move until the location you 
-                          want to move to becomes highlighted, then drop.
-                        </p>
-                        <p>Components can also be resized horizontally by clicking and dragging in the bottom right-hand corner of a slot. Rows
-                          can be resized vertically by clicking on the resize icon to the bottom right of each row.
-                        </p>
+                        <p>You can drag a component from one slot to another to switch their positions.</p>
+                        <p>Components can also be resized horizontally by clicking and dragging in the bottom right-hand corner of a slot.</p>
 
                         <h5>Toggling components</h5>
                         <p>The <b>Add Component</b> menu in the navigation bar can be used to toggle components visibility. Most components are displayed by default.
@@ -141,7 +137,9 @@ export default {
     PopupHelp,
     ShowHardwareConfigButton
   },
-  props:['isGraphOn', 'isDataRecorderOn', 'isTableOn', 'isSnapshotOn'],
+  props:{
+      
+  },
   emits:[
     'toggleconsent', 'togglelayout', 'togglegraph', 'toggledatarecorder', 'togglestopwatch', 'toggletable', 'togglesystemdiagrams', 'togglesnapshot', 'toggleworkspace', 'clearworkspace', 'addruler', 'addprotractor'
   ],
@@ -213,11 +211,6 @@ export default {
 </script>
 
 <style scoped>
-.dropdown-checked::before{
-  position: absolute;
-  left: .2rem;
-  content: '✓';
-  font-weight: 600;
-}
+
 
 </style>
