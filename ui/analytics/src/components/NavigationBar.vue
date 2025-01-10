@@ -56,13 +56,17 @@
                   </ul>
               </li> -->
 
-              <li v-if='getIsLoggingOn' class="nav-item dropdown">
+              <!-- <li v-if='getIsLoggingOn' class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="settingsdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Settings
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                     <li><a class="dropdown-item" id='toggleconsentbutton' href="#" @click='this.$emit("toggleconsent")'>Change consent</a></li>
                   </ul>
+              </li> -->
+
+              <li class="nav-item">
+                  <div class="nav-link">UUID: {{ getLogUUID }}</div>
               </li>
 
           </ul>
