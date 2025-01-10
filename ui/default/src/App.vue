@@ -10,7 +10,7 @@
             @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
                     />
 
-      <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
+      <!-- <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/> -->
 
       <transition name='fade'>
       <div v-if='showLoadDataModal && !showConsentModal' class="modal" id='modal-show' tabindex="-1">
@@ -100,7 +100,7 @@ import NavigationBar from "./components/NavigationBar.vue";
 import MotorSnapshot from "./components/MotorSnapshot.vue";
 // import Instructions from "./components/Instructions.vue";
 import Streams from './components/Streams.vue';
-import Consent from './components/Consent.vue';
+//import Consent from './components/Consent.vue';
 
 import { mapGetters } from 'vuex';
 
@@ -119,7 +119,7 @@ export default {
     Streams,
     MotorSnapshot,
     // Instructions,
-    Consent,
+//    Consent,
   },
   data() {
    return {
@@ -147,7 +147,7 @@ export default {
     this.$store.dispatch('setDataRecorder', this.isDataRecorderOn);    
     this.$store.dispatch('setUsesLocalStorage', this.hasStorage());
     this.updateUUID();
-    this.checkConsent();
+    //this.checkConsent();
   },
   mounted(){
     if(this.getUsesLocalStorage && this.hasDataToLoad()){

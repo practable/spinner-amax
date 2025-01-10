@@ -10,7 +10,7 @@
             @togglesystemdiagrams="toggleSystemDiagrams" @clearworkspace="clearWorkspace" @addruler="rulerAdded = true" @addprotractor="protractorAdded = true"
                     />
 
-      <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/>
+      <!-- <consent v-if='showConsentModal && getIsLoggingOn' @consentset="closeConsentModal"/> -->
       <logging v-if="getIsLoggingOn" id='logging' />
       
       <transition name='fade'>
@@ -101,7 +101,7 @@ import NavigationBar from "./components/NavigationBar.vue";
 import MotorSnapshot from "./components/MotorSnapshot.vue";
 // import Instructions from "./components/Instructions.vue";
 import Streams from './components/Streams.vue';
-import Consent from './components/Consent.vue';
+//import Consent from './components/Consent.vue';
 import Logging from './components/Logging.vue'
 
 import { mapGetters } from 'vuex';
@@ -121,7 +121,7 @@ export default {
     Streams,
     MotorSnapshot,
     // Instructions,
-    Consent,
+//    Consent,
     Logging
   },
   data() {
@@ -150,7 +150,7 @@ export default {
     this.$store.dispatch('setDataRecorder', this.isDataRecorderOn);    
     this.$store.dispatch('setUsesLocalStorage', this.hasStorage());
     this.updateUUID();
-    this.checkConsent();
+    //this.checkConsent();  //consent no longer required for DPIA
   },
   mounted(){
     if(this.getUsesLocalStorage && this.hasDataToLoad()){
@@ -421,7 +421,7 @@ export default {
         if(stored_uuid){
             this.$store.dispatch('setUUID', stored_uuid);
         } else{
-          this.$store.dispatch('setUUID', 'test00');
+          this.$store.dispatch('setUUID', 'null');
         }
       },
       checkConsent(){
