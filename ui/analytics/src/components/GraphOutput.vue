@@ -432,16 +432,21 @@ export default {
                     tooltip:{
                         callbacks:{
                             label: function(context){
-                                canvas.dispatchEvent(
+                                try{
+                                    canvas.dispatchEvent(
                                     new CustomEvent('chartdatahover', {
                                         bubbles: true,
                                         detail: {
                                             dataset: context.dataset.label,
                                             x: context.parsed.x,
                                             y: context.parsed.y
-                                        }
-                                    })
-                                )
+                                            }
+                                        })
+                                    )
+                                } catch (e){
+                                    console.log('chartdatahover event error');
+                                }
+                                
                             }
                         }
                     }
