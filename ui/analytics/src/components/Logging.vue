@@ -272,6 +272,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -289,7 +290,7 @@ export default {
           },
         "context": 
           {
-            
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -300,6 +301,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -322,7 +324,8 @@ export default {
             "event_timestamp": event.timeStamp,
             "x": event.clientX, 
             "y": event.clientY,
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
       
@@ -338,6 +341,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -359,7 +363,8 @@ export default {
             "event_timestamp": event.timeStamp,
             "dataset": event.detail.dataset,
             "data": {x: event.detail.x, y: event.detail.y}, 
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
       
@@ -375,6 +380,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -396,7 +402,8 @@ export default {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
             "mouse-left": event.relatedTarget != null ? event.relatedTarget.id : '',
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -407,6 +414,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -428,7 +436,8 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -444,6 +453,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -464,7 +474,8 @@ export default {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
             "previous_click": event.originalTarget.id,
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -480,6 +491,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -499,7 +511,8 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -510,6 +523,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -529,7 +543,8 @@ export default {
           {
             "event_type": event.type,
             "event_timestamp": event.timeStamp,
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -541,6 +556,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": "system",
@@ -558,7 +574,7 @@ export default {
           },
         "context": 
           {
-            
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -569,6 +585,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": message.level,
         "type": "experiment", 
+        "version": config.version,
         "actor":
           {
             "id": this.getExperiment,
@@ -587,7 +604,8 @@ export default {
           },
         "context": 
           {
-            "msg": message.text
+            "msg": message.text,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -598,6 +616,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -615,7 +634,8 @@ export default {
           },
         "context": 
           {
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
@@ -626,6 +646,7 @@ export default {
         "timestamp": new Date().getTime(), 
         "level": "INFO",
         "type": "analytics", 
+        "version": config.version,
         "actor":
           {
             "id": this.getLogUUID,
@@ -643,7 +664,8 @@ export default {
           },
         "context": 
           {
-            "exp_id": this.getExperiment
+            "exp_id": this.getExperiment,
+            "session-expired": this.getSessionExpired
           }
       }
 
