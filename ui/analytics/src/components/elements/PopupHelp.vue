@@ -91,10 +91,8 @@ export default {
         this.$nextTick(() => {
           this.popup_showing = false;
         });
-       
-        
-        
-      }
+      },
+
   }
 }
 </script>
