@@ -85,7 +85,7 @@
               <li class="nav-item me-1">
                   <popup-help id="popup-help-navbar">
                       <template v-slot:header>
-                        <h5>Information</h5>
+                        <h5>Information (v{{ getAppVersion }})</h5>
                       </template>
 
                       <template v-slot:body>
@@ -159,7 +159,8 @@ export default {
       'getIsLoggingOn',
       'getLogUUID',
       'getDarkTheme',
-      'getConfigJSON'
+      'getConfigJSON',
+      'getAppVersion'
     ]),
       labName(){
         return this.getLabID == '' ? 'Spinner Lab': ('Spinner Lab: ' + this.getLabID);
