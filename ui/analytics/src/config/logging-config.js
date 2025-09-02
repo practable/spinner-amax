@@ -1,6 +1,6 @@
 const config = {
     //Most likely leave the below as is:
-    version: '1.1',
+    version: import.meta.env.VITE_APP_VERSION,
     logging_path: '/addLog',
     definitions_path: '/verbs',
 
