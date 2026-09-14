@@ -7,6 +7,7 @@ const uiStore = {
        isDraggable: true,
        usesLocalStorage: false,        //can only use localStorage if the browser allows it.
        config_json: '', 
+       windowWidth: window.innerWidth,
        darkTheme: document.body.classList.contains('dark-theme') ? true : false
 
        }),
@@ -25,6 +26,9 @@ const uiStore = {
          },
          SET_DARK_THEME(state, set){
             state.darkTheme = set;
+         },
+         SET_WINDOW_WIDTH(state, val){
+            state.windowWidth = val;
          }
        },
        actions:{
@@ -42,6 +46,9 @@ const uiStore = {
          },
          setDarkTheme(context, set){
             context.commit('SET_DARK_THEME', set);
+         },
+         setWindowWidth(context, val){
+            context.commit('SET_WINDOW_WIDTH', val);
          }
        },
        getters:{
@@ -62,7 +69,17 @@ const uiStore = {
          },
          getAppVersion(state){
             return import.meta.env.VITE_APP_VERSION;
-         }
+         },
+         getWindowWidth(state){
+            return state.windowWidth;
+         },
+         isMobile(state){
+            if(state.windowWidth < 992){
+               return true;
+            } else{
+               return false;
+            }
+         },
          
        },  
   
