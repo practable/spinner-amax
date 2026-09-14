@@ -319,8 +319,15 @@ export default {
             this.clearData();
         },
         getGraphDataParameter(new_value){
-            console.log(new_value);
-            scatterChart.options.scales['y'].title.text = new_value;
+            //console.log(new_value);
+            if(new_value == 'theta'){
+                 scatterChart.options.scales['y'].title.text = 'Angular displacement [rad]';
+            } else if(new_value == 'omega'){
+                scatterChart.options.scales['y'].title.text = 'Angular speed [rad/s]';
+            } else{
+                scatterChart.options.scales['y'].title.text = '';
+            }
+           
             scatterChart.update();
         }
     },
@@ -386,7 +393,7 @@ export default {
                     x: {
                         title:{
                             display: true,
-                            text: 'time/s',
+                            text: 'time [s]',
                             color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
@@ -409,7 +416,7 @@ export default {
                     y: {
                         title:{
                             display: true,
-                            text: _this.getGraphDataParameter,
+                            text: _this.getGraphDataParameter == 'theta' ? 'Angular displacement [rad]' : 'Angular speed [rad/s]',
                             color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',

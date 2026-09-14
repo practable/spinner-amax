@@ -3,6 +3,13 @@
 
 <template>
 <div class="m-2 practable-component" id='motor-snapshot-div'>
+
+    <div class='d-grid gap-2 d-sm-block'>
+        <button id="record-snapshot-button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
+        <button id="reset-snapshot-button" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
+        <button id="download-snapshot-button" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
+    </div>
+    
     <div class="row justify-content-center align-items-center" >
 
         <table class="table">
@@ -27,12 +34,6 @@
 
 	</div>
 
-
-    <div class='d-grid gap-2 d-sm-block'>
-        <button id="record-snapshot-button" type='button' class="button-xsm button-primary" @click="takeSnapshot">Record Snapshot</button>
-        <button id="reset-snapshot-button" type='button' class="button-xsm button-warning" @click="toggleResetModal">Reset</button>
-        <button id="download-snapshot-button" type='button' class="button-xsm button-secondary" @click="outputToCSV">Download Snapshots</button>
-    </div>
     
     <div class="d-flex flex-row">
         <popup-help id="popup-help-snapshot">
