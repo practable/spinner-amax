@@ -41,6 +41,8 @@
 
         <streams id='streams' />
 
+        <logging v-if="getIsLoggingOn" id='logging' />
+
 <!-- Beginning of grid layout -->
 
       <!-- <div class='row' id='fixed-row'>
@@ -100,7 +102,7 @@ import NavigationBar from "./components/NavigationBar.vue";
 import MotorSnapshot from "./components/MotorSnapshot.vue";
 // import Instructions from "./components/Instructions.vue";
 import Streams from './components/Streams.vue';
-//import Consent from './components/Consent.vue';
+import Logging from "./components/Logging.vue";
 
 import { mapGetters } from 'vuex';
 
@@ -119,7 +121,7 @@ export default {
     Streams,
     MotorSnapshot,
     // Instructions,
-//    Consent,
+    Logging
   },
   data() {
    return {
