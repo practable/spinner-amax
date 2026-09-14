@@ -178,7 +178,15 @@ export default {
       window.onresize = () => {this.setWindowWidth(window.innerWidth)};
   },
   watch:{
-    
+    isMobile() {
+      this.$nextTick(() => {
+        document.querySelectorAll('#component-grid > div, .drop-area')
+        .forEach((el) => {
+          el.style.width = '';
+          el.style.height = '';
+        });
+      });
+    },
   },
   computed:{
     ...mapGetters([

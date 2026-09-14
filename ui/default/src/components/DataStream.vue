@@ -20,11 +20,14 @@ export default {
 	},
     data(){
         return{
-			stream: Object,
+			stream: {},
         }
     },
+	beforeUnmount() { 
+        document.removeEventListener("streams:dropped", this.reconnect);
+    },
 	mounted(){
-		document.addEventListener("streams:dropped", this.getWebsocketConnection);
+		document.addEventListener("streams:dropped", this.reconnect);
 	},
     computed:{
 		...mapGetters({
@@ -52,6 +55,9 @@ export default {
 
 	},
 	methods:{
+		reconnect(){
+			this.getWebsocketConnection();
+		},
 		getWebsocketConnection(){
 			this.stream = this.$store.getters.getStream("data");
 			var accessURL = this.stream.url;
